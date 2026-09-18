@@ -1,0 +1,1 @@
+<?php get_header(); ?><main><section class="page-hero compact"><div class="k-container"><h1><?php the_title(); ?></h1></div></section><section class="k-section"><div class="k-container prose"><?php while(have_posts()): the_post(); the_content(); endwhile; ?></div></section></main><?php get_footer(); ?>

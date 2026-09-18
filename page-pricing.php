@@ -1,0 +1,9 @@
+<?php get_header(); ?>
+<main><section class="page-hero"><div class="k-container"><div class="eyebrow">PRICING</div><h1>Start simple. Scale with your conversations.</h1><p>Use this launch structure until your final telephony, model, speech and support costs are validated.</p></div></section>
+<section class="k-section"><div class="k-container pricing-grid">
+<div class="price-card"><span>Launch</span><h2>Custom</h2><p>For pilots and single-agent deployments.</p><ul><li>1 AI teammate</li><li>Core call workflow</li><li>Basic analytics</li><li>Email support</li></ul><a class="k-btn k-btn-ghost" href="<?php echo esc_url(home_url('/demo/')); ?>">Start a pilot</a></div>
+<div class="price-card featured"><div class="popular">RECOMMENDED</div><span>Growth</span><h2>Custom</h2><p>For growing businesses with multiple workflows.</p><ul><li>Multiple AI teammates</li><li>CRM / calendar workflows</li><li>Advanced outcomes</li><li>Priority onboarding</li></ul><a class="k-btn k-btn-primary" href="<?php echo esc_url(home_url('/demo/')); ?>">Book a demo</a></div>
+<div class="price-card"><span>Business</span><h2>Custom</h2><p>For teams that need deeper integrations and controls.</p><ul><li>Team management</li><li>Advanced integrations</li><li>Custom workflow logic</li><li>Priority support</li></ul><a class="k-btn k-btn-ghost" href="<?php echo esc_url(home_url('/contact/')); ?>">Contact sales</a></div>
+<div class="price-card"><span>Enterprise</span><h2>Let's talk</h2><p>For higher-volume or specialized deployments.</p><ul><li>Custom architecture</li><li>Security review</li><li>Deployment options</li><li>Commercial SLA options</li></ul><a class="k-btn k-btn-ghost" href="<?php echo esc_url(home_url('/contact/')); ?>">Contact sales</a></div>
+</div><p class="pricing-note">Pricing shown as “Custom” intentionally. Finalize public rates only after testing your actual per-minute infrastructure and support economics.</p></section></main>
+<?php get_footer(); ?>

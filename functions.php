@@ -474,7 +474,7 @@ function kathya_ai_v6_virtual_pages($template) {
           'pricing'=>'page-pricing.php','developers'=>'page-developers.php','resources'=>'page-resources.php',
           'about'=>'page-about.php','company'=>'page-about.php','demo'=>'page-demo.php','contact'=>'page-contact.php',
           'book-appointment'=>'page-book-appointment.php','manage-appointment'=>'page-manage-appointment.php',
-          'sign-in'=>'page-sign-in.php','get-started'=>'page-get-started.php','platform'=>'page-platform.php'
+          'sign-in'=>'page-sign-in.php','get-started'=>'page-get-started.php','booking-confirmation'=>'page-booking-confirmation.php','platform'=>'page-platform.php'
         );
         if (isset($map[$path])) {
             global $wp_query; $wp_query->is_404 = false; status_header(200);

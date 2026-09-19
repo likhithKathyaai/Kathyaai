@@ -11,7 +11,7 @@ add_action('wp_head', function () {
     ? 'Conversational AI for voice, customer engagement and business workflows. Turn conversations into actions with KATHYA AI.'
     : (has_excerpt() ? get_the_excerpt() : 'Explore KATHYA AI — conversational AI designed to understand intent, connect workflows and turn conversations into action.');
   $desc = wp_strip_all_tags($desc);
-  $image = get_template_directory_uri() . '/assets/images/kathya-social-preview.png';
+  $image = get_template_directory_uri() . '/screenshot.png';
   echo '<meta name="description" content="'.esc_attr($desc).'">'."\n";
   echo '<meta property="og:type" content="website">'."\n";
   echo '<meta property="og:site_name" content="KATHYA AI">'."\n";

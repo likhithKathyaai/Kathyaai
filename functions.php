@@ -506,3 +506,27 @@ function kathya_ai_v6_handle_get_started(){
 }
 add_action('admin_post_nopriv_kathya_get_started','kathya_ai_v6_handle_get_started');
 add_action('admin_post_kathya_get_started','kathya_ai_v6_handle_get_started');
+
+
+/* V6.1.2: force product templates for reserved KATHYA routes even when legacy WP pages exist. */
+function kathya_ai_v612_force_reserved_templates($template){
+    if (is_admin()) return $template;
+    $path = trim((string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/');
+    $slug = sanitize_title(basename($path));
+    $map = array(
+      'sign-in'=>'page-sign-in.php',
+      'get-started'=>'page-get-started.php',
+      'booking-confirmation'=>'page-booking-confirmation.php'
+    );
+    if (isset($map[$slug])) {
+        $candidate = get_template_directory().'/'.$map[$slug];
+        if (file_exists($candidate)) {
+            global $wp_query;
+            if ($wp_query) { $wp_query->is_404 = false; }
+            status_header(200);
+            return $candidate;
+        }
+    }
+    return $template;
+}
+add_filter('template_include','kathya_ai_v612_force_reserved_templates',999);

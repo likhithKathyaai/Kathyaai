@@ -474,7 +474,7 @@ function kathya_ai_v6_virtual_pages($template) {
           'pricing'=>'page-pricing.php','developers'=>'page-developers.php','resources'=>'page-resources.php',
           'about'=>'page-about.php','company'=>'page-about.php','demo'=>'page-demo.php','contact'=>'page-contact.php',
           'book-appointment'=>'page-book-appointment.php','manage-appointment'=>'page-manage-appointment.php',
-          'sign-in'=>'page-sign-in.php','platform'=>'page-platform.php'
+          'sign-in'=>'page-sign-in.php','get-started'=>'page-get-started.php','platform'=>'page-platform.php'
         );
         if (isset($map[$path])) {
             global $wp_query; $wp_query->is_404 = false; status_header(200);
@@ -485,3 +485,24 @@ function kathya_ai_v6_virtual_pages($template) {
     return $template;
 }
 add_filter('template_include','kathya_ai_v6_virtual_pages',99);
+
+
+function kathya_ai_v6_handle_get_started(){
+    if(kathya_ai_v2_honeypot_failed()) wp_die('Invalid submission.');
+    if(!isset($_POST['kathya_get_started_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['kathya_get_started_nonce'])),'kathya_get_started_submit')) wp_die('Security check failed.');
+    $name=sanitize_text_field(wp_unslash($_POST['name']??'')); $email=sanitize_email(wp_unslash($_POST['email']??''));
+    $company=sanitize_text_field(wp_unslash($_POST['company']??'')); $phone=sanitize_text_field(wp_unslash($_POST['phone']??''));
+    $outcome=sanitize_text_field(wp_unslash($_POST['outcome']??'')); $industry=sanitize_text_field(wp_unslash($_POST['industry']??''));
+    $systems=sanitize_text_field(wp_unslash($_POST['systems']??'')); $volume=sanitize_text_field(wp_unslash($_POST['volume']??''));
+    $channels=isset($_POST['channels']) && is_array($_POST['channels']) ? array_map('sanitize_text_field',wp_unslash($_POST['channels'])) : array();
+    $consent=!empty($_POST['consent']);
+    if(!$name || !is_email($email) || !$company || !$outcome || !$industry || !$consent){wp_safe_redirect(add_query_arg('started','missing',home_url('/get-started/')));exit;}
+    $to=get_theme_mod('kathya_email',get_option('admin_email')); if(!is_email($to))$to=get_option('admin_email');
+    $subject='New KATHYA workspace request — '.$company;
+    $body="Name: {$name}\nEmail: {$email}\nPhone: {$phone}\nCompany: {$company}\nOutcome: {$outcome}\nIndustry: {$industry}\nChannels: ".implode(', ',$channels)."\nSystems: {$systems}\nVolume: {$volume}\n";
+    $sent=wp_mail($to,$subject,$body,array('Reply-To: '.$name.' <'.$email.'>'));
+    if($sent) wp_mail($email,'Your KATHYA blueprint request',"Hi {$name},\n\nWe received your KATHYA workspace request for {$outcome}. Our team will review the workflow and follow up with you.\n\nKATHYA AI\nSpeak. Understand. Act.");
+    wp_safe_redirect(add_query_arg('started',$sent?'success':'email-error',home_url('/get-started/')));exit;
+}
+add_action('admin_post_nopriv_kathya_get_started','kathya_ai_v6_handle_get_started');
+add_action('admin_post_kathya_get_started','kathya_ai_v6_handle_get_started');

@@ -115,3 +115,38 @@ body{font-size:16px;line-height:1.65}.k-section{padding:var(--space-section) 0}.
 .home .v5-section:before{opacity:.012}
 @media(max-width:900px){.home .v5-hero{padding-top:48px}.home .v5-product-stage{min-height:360px;transform:none}.home .v5-section{padding:56px 0}.home .v5-network{min-height:390px}}
 @media(max-width:620px){.home .v5-hero{padding:38px 0 42px}.home .v5-hero h1{font-size:clamp(46px,14vw,66px)}.home .v5-lead{font-size:16px}.home .v5-product-stage{min-height:320px}.home .v5-section{padding:46px 0}.home .v5-section-head{margin-bottom:24px}.home .v5-bento article,.home .v5-bento article.big{min-height:auto;padding:20px}.home .v5-network{min-height:340px}.home .v5-final{padding:58px 0}}
+
+/* V6.5 homepage density repair + purposeful motion
+   Fixes legacy min-heights/padding that created empty viewport-sized sections. */
+.home .v5-home section{height:auto!important}
+.home .v5-section{min-height:0!important;padding:clamp(44px,5vw,72px) 0!important}
+.home .v5-bento-section{padding-top:clamp(40px,4.5vw,64px)!important;padding-bottom:clamp(48px,5.5vw,76px)!important}
+.home .v5-section-head{min-height:0!important;margin:0 0 clamp(24px,3vw,38px)!important}
+.home .v5-section-head h2{margin:.45rem 0 .65rem!important}
+.home .v5-section-head p{margin-bottom:0!important}
+.home .v5-bento{margin-top:0!important;align-items:stretch}
+.home .v5-bento article{min-height:0!important}
+.home .bento-wide{min-height:240px!important}
+.home .bento-stat,.home .bento-lang,.home .bento-actions{min-height:210px!important}
+.home .bento-intel{min-height:280px!important}
+.home .v5-outcome,.home .v5-studio,.home .v5-usecases,.home .v5-connect,.home .v5-trust{min-height:0!important}
+.home .v5-flow{margin-top:0!important}
+.home .v5-studio-grid,.home .v5-connect-grid{min-height:0!important}
+.home .v5-usecase-panel{padding-top:clamp(24px,3vw,40px)!important}
+.home .v5-network{height:clamp(330px,38vw,460px)!important;min-height:0!important}
+.home .v5-trust-card{margin:0!important}
+.home .v5-book-card{padding-top:clamp(36px,4vw,56px)!important}
+.home .v5-section+.v5-section{margin-top:0!important}
+.home .v5-bento article{background:linear-gradient(145deg,rgba(12,30,22,.9),rgba(4,12,8,.92));overflow:hidden}
+.home .v5-bento article:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-90px;bottom:-110px;background:radial-gradient(circle,rgba(166,245,73,.1),transparent 68%);transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .5s ease}
+.home .v5-bento article:hover:after{transform:scale(1.5);opacity:.8}
+.home .v5-section-head.reveal.visible h2{animation:kTitleIn .75s cubic-bezier(.2,.8,.2,1) both}
+.home .v5-section-head.reveal.visible>span{animation:kEyebrowIn .6s ease both}
+@keyframes kTitleIn{from{opacity:0;transform:translateY(18px);letter-spacing:-.075em}to{opacity:1;transform:none}}
+@keyframes kEyebrowIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+@media(max-width:760px){
+ .home .v5-section{padding:40px 0!important}
+ .home .v5-bento-section{padding:38px 0 44px!important}
+ .home .bento-wide,.home .bento-stat,.home .bento-lang,.home .bento-actions,.home .bento-intel{min-height:0!important}
+ .home .v5-network{height:330px!important}
+}

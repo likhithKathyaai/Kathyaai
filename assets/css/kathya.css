@@ -273,3 +273,29 @@ body:not(.home) .k-card{min-height:230px;padding:24px;background:linear-gradient
 body:not(.home) .k-card h2,body:not(.home) .k-card h3{margin:16px 0 10px}body:not(.home) .k-card p{min-height:0}
 @media(max-width:980px){.pricing-grid,body:not(.home) .card-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.pricing-grid,body:not(.home) .card-grid{grid-template-columns:1fr}.price-card{min-height:0}body:not(.home) .page-hero{padding:48px 0 28px}}
+
+/* V7.2 critical inner-page visibility + spacing repair
+   User screenshots showed hero text but content grids below hidden/off-canvas. */
+body:not(.home) main#main-content,
+body:not(.home) main{display:block!important;overflow:visible!important}
+body:not(.home) .page-hero{min-height:0!important;height:auto!important;padding:54px 0 32px!important;overflow:hidden!important}
+body:not(.home) .page-hero .k-container{min-height:0!important;height:auto!important}
+body:not(.home) .page-hero h1{margin:10px 0 14px!important;line-height:1.01!important}
+body:not(.home) .k-section{display:block!important;min-height:0!important;height:auto!important;padding:34px 0 48px!important;overflow:visible!important}
+body:not(.home) .k-section>.k-container{display:block!important;min-height:0!important;height:auto!important}
+body:not(.home) .pricing-grid,
+body:not(.home) .card-grid,
+body:not(.home) .k-card,
+body:not(.home) .price-card,
+body:not(.home) .k-section.alt,
+body:not(.home) .k-section.alt *{opacity:1!important;visibility:visible!important;filter:none!important}
+body:not(.home) .pricing-grid,
+body:not(.home) .card-grid{transform:none!important;position:relative!important;z-index:3!important}
+body:not(.home) .pricing-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important}
+body:not(.home) .card-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important}
+body:not(.home) .price-card,
+body:not(.home) .k-card{display:flex!important;flex-direction:column!important;transform:none!important}
+body:not(.home) .k-section.alt{display:block!important;min-height:0!important;height:auto!important;padding:42px 0 54px!important}
+body:not(.home) .k-section.alt h2{margin:0 0 20px!important;font-size:clamp(30px,4vw,48px)!important}
+@media(max-width:980px){body:not(.home) .pricing-grid,body:not(.home) .card-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:620px){body:not(.home) .page-hero{padding:40px 0 24px!important}body:not(.home) .k-section{padding:26px 0 38px!important}body:not(.home) .pricing-grid,body:not(.home) .card-grid{grid-template-columns:1fr!important}}

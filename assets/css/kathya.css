@@ -150,3 +150,25 @@ body{font-size:16px;line-height:1.65}.k-section{padding:var(--space-section) 0}.
  .home .bento-wide,.home .bento-stat,.home .bento-lang,.home .bento-actions,.home .bento-intel{min-height:0!important}
  .home .v5-network{height:330px!important}
 }
+
+/* V6.6 definitive homepage repair.
+   Scope to #main-content.v5-home instead of WP body .home, so it works regardless of WordPress body classes. */
+#main-content.v5-home .v5-section{min-height:auto!important;height:auto!important;padding:clamp(42px,4.8vw,68px) 0!important}
+#main-content.v5-home .v5-bento-section{min-height:auto!important;height:auto!important;padding:46px 0 58px!important}
+#main-content.v5-home .v5-bento-section>.k-container{min-height:0!important;height:auto!important;display:block!important}
+#main-content.v5-home .v5-bento-section .v5-section-head{min-height:0!important;height:auto!important;margin:0 0 28px!important;padding:0!important}
+#main-content.v5-home .v5-bento{display:grid!important;min-height:0!important;height:auto!important;margin:0!important;padding:0!important;gap:14px!important}
+#main-content.v5-home .v5-bento>article{visibility:visible;min-height:190px!important;height:auto!important;margin:0!important;padding:24px!important}
+#main-content.v5-home .v5-bento>.bento-wide{min-height:230px!important}
+#main-content.v5-home .v5-bento>.bento-intel{min-height:260px!important}
+#main-content.v5-home .v5-outcome,#main-content.v5-home .v5-studio,#main-content.v5-home .v5-usecases,#main-content.v5-home .v5-connect,#main-content.v5-home .v5-trust{min-height:0!important;height:auto!important}
+#main-content.v5-home .v5-section-head{min-height:0!important;height:auto!important;margin-bottom:28px!important}
+#main-content.v5-home .v5-studio-grid,#main-content.v5-home .v5-connect-grid,#main-content.v5-home .v5-usecase-panel{min-height:0!important;height:auto!important}
+#main-content.v5-home .v5-network{height:390px!important;min-height:0!important}
+#main-content.v5-home .reveal{will-change:opacity,transform}
+@media(max-width:760px){
+ #main-content.v5-home .v5-section{padding:38px 0!important}
+ #main-content.v5-home .v5-bento-section{padding:36px 0 42px!important}
+ #main-content.v5-home .v5-bento>article,#main-content.v5-home .v5-bento>.bento-wide,#main-content.v5-home .v5-bento>.bento-intel{min-height:0!important}
+ #main-content.v5-home .v5-network{height:320px!important}
+}

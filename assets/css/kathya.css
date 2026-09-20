@@ -203,3 +203,21 @@ body{font-size:16px;line-height:1.65}.k-section{padding:var(--space-section) 0}.
 #main-content.v5-home .v5-bento-live>.bento-intel{grid-column:span 2!important;min-height:260px!important}
 @media(max-width:1100px){#main-content.v5-home .v5-bento-live{grid-template-columns:1fr 1fr!important}#main-content.v5-home .v5-bento-live>.bento-wide,#main-content.v5-home .v5-bento-live>.bento-intel{grid-column:span 2!important}}
 @media(max-width:760px){#main-content.v5-home .v5-bento-live{grid-template-columns:1fr!important}#main-content.v5-home .v5-bento-live>.bento-wide,#main-content.v5-home .v5-bento-live>.bento-intel{grid-column:span 1!important;display:block!important;min-height:0!important}#main-content.v5-home .v5-bento-live>article{min-height:0!important}}
+
+/* V6.9 KATHYA flight companion */
+.kathya-bird{position:fixed;left:0;top:0;width:44px;height:44px;z-index:9998;pointer-events:none;opacity:0;transition:opacity .35s ease;will-change:transform;mix-blend-mode:normal}
+.kathya-bird img{position:absolute;inset:4px;width:36px;height:36px;object-fit:contain;filter:drop-shadow(0 5px 12px rgba(0,0,0,.42)) drop-shadow(0 0 7px rgba(166,245,73,.22));transform-origin:52% 55%;animation:kBirdBreathe 2.8s ease-in-out infinite}
+.kathya-bird-glow{position:absolute;inset:5px;border-radius:50%;background:radial-gradient(circle,rgba(166,245,73,.18),rgba(85,216,121,.05) 48%,transparent 72%);filter:blur(5px);transform:scale(1.25)}
+@media(pointer:fine) and (min-width:821px){
+ .kathya-bird{opacity:.94}
+ .kathya-bird.is-flying img{animation:kBirdFly .28s ease-in-out infinite alternate}
+ .kathya-bird.is-curious img{transform:scale(1.16) rotate(-7deg);filter:drop-shadow(0 5px 14px rgba(0,0,0,.45)) drop-shadow(0 0 12px rgba(166,245,73,.4))}
+ .kathya-bird.is-curious .kathya-bird-glow{transform:scale(1.75);opacity:1}
+}
+@keyframes kBirdBreathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.035)}}
+@keyframes kBirdFly{from{transform:translateY(1px) rotate(-3deg) scaleY(.94)}to{transform:translateY(-2px) rotate(3deg) scaleY(1.05)}}
+.kathya-bird.is-mobile-flight{display:block;opacity:0;top:18vh;left:-70px;width:38px;height:38px}
+.kathya-bird.is-mobile-flight img{width:32px;height:32px}
+.kathya-bird.is-mobile-flight.mobile-go{animation:kMobileFly 6.8s cubic-bezier(.3,.05,.55,1) forwards}
+@keyframes kMobileFly{0%{opacity:0;transform:translate3d(-20px,60px,0) rotate(8deg)}12%{opacity:.72}45%{transform:translate3d(48vw,-18px,0) rotate(-7deg)}82%{opacity:.62}100%{opacity:0;transform:translate3d(calc(100vw + 100px),70px,0) rotate(7deg)}}
+@media(prefers-reduced-motion:reduce){.kathya-bird{display:none!important}}

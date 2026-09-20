@@ -221,3 +221,35 @@ body{font-size:16px;line-height:1.65}.k-section{padding:var(--space-section) 0}.
 .kathya-bird.is-mobile-flight.mobile-go{animation:kMobileFly 6.8s cubic-bezier(.3,.05,.55,1) forwards}
 @keyframes kMobileFly{0%{opacity:0;transform:translate3d(-20px,60px,0) rotate(8deg)}12%{opacity:.72}45%{transform:translate3d(48vw,-18px,0) rotate(-7deg)}82%{opacity:.62}100%{opacity:0;transform:translate3d(calc(100vw + 100px),70px,0) rotate(7deg)}}
 @media(prefers-reduced-motion:reduce){.kathya-bird{display:none!important}}
+
+/* V7.0 compact platform + illustrated bird companion */
+#main-content.v5-home section.v5-bento-section{padding:30px 0 38px!important}
+#main-content.v5-home .v5-bento-section .v5-section-head{margin:0 0 16px!important}
+#main-content.v5-home .v5-bento-section .v5-section-head h2{font-size:clamp(34px,4vw,58px)!important;line-height:1!important;margin:6px 0 0!important}
+#main-content.v5-home .v5-bento-live{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important}
+#main-content.v5-home .v5-bento-live>article,#main-content.v5-home .v5-bento-live>.bento-wide,#main-content.v5-home .v5-bento-live>.bento-intel{grid-column:span 1!important;display:block!important;min-height:210px!important;padding:20px!important;border-radius:20px!important}
+#main-content.v5-home .v5-bento-live h3{font-size:1.18rem!important;margin:.65rem 0!important}
+#main-content.v5-home .v5-bento-live p{font-size:11px!important;line-height:1.55!important}
+#main-content.v5-home .v5-bento-live .bento-wave{width:100%!important;height:64px!important;margin-top:22px!important}
+#main-content.v5-home .v5-bento-live .bento-stat strong{font-size:3.4rem!important}
+#main-content.v5-home .v5-bento-live .intel-metrics{grid-template-columns:1fr!important;gap:4px!important}
+#main-content.v5-home .v5-bento-live .intel-chart{height:58px!important;margin-top:8px!important}
+@media(max-width:1100px){#main-content.v5-home .v5-bento-live{grid-template-columns:repeat(2,minmax(0,1fr))!important}#main-content.v5-home .v5-bento-live>article,#main-content.v5-home .v5-bento-live>.bento-wide,#main-content.v5-home .v5-bento-live>.bento-intel{grid-column:span 1!important}}
+@media(max-width:650px){#main-content.v5-home section.v5-bento-section{padding:26px 0 32px!important}#main-content.v5-home .v5-bento-live{grid-template-columns:1fr!important}#main-content.v5-home .v5-bento-live>article{min-height:0!important}}
+/* hide obsolete logo follower from any stale DOM */
+.kathya-bird{display:none!important}
+.k-bird{position:fixed;left:0;top:0;width:52px;height:42px;z-index:9998;pointer-events:none;opacity:.94;will-change:transform;filter:drop-shadow(0 4px 8px rgba(0,0,0,.38)) drop-shadow(0 0 7px rgba(166,245,73,.2))}
+.k-bird i{position:absolute;display:block}
+.kb-body{width:29px;height:15px;left:10px;top:17px;border-radius:70% 55% 60% 65%;background:linear-gradient(100deg,#2abf68,#8df24b 68%,#d8ff72)}
+.kb-head{width:14px;height:14px;left:34px;top:13px;border-radius:50%;background:linear-gradient(135deg,#a7f65a,#4bd778)}
+.kb-eye{width:3px;height:3px;left:43px;top:17px;border-radius:50%;background:#06110d}
+.kb-beak{width:0;height:0;left:47px;top:18px;border-top:3px solid transparent;border-bottom:3px solid transparent;border-left:7px solid #d9ff67}
+.kb-tail{width:17px;height:12px;left:0;top:20px;background:linear-gradient(135deg,#34d76d,#8cf34c);clip-path:polygon(100% 35%,0 0,35% 50%,0 100%,100% 65%)}
+.kb-wing{width:25px;height:14px;left:15px;top:12px;border-radius:90% 20% 80% 10%;transform-origin:20% 80%;background:linear-gradient(135deg,#b8ff5b,#38cf6b)}
+.kb-wing-b{top:23px;opacity:.7;transform:rotate(20deg) scale(.82)}
+.kb-trail{width:36px;height:1px;right:40px;top:24px;background:linear-gradient(90deg,transparent,rgba(150,247,78,.45));box-shadow:-12px 4px 10px rgba(85,216,121,.12)}
+.k-bird.flying .kb-wing-a{animation:kbFlapA .24s ease-in-out infinite alternate}.k-bird.flying .kb-wing-b{animation:kbFlapB .24s ease-in-out infinite alternate}.k-bird.curious{filter:drop-shadow(0 0 11px rgba(166,245,73,.45))}
+@keyframes kbFlapA{from{transform:rotate(-12deg)}to{transform:rotate(28deg) scaleY(.72)}}@keyframes kbFlapB{from{transform:rotate(30deg) scale(.82)}to{transform:rotate(-12deg) scale(.82)}}
+.k-bird.mobile-bird{opacity:0;left:-70px;top:18vh}.k-bird.mobile-bird.flyby{animation:kbFlyby 7s cubic-bezier(.25,.1,.5,1) forwards}
+@keyframes kbFlyby{0%{opacity:0;transform:translate3d(-20px,60px,0)}12%{opacity:.75}50%{transform:translate3d(52vw,-10px,0)}84%{opacity:.7}100%{opacity:0;transform:translate3d(calc(100vw + 110px),65px,0)}}
+@media(prefers-reduced-motion:reduce){.k-bird{display:none!important}}

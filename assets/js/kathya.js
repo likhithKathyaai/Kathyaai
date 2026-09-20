@@ -119,3 +119,29 @@ document.addEventListener('DOMContentLoaded',()=>{
  const mark=hero?.querySelector('.v5-product-stage');
  if(hero&&mark){hero.addEventListener('pointermove',e=>{if(window.innerWidth<900)return;const x=(e.clientX/window.innerWidth-.5)*8,y=(e.clientY/window.innerHeight-.5)*6;mark.style.transform='translate3d('+x+'px,'+y+'px,0)';});hero.addEventListener('pointerleave',()=>mark.style.transform='');}
 });
+
+/* V6.9 KATHYA flight companion — desktop pointer guide, mobile ambient fly-by */
+document.addEventListener('DOMContentLoaded',()=>{
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const fine=window.matchMedia('(pointer:fine)').matches;
+ if(reduced) return;
+ const bird=document.createElement('div');
+ bird.className='kathya-bird';
+ bird.setAttribute('aria-hidden','true');
+ bird.innerHTML='<span class="kathya-bird-glow"></span><img src="'+(window.KathyaAssist?.home||'/')+'wp-content/themes/kathya-ai-v6/assets/images/kathya-mark.png" alt="" draggable="false">';
+ document.body.appendChild(bird);
+ if(fine && window.innerWidth>820){
+   let tx=window.innerWidth*.72,ty=window.innerHeight*.35,x=tx,y=ty,angle=0,lastX=tx,idle;
+   const animate=()=>{x+=(tx-x)*.115;y+=(ty-y)*.115;const dx=tx-lastX;angle=Math.max(-18,Math.min(18,dx*.28));lastX+=(tx-lastX)*.18;bird.style.transform='translate3d('+(x-22)+'px,'+(y-22)+'px,0) rotate('+angle+'deg)';requestAnimationFrame(animate)};
+   animate();
+   window.addEventListener('pointermove',e=>{tx=e.clientX+18;ty=e.clientY+16;bird.classList.add('is-flying');clearTimeout(idle);idle=setTimeout(()=>bird.classList.remove('is-flying'),220)},{passive:true});
+   document.querySelectorAll('a,button,.v5-bento article,.k-card').forEach(el=>{
+     el.addEventListener('pointerenter',()=>bird.classList.add('is-curious'));
+     el.addEventListener('pointerleave',()=>bird.classList.remove('is-curious'));
+   });
+ }else{
+   bird.classList.add('is-mobile-flight');
+   const fly=()=>{bird.classList.remove('mobile-go');void bird.offsetWidth;bird.classList.add('mobile-go')};
+   setTimeout(fly,1200);setInterval(fly,14000);
+ }
+});

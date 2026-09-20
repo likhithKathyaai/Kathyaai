@@ -99,3 +99,23 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.querySelectorAll('.k-assist-quick button').forEach(b=>b.addEventListener('click',async()=>{const k=b.dataset.q;await ask(prompts[k]||b.textContent);if(k==='demo')link('/book-appointment/','Choose a time →');if(k==='contact')link('/contact/','Contact team →');if(k==='pricing')link('/pricing/','View pricing →');if(k==='solutions')link('/solutions/','Explore solutions →')}));
  form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value.trim();if(!q)return;input.value='';ask(q)});
 });
+
+/* V6.2 creative interaction layer */
+document.addEventListener('DOMContentLoaded',()=>{
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const header=document.querySelector('.site-header');
+ const onScroll=()=>header?.classList.toggle('k-scrolled',window.scrollY>18);
+ onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+ document.querySelectorAll('.v5-bento,.pricing-grid,.card-grid,.v5-flow,.auth-points').forEach(group=>{
+   [...group.children].forEach((el,i)=>{el.classList.add('motion-child');el.style.setProperty('--motion-i',i);});
+   if(!group.classList.contains('reveal')) group.classList.add('reveal');
+ });
+ if(reduced)return;
+ document.querySelectorAll('.v5-bento article,.price-card,.k-card,.v5-builder,.auth-card').forEach(card=>{
+   card.addEventListener('pointermove',e=>{if(window.innerWidth<900)return;const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform='perspective(900px) rotateX('+(-y*2.4)+'deg) rotateY('+(x*3.2)+'deg) translateY(-5px)';});
+   card.addEventListener('pointerleave',()=>card.style.transform='');
+ });
+ const hero=document.querySelector('.v5-hero');
+ const mark=hero?.querySelector('.v5-product-stage');
+ if(hero&&mark){hero.addEventListener('pointermove',e=>{if(window.innerWidth<900)return;const x=(e.clientX/window.innerWidth-.5)*8,y=(e.clientY/window.innerHeight-.5)*6;mark.style.transform='translate3d('+x+'px,'+y+'px,0)';});hero.addEventListener('pointerleave',()=>mark.style.transform='');}
+});

@@ -516,7 +516,10 @@ function kathya_ai_v612_force_reserved_templates($template){
     $map = array(
       'sign-in'=>'page-sign-in.php',
       'get-started'=>'page-get-started.php',
-      'booking-confirmation'=>'page-booking-confirmation.php'
+      'booking-confirmation'=>'page-booking-confirmation.php',
+      'pricing'=>'page-pricing.php',
+      'integrations'=>'page-integrations.php',
+      'resources'=>'page-resources.php'
     );
     if (isset($map[$slug])) {
         $candidate = get_template_directory().'/'.$map[$slug];

@@ -11,14 +11,26 @@
       <div class="v5-proof"><span>Natural voice</span><span>Multilingual</span><span>Connected actions</span><span>Human handoff</span></div>
     </div>
     <div class="v5-product-stage reveal" id="talk">
-      <div class="v5-console">
-        <div class="v5-console-head"><div><i></i><strong>KATHYA</strong></div><span>LIVE EXPERIENCE</span></div>
-        <div class="v5-voice-core"><div class="v5-ring r1"></div><div class="v5-ring r2"></div><div class="v5-core"><b>K</b></div><div class="v5-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><small id="v5-status">Ready when you are</small></div>
-        <div class="v5-chat" id="v5-chat"><div class="user"><small>YOU</small><p>Can you book a demo tomorrow afternoon?</p></div><div class="ai"><small>KATHYA</small><p>Absolutely. I can check availability and help you choose a time.</p></div></div>
+      <div class="v5-console v8-console">
+        <div class="v5-console-head"><div><i></i><strong>KATHYA LIVE</strong></div><span>CONVERSATION → ACTION</span></div>
+        <div class="v8-demo-grid">
+          <div class="v8-orb-zone">
+            <div class="v8-orbit o1"></div><div class="v8-orbit o2"></div>
+            <div class="v5-core v8-core"><b>K</b></div>
+            <div class="v5-wave v8-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <small id="v5-status">Ready for a request</small>
+          </div>
+          <div class="v8-journey">
+            <div class="v8-step active"><b>01</b><span><small>LISTEN</small><strong>Customer request</strong></span></div>
+            <div class="v8-step"><b>02</b><span><small>UNDERSTAND</small><strong>Intent + context</strong></span></div>
+            <div class="v8-step"><b>03</b><span><small>ACT</small><strong>Check connected tools</strong></span></div>
+            <div class="v8-step"><b>04</b><span><small>COMPLETE</small><strong>Confirm the outcome</strong></span></div>
+          </div>
+        </div>
+        <div class="v5-chat v8-chat" id="v5-chat"><div class="user"><small>YOU</small><p>Can you book a demo tomorrow afternoon?</p></div><div class="ai"><small>KATHYA</small><p>Absolutely. I can check availability and help you choose a time.</p></div></div>
+        <div class="v8-action-strip"><span>Intent <b id="v8-intent">Appointment</b></span><span>Tool <b id="v8-tool">Calendar</b></span><span>Next action <b id="v8-next">Find availability</b></span></div>
         <div class="v5-actions"><button id="v5-talk" type="button"><span>●</span> Experience KATHYA</button><a href="<?php echo esc_url(home_url('/book-appointment/')); ?>">Book directly →</a></div>
       </div>
-      <div class="v5-float-card fc1"><small>INTENT</small><strong>Book appointment</strong><span>98% confidence</span></div>
-      <div class="v5-float-card fc2"><small>ACTION</small><strong>Calendar checked</strong><span>2 slots found</span></div>
     </div>
   </div>
 </section>

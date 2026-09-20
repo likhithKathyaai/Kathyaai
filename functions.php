@@ -530,3 +530,49 @@ function kathya_ai_v612_force_reserved_templates($template){
     return $template;
 }
 add_filter('template_include','kathya_ai_v612_force_reserved_templates',999);
+
+
+/* V6.3 technical SEO */
+function kathya_ai_v63_seo_map(){
+ return array(
+  ''=>array('KATHYA AI — Conversational AI Agents for Business','Build conversational AI agents for voice, customer support, appointment booking, sales and connected business workflows with KATHYA AI.'),
+  'platform'=>array('Conversational AI Platform | KATHYA AI','Build AI agents that understand customers, use business knowledge and complete connected actions across voice and digital workflows.'),
+  'solutions'=>array('AI Agents for Sales, Support & Booking | KATHYA AI','Explore KATHYA AI solutions for customer reception, sales, support, appointment booking, lead qualification and business workflows.'),
+  'industries'=>array('Conversational AI for Modern Businesses | KATHYA AI','Explore KATHYA AI conversational automation for healthcare administration, real estate, automotive, hospitality, financial services and more.'),
+  'integrations'=>array('AI Agent Integrations | KATHYA AI','Connect KATHYA AI workflows with calendars, messaging, CRM, email, APIs and other business systems as configured for your deployment.'),
+  'pricing'=>array('KATHYA AI Pricing & Pilot Plans','Explore KATHYA AI pilot, growth, business and enterprise deployment options for conversational AI workflows.'),
+  'developers'=>array('KATHYA AI for Developers','Explore KATHYA AI developer workflows, APIs, webhooks and integration patterns for connected conversational AI experiences.'),
+  'resources'=>array('Conversational AI Resources | KATHYA AI','Learn about conversational AI agents, voice AI, customer automation, business actions and KATHYA AI workflows.'),
+  'about'=>array('About KATHYA AI','Learn about KATHYA AI, a conversational AI technology product focused on turning customer conversations into completed business actions.'),
+  'demo'=>array('Book a KATHYA AI Demo','See how KATHYA AI can handle customer conversations, connected actions and business workflows for your organization.'),
+  'get-started'=>array('Start with KATHYA AI','Create a KATHYA AI blueprint for your business outcome, channels, systems and conversational workflow.')
+ );
+}
+function kathya_ai_v63_slug(){ $p=trim((string)wp_parse_url($_SERVER['REQUEST_URI']??'/',PHP_URL_PATH),'/'); return sanitize_title(basename($p)); }
+function kathya_ai_v63_title($title){
+ if(is_admin()) return $title; $m=kathya_ai_v63_seo_map(); $s=kathya_ai_v63_slug(); if(is_front_page())$s=''; return isset($m[$s])?$m[$s][0]:$title;
+}
+add_filter('pre_get_document_title','kathya_ai_v63_title',50);
+function kathya_ai_v63_head(){
+ if(defined('WPSEO_VERSION')||defined('RANK_MATH_VERSION'))return;
+ $m=kathya_ai_v63_seo_map();$s=is_front_page()?'':kathya_ai_v63_slug();$desc=$m[$s][1]??'KATHYA AI is a conversational AI platform for connected business conversations and actions.';
+ $canonical=is_front_page()?home_url('/'):home_url('/'.($s?$s.'/':''));
+ echo '<meta name="description" content="'.esc_attr($desc).'">'."\n";
+ echo '<link rel="canonical" href="'.esc_url($canonical).'">'."\n";
+ echo '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">'."\n";
+}
+add_action('wp_head','kathya_ai_v63_head',1);
+function kathya_ai_v63_schema(){
+ if(defined('WPSEO_VERSION')||defined('RANK_MATH_VERSION'))return;
+ $logo=get_theme_file_uri('/assets/images/kathya-mark.png');
+ $graph=array(
+  array('@type'=>'Organization','@id'=>home_url('/').'#organization','name'=>'KATHYA AI','url'=>home_url('/'),'logo'=>array('@type'=>'ImageObject','url'=>$logo),'description'=>'Conversational AI technology product focused on connected business conversations and actions.','parentOrganization'=>array('@type'=>'Organization','name'=>'PA MedLog Talent LLC')),
+  array('@type'=>'WebSite','@id'=>home_url('/').'#website','url'=>home_url('/'),'name'=>'KATHYA AI','publisher'=>array('@id'=>home_url('/').'#organization'))
+ );
+ echo '<script type="application/ld+json">'.wp_json_encode(array('@context'=>'https://schema.org','@graph'=>$graph),JSON_UNESCAPED_SLASHES).'</script>'."\n";
+}
+add_action('wp_head','kathya_ai_v63_schema',22);
+function kathya_ai_v63_robots($output,$public){
+ $output.="\nSitemap: ".home_url('/wp-sitemap.xml')."\n"; return $output;
+}
+add_filter('robots_txt','kathya_ai_v63_robots',10,2);

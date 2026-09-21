@@ -119,21 +119,3 @@ document.addEventListener('DOMContentLoaded',()=>{
  const mark=hero?.querySelector('.v5-product-stage');
  if(hero&&mark){hero.addEventListener('pointermove',e=>{if(window.innerWidth<900)return;const x=(e.clientX/window.innerWidth-.5)*8,y=(e.clientY/window.innerHeight-.5)*6;mark.style.transform='translate3d('+x+'px,'+y+'px,0)';});hero.addEventListener('pointerleave',()=>mark.style.transform='');}
 });
-
-/* V7.0 KATHYA bird companion — CSS-drawn bird, not the brand logo */
-document.addEventListener('DOMContentLoaded',()=>{
- const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
- const fine=matchMedia('(pointer:fine)').matches;
- if(reduced)return;
- const bird=document.createElement('div');
- bird.className='k-bird';
- bird.setAttribute('aria-hidden','true');
- bird.innerHTML='<svg class="kb-parrot" viewBox="0 0 96 72" aria-hidden="true"><defs><linearGradient id="kpg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d8ff63"/><stop offset=".48" stop-color="#55d879"/><stop offset="1" stop-color="#079b56"/></linearGradient><linearGradient id="kpw" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#efff77"/><stop offset=".5" stop-color="#75df43"/><stop offset="1" stop-color="#0c8d4e"/></linearGradient></defs><path class="kp-tail" d="M36 48 4 68l28-27L8 53l31-20z" fill="#2fc568"/><ellipse cx="48" cy="39" rx="25" ry="17" fill="url(#kpg)"/><path class="kp-wing" d="M46 39C29 29 25 8 39 3c5 15 14 22 28 29-7 3-13 6-21 7z" fill="url(#kpw)"/><circle cx="70" cy="29" r="13" fill="#91ee55"/><path d="M80 27c11-4 14 2 5 8-3 2-6 1-8-1z" fill="#ff5b35"/><circle cx="74" cy="25" r="2.2" fill="#07120c"/><circle cx="73.4" cy="24.3" r=".65" fill="#fff"/><path d="M61 31c4 4 8 6 13 7" fill="none" stroke="#1a9a50" stroke-width="2"/><path d="M48 51c3 6 1 10-3 13M57 52c4 5 3 9 0 12" fill="none" stroke="#ef8b39" stroke-width="2.5" stroke-linecap="round"/></svg><i class="kb-trail"></i>'
- document.body.appendChild(bird);
- if(fine&&innerWidth>820){
-  let tx=innerWidth*.7,ty=innerHeight*.3,x=tx,y=ty,dir=1,idle;
-  const frame=()=>{x+=(tx-x)*.105;y+=(ty-y)*.105;bird.style.transform='translate3d('+(x-24)+'px,'+(y-20)+'px,0) scaleX('+dir+')';requestAnimationFrame(frame)};frame();
-  addEventListener('pointermove',e=>{dir=e.clientX<tx?-1:1;tx=e.clientX+28*dir;ty=e.clientY+18;bird.classList.add('flying');clearTimeout(idle);idle=setTimeout(()=>bird.classList.remove('flying'),240)},{passive:true});
-  document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('pointerenter',()=>bird.classList.add('curious'));el.addEventListener('pointerleave',()=>bird.classList.remove('curious'))});
- }else{bird.classList.add('mobile-bird');const fly=()=>{bird.classList.remove('flyby');void bird.offsetWidth;bird.classList.add('flyby')};setTimeout(fly,1000);setInterval(fly,15000)}
-});

@@ -15,3 +15,6 @@ Deploy the contents of `dist/` to the website document root. Do not point Hostin
 /, /product, /solutions, /industries, /integrations, /pricing, /developers, /resources
 
 The current production WordPress site should remain live until this React build is reviewed and the compiled output is deployed in a controlled cutover.
+
+
+<!-- Vercel production trigger: kathya-react -->

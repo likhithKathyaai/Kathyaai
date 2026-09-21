@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kathyaai.com/sitemap.xml

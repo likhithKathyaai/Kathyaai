@@ -2,9 +2,9 @@ name: React Build Check
 on:
   push:
     branches: [kathya-react]
-    paths: ['react-site/**']
+    paths: ['react-site/**', '.github/workflows/react-build.yml']
   pull_request:
-    paths: ['react-site/**']
+    paths: ['react-site/**', '.github/workflows/react-build.yml']
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,7 +16,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-          cache-dependency-path: react-site/package-lock.json
       - run: npm install
       - run: npm run build

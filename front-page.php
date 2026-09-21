@@ -1,36 +1,26 @@
 <?php get_header(); ?>
 <main id="main-content" class="v5-home">
-<section class="v5-hero">
+<section class="v5-hero v82-hero">
   <div class="v5-grid"></div><div class="v5-aurora"></div>
-  <div class="k-container v5-hero-inner">
-    <div class="v5-hero-copy reveal">
-      <div class="v5-kicker"><span class="live-dot"></span> Conversational AI for real business actions</div>
-      <h1>Conversations that<br><span>turn into action.</span></h1>
-      <p>Deploy intelligent AI agents that speak naturally, understand intent and complete customer-facing tasks across voice, calendars, messaging and your business systems.</p>
-      <div class="hero-actions"><a class="k-btn k-btn-primary" href="#talk">● Talk to KATHYA</a><a class="v5-text-link" href="#studio">Build an agent <span>↗</span></a></div>
-      <div class="v5-proof"><span>Natural voice</span><span>Multilingual</span><span>Connected actions</span><span>Human handoff</span></div>
+  <div class="k-container v82-hero-grid">
+    <div class="v82-copy reveal">
+      <div class="v5-kicker"><span class="live-dot"></span> CONVERSATIONAL AI FOR REAL BUSINESS ACTIONS</div>
+      <h1>Conversations that<br><span>complete the work.</span></h1>
+      <p>KATHYA understands customer intent, connects to your business systems and moves every conversation toward a clear outcome.</p>
+      <div class="hero-actions"><a class="k-btn k-btn-primary" href="#talk">Talk to KATHYA →</a><a class="v5-text-link" href="<?php echo esc_url(home_url('/demo/')); ?>">See a business workflow <span>↗</span></a></div>
+      <div class="v5-proof"><span>Natural voice</span><span>Business actions</span><span>Human handoff</span></div>
     </div>
-    <div class="v5-product-stage reveal" id="talk">
-      <div class="v5-console v8-console">
-        <div class="v5-console-head"><div><i></i><strong>KATHYA LIVE</strong></div><span>CONVERSATION → ACTION</span></div>
-        <div class="v8-demo-grid">
-          <div class="v8-orb-zone">
-            <div class="v8-orbit o1"></div><div class="v8-orbit o2"></div>
-            <div class="v5-core v8-core"><b>K</b></div>
-            <div class="v5-wave v8-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            <small id="v5-status">Ready for a request</small>
-          </div>
-          <div class="v8-journey">
-            <div class="v8-step active"><b>01</b><span><small>LISTEN</small><strong>Customer request</strong></span></div>
-            <div class="v8-step"><b>02</b><span><small>UNDERSTAND</small><strong>Intent + context</strong></span></div>
-            <div class="v8-step"><b>03</b><span><small>ACT</small><strong>Check connected tools</strong></span></div>
-            <div class="v8-step"><b>04</b><span><small>COMPLETE</small><strong>Confirm the outcome</strong></span></div>
-          </div>
-        </div>
-        <div class="v5-chat v8-chat" id="v5-chat"><div class="user"><small>YOU</small><p>Can you book a demo tomorrow afternoon?</p></div><div class="ai"><small>KATHYA</small><p>Absolutely. I can check availability and help you choose a time.</p></div></div>
-        <div class="v8-action-strip"><span>Intent <b id="v8-intent">Appointment</b></span><span>Tool <b id="v8-tool">Calendar</b></span><span>Next action <b id="v8-next">Find availability</b></span></div>
-        <div class="v5-actions"><button id="v5-talk" type="button"><span>●</span> Experience KATHYA</button><a href="<?php echo esc_url(home_url('/book-appointment/')); ?>">Book directly →</a></div>
+    <div class="v82-product reveal" id="talk">
+      <div class="v82-top"><span><i></i> KATHYA LIVE</span><small>CONVERSATION → OUTCOME</small></div>
+      <div class="v82-conversation">
+        <div><small>CUSTOMER</small><p>Can you book a demo tomorrow afternoon?</p></div>
+        <div class="ai"><small>KATHYA</small><p>I can check availability and help you choose a time.</p></div>
       </div>
+      <div class="v82-path"><span class="on"><b>01</b>Understand</span><i></i><span><b>02</b>Check</span><i></i><span><b>03</b>Act</span><i></i><span><b>04</b>Confirm</span></div>
+      <div class="v82-outcome"><div><small>INTENT</small><strong>Book appointment</strong></div><div><small>CONNECTED TOOL</small><strong>Calendar</strong></div><div><small>NEXT</small><strong>Find availability</strong></div></div>
+      <div class="v5-actions"><button id="v5-talk" type="button"><span>●</span> Experience KATHYA</button><a href="<?php echo esc_url(home_url('/book-appointment/')); ?>">Book directly →</a></div>
+      <div id="v5-status" class="v82-status">Ready for a request</div>
+      <div id="v5-chat" class="v82-hidden-chat" aria-hidden="true"></div>
     </div>
   </div>
 </section>

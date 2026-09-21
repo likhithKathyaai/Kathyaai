@@ -366,3 +366,47 @@ body:not(.home) .k-section.alt h2{margin:0 0 20px!important;font-size:clamp(30px
 @media(max-width:820px){.v8-demo-grid{grid-template-columns:1fr!important}.v8-orb-zone{min-height:210px}.v8-journey{grid-template-columns:1fr 1fr!important}.v8-chat{grid-template-columns:1fr!important}.v8-action-strip{grid-template-columns:1fr!important}.v8-step.active{transform:none}.v8-console{padding:14px!important}}
 @media(max-width:420px){.v8-journey{grid-template-columns:1fr!important}.v8-orb-zone{min-height:195px}.v8-core{width:78px!important;height:78px!important}.v8-orbit.o1{width:125px;height:125px}.v8-orbit.o2{width:160px;height:160px}}
 @media(prefers-reduced-motion:reduce){.v8-orbit,.v8-console:after{animation:none!important}}
+
+/* V8.1 brand cleanup: bird removed; cinematic KATHYA watermark across the complete website */
+.kathya-bird,.k-bird{display:none!important}
+body{position:relative}
+main,.site-footer{position:relative;isolation:isolate}
+main:before{content:"";position:fixed;z-index:-1;pointer-events:none;width:min(70vw,920px);height:min(70vw,920px);right:-22vw;top:16vh;background:url("../images/kathya-mark.png") center/contain no-repeat;opacity:.022;filter:saturate(1.05) drop-shadow(0 0 70px rgba(85,216,121,.12))}
+#main-content.v5-home .v5-hero,
+#main-content.v5-home .v5-section,
+body:not(.home) .page-hero,
+body:not(.home) .k-section,
+.auth-shell,
+.cta-card,
+.site-footer{position:relative;isolation:isolate;overflow:hidden}
+#main-content.v5-home .v5-hero:before,
+#main-content.v5-home .v5-section:before,
+body:not(.home) .page-hero:before,
+body:not(.home) .k-section:before,
+.auth-shell:before,
+.cta-card:before,
+.site-footer:before{content:"";position:absolute;z-index:0;pointer-events:none;background:url("../images/kathya-mark.png") center/contain no-repeat;filter:saturate(1.05) drop-shadow(0 0 44px rgba(85,216,121,.11))}
+#main-content.v5-home .v5-hero:before{width:min(48vw,650px);height:min(48vw,650px);right:-9vw;top:50%;transform:translateY(-50%);opacity:.035}
+#main-content.v5-home .v5-section:before{width:360px;height:360px;right:-105px;top:50%;transform:translateY(-50%) rotate(-8deg);opacity:.018}
+#main-content.v5-home .v5-section:nth-of-type(even):before{right:auto;left:-120px;transform:translateY(-50%) rotate(8deg)}
+body:not(.home) .page-hero:before{width:460px;height:460px;right:-90px;top:-135px;opacity:.035}
+body:not(.home) .k-section:before{width:330px;height:330px;right:-120px;bottom:-120px;opacity:.016}
+.auth-shell:before{width:560px;height:560px;left:-180px;bottom:-220px;opacity:.025}
+.cta-card:before{width:340px;height:340px;right:-80px;top:-110px;opacity:.04}
+.site-footer:before{width:400px;height:400px;right:-120px;bottom:-180px;opacity:.018}
+#main-content.v5-home .v5-hero>*,
+#main-content.v5-home .v5-section>*,
+body:not(.home) .page-hero>*,
+body:not(.home) .k-section>*,
+.auth-shell>*,
+.cta-card>*,
+.site-footer>*{position:relative;z-index:1}
+@media(max-width:760px){
+ main:before{width:520px;height:520px;right:-330px;opacity:.012}
+ #main-content.v5-home .v5-hero:before{width:390px;height:390px;right:-190px;opacity:.022}
+ #main-content.v5-home .v5-section:before{width:260px;height:260px;right:-150px;opacity:.012}
+ #main-content.v5-home .v5-section:nth-of-type(even):before{left:-160px}
+ body:not(.home) .page-hero:before{width:300px;height:300px;right:-150px;top:-70px;opacity:.02}
+ body:not(.home) .k-section:before{opacity:.01}
+ .site-footer:before{opacity:.012}
+}

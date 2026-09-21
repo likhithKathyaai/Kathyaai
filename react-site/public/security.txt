@@ -1,3 +1,0 @@
-Contact: mailto:likhit@pamedlogtalent.com
-Preferred-Languages: en
-Canonical: https://kathyaai.com/.well-known/security.txt

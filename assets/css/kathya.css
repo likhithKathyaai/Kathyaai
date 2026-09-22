@@ -430,3 +430,35 @@ body:not(.home) .pricing-compare .price-card.featured{transform:translateY(-7px)
 .pricing-note{margin-top:18px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.06);color:#718078;font-size:11px;text-align:center}
 @media(max-width:980px){.v82-hero-grid{grid-template-columns:1fr!important;gap:30px}.v82-product{max-width:720px}.pricing-page .pricing-section{padding-top:12px!important}body:not(.home) .pricing-compare{grid-template-columns:repeat(2,minmax(0,1fr))!important}body:not(.home) .pricing-compare .price-card.featured{transform:none!important}}
 @media(max-width:620px){#main-content.v5-home .v82-hero{padding:36px 0 42px!important}.v82-copy h1{font-size:46px!important}.v82-copy>p{font-size:15px}.v82-product{padding:15px;border-radius:20px}.v82-conversation,.v82-outcome{grid-template-columns:1fr!important}.v82-path{display:grid;grid-template-columns:1fr 1fr;gap:7px}.v82-path i{display:none}.pricing-page .pricing-hero{padding:36px 0 18px!important}.pricing-page .pricing-section{padding:10px 0 44px!important}body:not(.home) .pricing-compare{grid-template-columns:1fr!important}body:not(.home) .pricing-compare .price-card{min-height:0!important}}
+
+
+/* V8.2.1 — center homepage hero and prevent right-shift on wide screens */
+#main-content.v5-home .v82-hero .k-container{
+  width:min(1180px,calc(100% - 48px))!important;
+  max-width:1180px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+#main-content.v5-home .v82-hero-grid{
+  grid-template-columns:minmax(0,1fr) minmax(390px,.86fr)!important;
+  gap:clamp(28px,4vw,58px)!important;
+}
+#main-content.v5-home .v82-copy{min-width:0}
+#main-content.v5-home .v82-copy h1{
+  font-size:clamp(52px,5.55vw,80px)!important;
+  max-width:650px!important;
+}
+#main-content.v5-home .v82-product{
+  width:100%!important;
+  max-width:520px!important;
+  justify-self:end!important;
+}
+@media(max-width:980px){
+  #main-content.v5-home .v82-hero .k-container{width:min(100% - 36px,760px)!important}
+  #main-content.v5-home .v82-hero-grid{grid-template-columns:1fr!important}
+  #main-content.v5-home .v82-product{max-width:720px!important;justify-self:stretch!important}
+}
+@media(max-width:600px){
+  #main-content.v5-home .v82-hero .k-container{width:calc(100% - 28px)!important}
+  #main-content.v5-home .v82-copy h1{font-size:clamp(44px,14vw,62px)!important}
+}

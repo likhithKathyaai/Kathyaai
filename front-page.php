@@ -1,30 +1,31 @@
 <?php get_header(); ?>
 <main id="main-content" class="v5-home">
-<section class="v5-hero v82-hero">
+<section class="v5-hero v82-hero kathya-ref-hero">
   <div class="v5-grid"></div><div class="v5-aurora"></div>
   <div class="k-container v82-hero-grid">
     <div class="v82-copy reveal">
       <div class="v5-kicker"><span class="live-dot"></span> CONVERSATIONAL AI FOR REAL BUSINESS ACTIONS</div>
-      <h1>Conversations that<br><span>complete the work.</span></h1>
-      <p>KATHYA understands customer intent, connects to your business systems and moves every conversation toward a clear outcome.</p>
-      <div class="hero-actions"><a class="k-btn k-btn-primary" href="#talk">Talk to KATHYA →</a><a class="v5-text-link" href="<?php echo esc_url(home_url('/demo/')); ?>">See a business workflow <span>↗</span></a></div>
-      <div class="v5-proof"><span>Natural voice</span><span>Business actions</span><span>Human handoff</span></div>
+      <h1>Conversations<br>that <span>complete<br>the work.</span></h1>
+      <p>KATHYA understands, takes action, and gets things done across your business — voice, chat, and messaging in one intelligent platform.</p>
+      <div class="hero-actions"><a class="k-btn k-btn-primary" href="#talk">☎&nbsp; Talk to KATHYA →</a><a class="k-btn k-btn-ghost" href="<?php echo esc_url(home_url('/demo/')); ?>">▶&nbsp; Watch 2 min demo</a></div>
+      <div class="v5-proof kathya-hero-proof"><span>✓ No credit card required</span><span>✓ Setup in minutes</span><span>✓ Works with your tools</span></div>
     </div>
-    <div class="v82-product reveal" id="talk">
+    <div class="v82-product kathya-live-console reveal" id="talk">
       <div class="v82-top"><span><i></i> KATHYA LIVE</span><small>CONVERSATION → OUTCOME</small></div>
-      <div class="v82-conversation">
-        <div><small>CUSTOMER</small><p>Can you book a demo tomorrow afternoon?</p></div>
-        <div class="ai"><small>KATHYA</small><p>I can check availability and help you choose a time.</p></div>
+      <div class="kathya-console-grid">
+        <div class="kathya-chat-flow">
+          <p class="ai"><b>K</b><span>Hi! I'm KATHYA. How can I help you today?</span></p>
+          <p class="customer"><span>Can you move my appointment to Friday afternoon?</span></p>
+          <p class="ai"><b>K</b><span>Sure! I've checked your calendar. I can help reschedule and send a confirmation.</span></p>
+          <div class="kathya-input">◉ <span>Ask KATHYA anything...</span><b>↑</b></div>
+        </div>
+        <div class="kathya-live-actions"><header><span>LIVE ACTIONS</span><small>Completed ✓</small></header><ul><li>Identify customer <b>✓</b></li><li>Check calendar <b>✓</b></li><li>Find available slots <b>✓</b></li><li>Reschedule appointment <b>✓</b></li><li>Send confirmation <b>✓</b></li></ul><strong>▣ &nbsp; Completed ✓</strong></div>
       </div>
-      <div class="v82-path"><span class="on"><b>01</b>Understand</span><i></i><span><b>02</b>Check</span><i></i><span><b>03</b>Act</span><i></i><span><b>04</b>Confirm</span></div>
-      <div class="v82-outcome"><div><small>INTENT</small><strong>Book appointment</strong></div><div><small>CONNECTED TOOL</small><strong>Calendar</strong></div><div><small>NEXT</small><strong>Find availability</strong></div></div>
-      <div class="v5-actions"><button id="v5-talk" type="button"><span>●</span> Experience KATHYA</button><a href="<?php echo esc_url(home_url('/book-appointment/')); ?>">Book directly →</a></div>
-      <div id="v5-status" class="v82-status">Ready for a request</div>
-      <div id="v5-chat" class="v82-hidden-chat" aria-hidden="true"></div>
     </div>
   </div>
+  <div class="k-container kathya-tool-row" aria-label="Technology ecosystem"><span>Microsoft</span><span>aws</span><span>Google Cloud</span><span>Salesforce</span><span>Zoom</span><span>Slack</span><span>Twilio</span><span>OpenAI</span></div>
+  <div class="k-container kathya-hero-outcomes"><article><b>◯</b><div><strong>Understand</strong><span>Grasps intent, context and business data</span></div></article><article><b>◉</b><div><strong>Reason</strong><span>Uses knowledge and logic to find the best solution</span></div></article><article><b>⚙</b><div><strong>Act</strong><span>Updates systems, triggers workflows, and takes action</span></div></article><article><b>✓</b><div><strong>Complete</strong><span>Delivers outcomes, not just conversations</span></div></article></div>
 </section>
-<section class="v5-marquee kathya-ecosystem" aria-label="KATHYA technology ecosystem"><div class="k-container"><strong>TECHNOLOGY ECOSYSTEM</strong><span>VOICE</span><i>✦</i><span>KNOWLEDGE</span><i>✦</i><span>REASONING</span><i>✦</i><span>ACTIONS</span><i>✦</i><span>ANALYTICS</span><i>✦</i><span>HUMAN HANDOFF</span></div></section>
 <section class="v5-section v5-outcome"><div class="k-container"><div class="v5-section-head reveal"><span>HOW KATHYA WORKS</span><h2>One conversation.<br>Real action.</h2><p>Voice is the interface. Business outcomes are the product.</p></div><div class="v5-flow reveal"><article><b>01</b><h3>Speak</h3><p>Natural conversation</p><em>“I need an appointment.”</em></article><article><b>02</b><h3>Understand</h3><p>Intent + context</p><em>Appointment request</em></article><article><b>03</b><h3>Reason</h3><p>Rules + knowledge</p><em>Check availability</em></article><article><b>04</b><h3>Act</h3><p>Connected tools</p><em>4:00 PM booked</em></article><article class="active"><b>05</b><h3>Result</h3><p>Outcome captured</p><em>✓ Email&nbsp;&nbsp; ✓ Calendar</em></article></div></div></section>
 <section class="v5-section v5-bento-section"><div class="k-container"><div class="v5-section-head reveal"><span>THE PLATFORM</span><h2>Built to do more than talk.</h2></div><div class="v5-bento v5-bento-live">
 <article class="bento-wide"><div><span class="v5-label">NATURAL CONVERSATION</span><h3>Voice that feels present.</h3><p>Design responsive conversations around your business, knowledge and customer journey.</p></div><div class="bento-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>

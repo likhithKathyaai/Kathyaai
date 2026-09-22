@@ -1,0 +1,19 @@
+{
+  "name": "kathya-ai-theme",
+  "version": "5.2.0",
+  "description": "KATHYA AI WordPress Theme with Vercel Speed Insights",
+  "private": true,
+  "scripts": {
+    "postinstall": "echo 'Speed Insights installed successfully'"
+  },
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.12"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "wordpress",
+    "theme",
+    "vercel",
+    "speed-insights"
+  ]
+}

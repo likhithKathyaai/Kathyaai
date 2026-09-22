@@ -31,7 +31,7 @@ function kathya_ai_customize_register($wp_customize) {
         'kathya_email' => array('Enquiry Recipient Email', 'likhit@pamedlogtalent.com', 'email'),
         'kathya_phone' => array('Phone', '+1 307-302-6825', 'text'),
         'kathya_demo_url' => array('Demo Button URL', '/demo/', 'url'),
-        'kathya_app_url' => array('App / Sign In URL', '#', 'url'),
+        'kathya_app_url' => array('App / Sign In URL', '/sign-in/', 'url'),
     );
     foreach ($fields as $id => $cfg) {
         $wp_customize->add_setting($id, array('default'=>$cfg[1], 'sanitize_callback'=>$cfg[2] === 'email' ? 'sanitize_email' : ($cfg[2] === 'url' ? 'esc_url_raw' : 'sanitize_text_field')));
@@ -412,7 +412,7 @@ function kathya_ai_v52_assistant_response(WP_REST_Request $request) {
         if ($text) $conversation .= $role . ': ' . mb_substr($text, 0, 800) . "\n";
     }
     $conversation .= 'Visitor: ' . $message;
-    $instructions = 'You are KATHYA AI, the concise website assistant for KATHYA AI, a technology product by PA MedLog Talent LLC. KATHYA is a conversational AI platform for business voice and customer interaction workflows. Do not mention recruitment, staffing, candidates, ATS, or job placement. Help visitors understand KATHYA, solutions, integrations, pricing, security principles, appointments, and how to contact the team. Never invent certifications, customer results, pricing, integrations, availability, or legal/compliance claims. If asked to book, direct the visitor to /book-appointment/. If asked to contact a human, direct them to /contact/. Do not request passwords, payment card data, government IDs, medical details, or other sensitive information. Keep answers under 120 words unless the visitor explicitly asks for more detail.';
+    $instructions = 'You are KATHYA AI, the concise website assistant for KATHYA AI, a technology product by PA MedLog Talent LLC. KATHYA is a conversational AI platform for business voice and customer interaction workflows. Do not mention recruitment, staffing, candidates, ATS, or job placement. Help visitors understand KATHYA, solutions, integrations, pricing, security principles, appointments, and how to contact the team. Never invent certifications, customer results, pricing, integrations, availability, or legal/compliance claims. If a visitor wants a demo or appointment, tell them to use the Book a demo button in this assistant or the Talk to KATHYA button in the header; do not print raw URL paths. If they want a human, tell them to use Contact team; do not print raw URL paths. Do not request passwords, payment card data, government IDs, medical details, or other sensitive information. Prefer 2-5 short sentences. Keep answers under 90 words unless the visitor explicitly asks for more detail.';
 
     $model = defined('KATHYA_OPENAI_MODEL') && KATHYA_OPENAI_MODEL ? KATHYA_OPENAI_MODEL : 'gpt-5.6-luna';
     $response = wp_remote_post('https://api.openai.com/v1/responses', array(
@@ -461,3 +461,121 @@ function kathya_ai_v52_diagnostics_page() {
     echo '<form method="post">'; wp_nonce_field('kathya_test_mail_action'); echo '<input type="hidden" name="kathya_test_mail" value="1"><button class="button button-primary">Send test enquiry email</button></form>';
     echo '<h2>Live AI setup</h2><p>Add the API key server-side in <code>wp-config.php</code>. Never place it in JavaScript or a page builder.</p><pre>define(\'KATHYA_OPENAI_API_KEY\', \'YOUR_SERVER_SIDE_KEY\');\ndefine(\'KATHYA_OPENAI_MODEL\', \'gpt-5.6-luna\');</pre></div>';
 }
+
+
+/* --- KATHYA AI V6: launch routing + social preview --- */
+require_once get_template_directory() . '/inc/share-preview.php';
+
+function kathya_ai_v6_virtual_pages($template) {
+    if (is_404()) {
+        $path = trim((string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+        $map = array(
+          'solutions'=>'page-solutions.php','industries'=>'page-industries.php','integrations'=>'page-integrations.php',
+          'pricing'=>'page-pricing.php','developers'=>'page-developers.php','resources'=>'page-resources.php',
+          'about'=>'page-about.php','company'=>'page-about.php','demo'=>'page-demo.php','contact'=>'page-contact.php',
+          'book-appointment'=>'page-book-appointment.php','manage-appointment'=>'page-manage-appointment.php',
+          'sign-in'=>'page-sign-in.php','get-started'=>'page-get-started.php','booking-confirmation'=>'page-booking-confirmation.php','platform'=>'page-platform.php'
+        );
+        if (isset($map[$path])) {
+            global $wp_query; $wp_query->is_404 = false; status_header(200);
+            $candidate = get_template_directory() . '/' . $map[$path];
+            if (file_exists($candidate)) return $candidate;
+        }
+    }
+    return $template;
+}
+add_filter('template_include','kathya_ai_v6_virtual_pages',99);
+
+
+function kathya_ai_v6_handle_get_started(){
+    if(kathya_ai_v2_honeypot_failed()) wp_die('Invalid submission.');
+    if(!isset($_POST['kathya_get_started_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['kathya_get_started_nonce'])),'kathya_get_started_submit')) wp_die('Security check failed.');
+    $name=sanitize_text_field(wp_unslash($_POST['name']??'')); $email=sanitize_email(wp_unslash($_POST['email']??''));
+    $company=sanitize_text_field(wp_unslash($_POST['company']??'')); $phone=sanitize_text_field(wp_unslash($_POST['phone']??''));
+    $outcome=sanitize_text_field(wp_unslash($_POST['outcome']??'')); $industry=sanitize_text_field(wp_unslash($_POST['industry']??''));
+    $systems=sanitize_text_field(wp_unslash($_POST['systems']??'')); $volume=sanitize_text_field(wp_unslash($_POST['volume']??''));
+    $channels=isset($_POST['channels']) && is_array($_POST['channels']) ? array_map('sanitize_text_field',wp_unslash($_POST['channels'])) : array();
+    $consent=!empty($_POST['consent']);
+    if(!$name || !is_email($email) || !$company || !$outcome || !$industry || !$consent){wp_safe_redirect(add_query_arg('started','missing',home_url('/get-started/')));exit;}
+    $to=get_theme_mod('kathya_email',get_option('admin_email')); if(!is_email($to))$to=get_option('admin_email');
+    $subject='New KATHYA workspace request — '.$company;
+    $body="Name: {$name}\nEmail: {$email}\nPhone: {$phone}\nCompany: {$company}\nOutcome: {$outcome}\nIndustry: {$industry}\nChannels: ".implode(', ',$channels)."\nSystems: {$systems}\nVolume: {$volume}\n";
+    $sent=wp_mail($to,$subject,$body,array('Reply-To: '.$name.' <'.$email.'>'));
+    if($sent) wp_mail($email,'Your KATHYA blueprint request',"Hi {$name},\n\nWe received your KATHYA workspace request for {$outcome}. Our team will review the workflow and follow up with you.\n\nKATHYA AI\nSpeak. Understand. Act.");
+    wp_safe_redirect(add_query_arg('started',$sent?'success':'email-error',home_url('/get-started/')));exit;
+}
+add_action('admin_post_nopriv_kathya_get_started','kathya_ai_v6_handle_get_started');
+add_action('admin_post_kathya_get_started','kathya_ai_v6_handle_get_started');
+
+
+/* V6.1.2: force product templates for reserved KATHYA routes even when legacy WP pages exist. */
+function kathya_ai_v612_force_reserved_templates($template){
+    if (is_admin()) return $template;
+    $path = trim((string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/');
+    $slug = sanitize_title(basename($path));
+    $map = array(
+      'sign-in'=>'page-sign-in.php',
+      'get-started'=>'page-get-started.php',
+      'booking-confirmation'=>'page-booking-confirmation.php',
+      'pricing'=>'page-pricing.php',
+      'integrations'=>'page-integrations.php',
+      'resources'=>'page-resources.php'
+    );
+    if (isset($map[$slug])) {
+        $candidate = get_template_directory().'/'.$map[$slug];
+        if (file_exists($candidate)) {
+            global $wp_query;
+            if ($wp_query) { $wp_query->is_404 = false; }
+            status_header(200);
+            return $candidate;
+        }
+    }
+    return $template;
+}
+add_filter('template_include','kathya_ai_v612_force_reserved_templates',999);
+
+
+/* V6.3 technical SEO */
+function kathya_ai_v63_seo_map(){
+ return array(
+  ''=>array('KATHYA AI — Conversational AI Agents for Business','Build conversational AI agents for voice, customer support, appointment booking, sales and connected business workflows with KATHYA AI.'),
+  'platform'=>array('Conversational AI Platform | KATHYA AI','Build AI agents that understand customers, use business knowledge and complete connected actions across voice and digital workflows.'),
+  'solutions'=>array('AI Agents for Sales, Support & Booking | KATHYA AI','Explore KATHYA AI solutions for customer reception, sales, support, appointment booking, lead qualification and business workflows.'),
+  'industries'=>array('Conversational AI for Modern Businesses | KATHYA AI','Explore KATHYA AI conversational automation for healthcare administration, real estate, automotive, hospitality, financial services and more.'),
+  'integrations'=>array('AI Agent Integrations | KATHYA AI','Connect KATHYA AI workflows with calendars, messaging, CRM, email, APIs and other business systems as configured for your deployment.'),
+  'pricing'=>array('KATHYA AI Pricing & Pilot Plans','Explore KATHYA AI pilot, growth, business and enterprise deployment options for conversational AI workflows.'),
+  'developers'=>array('KATHYA AI for Developers','Explore KATHYA AI developer workflows, APIs, webhooks and integration patterns for connected conversational AI experiences.'),
+  'resources'=>array('Conversational AI Resources | KATHYA AI','Learn about conversational AI agents, voice AI, customer automation, business actions and KATHYA AI workflows.'),
+  'about'=>array('About KATHYA AI','Learn about KATHYA AI, a conversational AI technology product focused on turning customer conversations into completed business actions.'),
+  'demo'=>array('Book a KATHYA AI Demo','See how KATHYA AI can handle customer conversations, connected actions and business workflows for your organization.'),
+  'get-started'=>array('Start with KATHYA AI','Create a KATHYA AI blueprint for your business outcome, channels, systems and conversational workflow.')
+ );
+}
+function kathya_ai_v63_slug(){ $p=trim((string)wp_parse_url($_SERVER['REQUEST_URI']??'/',PHP_URL_PATH),'/'); return sanitize_title(basename($p)); }
+function kathya_ai_v63_title($title){
+ if(is_admin()) return $title; $m=kathya_ai_v63_seo_map(); $s=kathya_ai_v63_slug(); if(is_front_page())$s=''; return isset($m[$s])?$m[$s][0]:$title;
+}
+add_filter('pre_get_document_title','kathya_ai_v63_title',50);
+function kathya_ai_v63_head(){
+ if(defined('WPSEO_VERSION')||defined('RANK_MATH_VERSION'))return;
+ $m=kathya_ai_v63_seo_map();$s=is_front_page()?'':kathya_ai_v63_slug();$desc=$m[$s][1]??'KATHYA AI is a conversational AI platform for connected business conversations and actions.';
+ $canonical=is_front_page()?home_url('/'):home_url('/'.($s?$s.'/':''));
+ echo '<meta name="description" content="'.esc_attr($desc).'">'."\n";
+ echo '<link rel="canonical" href="'.esc_url($canonical).'">'."\n";
+ echo '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">'."\n";
+}
+add_action('wp_head','kathya_ai_v63_head',1);
+function kathya_ai_v63_schema(){
+ if(defined('WPSEO_VERSION')||defined('RANK_MATH_VERSION'))return;
+ $logo=get_theme_file_uri('/assets/images/kathya-mark.png');
+ $graph=array(
+  array('@type'=>'Organization','@id'=>home_url('/').'#organization','name'=>'KATHYA AI','url'=>home_url('/'),'logo'=>array('@type'=>'ImageObject','url'=>$logo),'description'=>'Conversational AI technology product focused on connected business conversations and actions.','parentOrganization'=>array('@type'=>'Organization','name'=>'PA MedLog Talent LLC')),
+  array('@type'=>'WebSite','@id'=>home_url('/').'#website','url'=>home_url('/'),'name'=>'KATHYA AI','publisher'=>array('@id'=>home_url('/').'#organization'))
+ );
+ echo '<script type="application/ld+json">'.wp_json_encode(array('@context'=>'https://schema.org','@graph'=>$graph),JSON_UNESCAPED_SLASHES).'</script>'."\n";
+}
+add_action('wp_head','kathya_ai_v63_schema',22);
+function kathya_ai_v63_robots($output,$public){
+ $output.="\nSitemap: ".home_url('/wp-sitemap.xml')."\n"; return $output;
+}
+add_filter('robots_txt','kathya_ai_v63_robots',10,2);

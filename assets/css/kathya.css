@@ -562,3 +562,37 @@ body:not(.home) .pricing-compare .price-card.featured{transform:translateY(-7px)
  #main-content.v5-home .v82-hero .k-container{width:calc(100% - 28px)!important}
  #main-content.v5-home .v82-copy h1{font-size:clamp(44px,13vw,58px)!important}
 }
+
+
+/* V8.4 — homepage whitespace audit: render all content without JS dependency */
+#main-content.v5-home{overflow-x:hidden!important}
+#main-content.v5-home .reveal,
+#main-content.v5-home .motion-child{
+  opacity:1!important;visibility:visible!important;
+  transform:none!important;filter:none!important;
+}
+#main-content.v5-home section,
+#main-content.v5-home .v5-section,
+#main-content.v5-home .v5-outcome,
+#main-content.v5-home .v5-bento-section,
+#main-content.v5-home .v5-studio,
+#main-content.v5-home .v5-usecases,
+#main-content.v5-home .v5-connect,
+#main-content.v5-home .v5-trust,
+#main-content.v5-home .v5-book{
+  min-height:0!important;height:auto!important;
+}
+#main-content.v5-home .v5-section{padding:clamp(56px,6vw,86px) 0!important}
+#main-content.v5-home .v5-section-head{margin-bottom:clamp(28px,4vw,48px)!important}
+#main-content.v5-home .v5-section-head:empty,
+#main-content.v5-home section:empty{display:none!important}
+#main-content.v5-home .v5-studio-grid,
+#main-content.v5-home .v5-connect-grid{align-items:center!important}
+#main-content.v5-home .v5-usecase-panel{min-height:0!important}
+#main-content.v5-home .v5-network{min-height:380px!important;height:380px!important}
+#main-content.v5-home .v5-trust-card,
+#main-content.v5-home .v5-book-card{min-height:0!important}
+@media(max-width:820px){
+ #main-content.v5-home .v5-section{padding:44px 0!important}
+ #main-content.v5-home .v5-network{min-height:320px!important;height:320px!important}
+}

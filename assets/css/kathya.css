@@ -596,3 +596,16 @@ body:not(.home) .pricing-compare .price-card.featured{transform:translateY(-7px)
  #main-content.v5-home .v5-section{padding:44px 0!important}
  #main-content.v5-home .v5-network{min-height:320px!important;height:320px!important}
 }
+
+
+/* V8.5 — product-led homepage sequence */
+.kathya-ecosystem .k-container{gap:18px!important}
+.kathya-ecosystem strong{font-size:9px;letter-spacing:.18em;color:#a6f549;white-space:nowrap}
+.kathya-proof-pricing>.k-container{display:grid!important;grid-template-columns:.92fr 1.08fr;gap:16px!important;align-items:stretch}
+.kathya-proof-placeholder,.kathya-pricing-preview{position:relative;border:1px solid rgba(166,245,73,.12);border-radius:26px;padding:clamp(28px,3vw,42px);background:linear-gradient(145deg,rgba(10,28,19,.94),rgba(4,14,9,.98));overflow:hidden}
+.kathya-proof-placeholder:after,.kathya-pricing-preview:after{content:"K";position:absolute;right:-12px;bottom:-64px;font-size:210px;line-height:1;font-weight:900;color:rgba(166,245,73,.025);pointer-events:none}
+.kathya-proof-pricing h2{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-.045em;margin:12px 0 16px;max-width:680px}
+.kathya-proof-pricing p{color:#91a299;max-width:650px;margin:0 0 24px}
+.kathya-price-factors{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0 26px}
+.kathya-price-factors span{border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:12px 14px;color:#c9d6cf;font-size:12px;background:rgba(255,255,255,.018)}
+@media(max-width:820px){.kathya-proof-pricing>.k-container{grid-template-columns:1fr!important}.kathya-price-factors{grid-template-columns:1fr}.kathya-ecosystem strong{display:block;margin-bottom:8px}}

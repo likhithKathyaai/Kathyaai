@@ -462,3 +462,49 @@ body:not(.home) .pricing-compare .price-card.featured{transform:translateY(-7px)
   #main-content.v5-home .v82-hero .k-container{width:calc(100% - 28px)!important}
   #main-content.v5-home .v82-copy h1{font-size:clamp(44px,14vw,62px)!important}
 }
+
+
+/* V8.2.2 — definitive hero centering repair */
+#main-content.v5-home .v82-hero{display:block!important}
+#main-content.v5-home .v82-hero-grid{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr)!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+  column-gap:clamp(32px,4vw,56px)!important;
+}
+#main-content.v5-home .v82-copy{
+  width:auto!important;
+  max-width:620px!important;
+  margin:0!important;
+  justify-self:start!important;
+  transform:none!important;
+}
+#main-content.v5-home .v82-copy h1{
+  width:auto!important;
+  max-width:620px!important;
+  font-size:clamp(50px,5vw,76px)!important;
+  line-height:.94!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+#main-content.v5-home .v82-copy>p{max-width:590px!important}
+#main-content.v5-home .v82-product{
+  width:100%!important;
+  max-width:500px!important;
+  margin:0!important;
+  justify-self:end!important;
+  transform:none!important;
+}
+@media(max-width:1100px){
+ #main-content.v5-home .v82-hero-grid{grid-template-columns:minmax(0,1fr) minmax(340px,.85fr)!important;column-gap:28px!important}
+ #main-content.v5-home .v82-copy h1{font-size:clamp(48px,5.6vw,66px)!important}
+}
+@media(max-width:900px){
+ #main-content.v5-home .v82-hero-grid{grid-template-columns:1fr!important}
+ #main-content.v5-home .v82-copy{max-width:720px!important}
+ #main-content.v5-home .v82-product{max-width:720px!important;justify-self:start!important}
+}

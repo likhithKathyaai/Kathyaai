@@ -19,6 +19,10 @@ function kathya_ai_assets() {
     wp_enqueue_style('kathya-ai-main', get_theme_file_uri('/assets/css/kathya.css'), array('kathya-ai-style'), $version);
     wp_enqueue_script('kathya-ai-main', get_theme_file_uri('/assets/js/kathya.js'), array(), $version, true);
     wp_localize_script('kathya-ai-main', 'KathyaAssist', array('home' => trailingslashit(home_url('/'))));
+    
+    // Vercel Speed Insights
+    wp_enqueue_script('vercel-speed-insights', get_theme_file_uri('/assets/js/vercel-speed-insights.js'), array(), '1.3.1', true);
+    wp_add_inline_script('vercel-speed-insights', 'if(typeof injectSpeedInsights==="function"){injectSpeedInsights({framework:"wordpress",debug:false});}');
 }
 add_action('wp_enqueue_scripts', 'kathya_ai_assets');
 

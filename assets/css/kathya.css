@@ -609,3 +609,18 @@ body:not(.home) .pricing-compare .price-card.featured{transform:translateY(-7px)
 .kathya-price-factors{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0 26px}
 .kathya-price-factors span{border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:12px 14px;color:#c9d6cf;font-size:12px;background:rgba(255,255,255,.018)}
 @media(max-width:820px){.kathya-proof-pricing>.k-container{grid-template-columns:1fr!important}.kathya-price-factors{grid-template-columns:1fr}.kathya-ecosystem strong{display:block;margin-bottom:8px}}
+
+
+/* V9.0 — outcome-led regional pricing */
+.kathya-pricing-preview strong{color:#f3ffe8}.kathya-price-factors b{display:block;color:var(--lime);font-size:15px;margin-bottom:2px}
+.kathya-price-disclaimer{display:block;color:#718078;font-size:10px;line-height:1.5;margin:-10px 0 22px;max-width:620px}
+.kathya-region-bar{display:flex;align-items:center;gap:10px;margin:0 0 18px;padding:12px 14px;border:1px solid rgba(166,245,73,.12);border-radius:14px;background:rgba(166,245,73,.025);font-size:11px;color:#9fb0a6}
+.kathya-region-bar span{padding:7px 10px;border-radius:9px;background:rgba(255,255,255,.035)}.kathya-region-bar b{color:var(--lime);margin-left:5px}.kathya-region-bar em{margin-left:auto;font-style:normal;color:#718078}
+.kathya-pricing-v9 .price-card{display:flex;flex-direction:column}.kathya-pricing-v9 .price-card>span{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#b8c7bf;font-weight:800}
+.dual-price{display:grid;gap:5px;margin:18px 0 16px}.dual-price strong{font-size:30px;line-height:1;color:#f5faf6;letter-spacing:-.04em}.dual-price b{font-size:16px;color:var(--lime);font-weight:750}.dual-price small{font-size:10px;letter-spacing:0;color:#81938a;font-weight:600;margin-left:3px}
+.kathya-pricing-v9 .price-card p{min-height:64px}.kathya-pricing-v9 .price-card ul{flex:1}.kathya-pricing-v9 .price-card .k-btn{margin-top:auto}
+.kathya-pricing-story{display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:center;margin:24px 0 10px;padding:30px;border:1px solid rgba(255,255,255,.07);border-radius:22px;background:linear-gradient(145deg,rgba(10,28,19,.92),rgba(4,14,9,.96))}
+.kathya-pricing-story h2{font-size:clamp(28px,3vw,42px);line-height:1.04;letter-spacing:-.04em;margin:10px 0 0}
+.kathya-pricing-points{display:grid;grid-template-columns:1fr 1fr;gap:8px}.kathya-pricing-points span{padding:13px;border:1px solid rgba(255,255,255,.06);border-radius:12px;color:#82958a;font-size:10px}.kathya-pricing-points b{display:block;color:#dbe7e0;font-size:12px;margin-bottom:3px}
+@media(max-width:820px){.kathya-region-bar{align-items:flex-start;flex-wrap:wrap}.kathya-region-bar em{width:100%;margin-left:0}.kathya-pricing-story{grid-template-columns:1fr}.kathya-pricing-points{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.kathya-pricing-points{grid-template-columns:1fr}.dual-price strong{font-size:28px}}

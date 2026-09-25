@@ -130,3 +130,26 @@ nav a:not(.talk):hover:after,nav a:not(.talk):focus-visible:after{right:0}
 .liveTrace span{font-size:8px;letter-spacing:.06em;color:#617269;white-space:nowrap;transition:color .35s ease,text-shadow .35s ease}.liveTrace span.on{color:#dff0e5;text-shadow:0 0 14px rgba(166,255,63,.18)}.liveTrace i{font-style:normal;color:#385044;font-size:9px}
 .builderPreview{border-block:1px solid var(--line);background:radial-gradient(circle at 75% 40%,rgba(166,255,63,.06),transparent 28%)}.builderFlow{display:flex;align-items:center;gap:12px;margin:34px 0 28px}.builderFlow span{flex:1;min-height:92px;display:grid;place-items:center;text-align:center;padding:18px;border:1px solid rgba(166,255,63,.15);border-radius:18px;background:linear-gradient(145deg,#0a1d14,#06110d);font-size:12px;font-weight:750;box-shadow:inset 0 1px rgba(255,255,255,.025)}.builderFlow i{font-style:normal;color:var(--lime)}.builderPreview>.primary{display:inline-flex;align-items:center;gap:8px}
 @media(max-width:760px){.liveTrace{display:grid;grid-template-columns:1fr auto 1fr}.liveTrace i:nth-of-type(2){display:none}.builderFlow{display:grid;grid-template-columns:1fr}.builderFlow i{transform:rotate(90deg);justify-self:center}.builderFlow span{min-height:72px}}
+
+/* Dove preview — light premium KATHYA direction */
+:root{color:#10261d;background:#f8faf7;--lime:#46b96a;--green:#16834b;--line:rgba(12,63,39,.10);--muted:#65766e}
+body{background:radial-gradient(circle at 84% 5%,rgba(76,185,115,.16),transparent 25%),linear-gradient(180deg,#fbfcfa,#f4f8f4 58%,#fbfcfa);color:#10261d}
+header{background:rgba(251,252,250,.88);border-color:rgba(12,63,39,.08);box-shadow:0 8px 30px rgba(17,65,42,.04)}
+.brand,.brand b{color:#10261d}nav a{color:#243c31}.talk,.primary,.run,.leadForm button{background:#07552f;color:white!important;box-shadow:0 10px 25px rgba(7,85,47,.14)}
+.hero{background:transparent}.heroWatermark{opacity:.055!important;right:4%!important;top:-9%!important;width:min(50vw,760px)!important;filter:grayscale(1) sepia(.2) hue-rotate(75deg) saturate(.55)!important}
+.dovePill,.lightIntro small{display:inline-flex;padding:7px 11px;border-radius:999px;background:#e8f7ec;color:#08733e;font-size:9px;font-weight:850;letter-spacing:.08em}
+.eyebrow{display:none}.hero h1{color:#10261d}.hero h1 em{color:#13864b}.heroCopy>p,.sectionHead>p,.lightIntro p{color:#61736a}
+.proof span{color:#3f5b4e;border-color:rgba(12,63,39,.10)}
+.console,.steps article,.bentoGrid article,.outcomeGrid article,.plans article,.leadForm,.formSuccess,.storyGrid article,.builderFlow span{background:rgba(255,255,255,.82);border-color:rgba(12,63,39,.10);box-shadow:0 22px 65px rgba(20,70,45,.08);color:#10261d}
+.consoleTop{border-color:rgba(12,63,39,.08)}.messages article,.outcomes span{background:#f5f9f5;border-color:rgba(12,63,39,.08)}.messages .ai{background:#edf8ef;border-color:rgba(22,131,75,.12)}.messages p,.outcomes b{color:#183529}.messages small,.outcomes small,.consoleTop small{color:#71867b}.flow div{color:#6d8277}.flow div b{background:#eaf4ed;color:#335a46}.flow div.active{color:#173c2b}.flow div.active b{background:#4ac36f;color:white}.flow>i{background:rgba(12,63,39,.10)}
+.liveTrace{background:#f5f9f5;border-color:rgba(12,63,39,.08)}.liveTrace span.on{color:#0b6136}
+.clientStrip{background:rgba(255,255,255,.55);border-color:rgba(12,63,39,.08);color:#76877e}.clientStrip span{color:#5d6d65}
+.lightIntro{max-width:1320px;margin:0 auto;padding:72px 5vw 10px}.lightIntro h2{font-size:clamp(42px,5vw,68px);line-height:.98;letter-spacing:-.05em;margin:14px 0}.lightIntro p{font-size:16px;max-width:700px}
+.ticker,.scaleSection{border-color:rgba(12,63,39,.08);color:#687b71}.sectionHead small,.steps article b,.outcomeGrid b,.plans article>small{color:#13864b}
+.steps p,.bentoGrid p,.plans p,.trust p,.storyGrid p,.outcomeGrid p{color:#667970}
+.scaleLine span{background:#f2f8f3;border-color:rgba(22,131,75,.13)}.scaleLine i,.ticker b{color:#15904f}
+.builderPreview{background:radial-gradient(circle at 78% 45%,rgba(72,188,111,.10),transparent 28%);border-color:rgba(12,63,39,.08)}
+.trust{background:linear-gradient(135deg,#063b24,#075b32);border-color:transparent;color:white}.trust p{color:#c3d9cd}.trust>a{background:white;color:#084b2b}
+footer{background:#f2f7f3;border-color:rgba(12,63,39,.08);color:#63756c}.footerLinks{color:#53685e}
+.leadForm input,.leadForm select,.leadForm textarea{background:#f8fbf8;color:#163327;border-color:rgba(12,63,39,.11)}
+@media(max-width:980px){nav.open{background:#fbfcfa}.menu{color:#153427}}

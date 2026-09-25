@@ -112,3 +112,12 @@ html,body,#root,.app,.app>main{min-height:0!important;height:auto!important}
 .eyebrow,.sectionHead small,.consoleTop small,.brandline{font-style:italic;letter-spacing:.12em}
 .heroCopy>p,.sectionHead>p{font-style:normal}
 nav a,.primary,.secondary,.talk,.run,button,input,textarea,select,.console,.pricingGrid,.footerLinks{font-style:normal}
+
+/* Production quality checklist: accessibility, focus, motion and mobile interaction */
+.skipLink{position:fixed;left:16px;top:-80px;z-index:9999;padding:11px 14px;border-radius:9px;background:var(--lime);color:#06110d!important;font-weight:800}
+.skipLink:focus{top:12px}
+:focus-visible{outline:3px solid var(--lime);outline-offset:4px;border-radius:5px}
+nav a,.footerLinks a{position:relative}
+nav a:not(.talk):after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:var(--lime);transition:right .25s ease}
+nav a:not(.talk):hover:after,nav a:not(.talk):focus-visible:after{right:0}
+@media(max-width:620px){.primary,.talk,.run,.leadForm button{min-height:44px}.actions{align-items:flex-start;flex-wrap:wrap}.footerLinks a{padding-block:5px}}

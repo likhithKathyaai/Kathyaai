@@ -121,3 +121,6 @@ nav a,.footerLinks a{position:relative}
 nav a:not(.talk):after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:var(--lime);transition:right .25s ease}
 nav a:not(.talk):hover:after,nav a:not(.talk):focus-visible:after{right:0}
 @media(max-width:620px){.primary,.talk,.run,.leadForm button{min-height:44px}.actions{align-items:flex-start;flex-wrap:wrap}.footerLinks a{padding-block:5px}}
+
+/* Production lead form states */
+.hp{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}.formError{margin:12px 0 0;color:#ffb4b4;font-size:12px;line-height:1.45}.leadForm button:disabled{opacity:.65;cursor:wait;transform:none!important}

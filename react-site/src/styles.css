@@ -124,3 +124,9 @@ nav a:not(.talk):hover:after,nav a:not(.talk):focus-visible:after{right:0}
 
 /* Production lead form states */
 .hp{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}.formError{margin:12px 0 0;color:#ffb4b4;font-size:12px;line-height:1.45}.leadForm button:disabled{opacity:.65;cursor:wait;transform:none!important}
+
+/* V9 premium product storytelling */
+.liveTrace{display:flex;align-items:center;gap:7px;margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.14);overflow:hidden}
+.liveTrace span{font-size:8px;letter-spacing:.06em;color:#617269;white-space:nowrap;transition:color .35s ease,text-shadow .35s ease}.liveTrace span.on{color:#dff0e5;text-shadow:0 0 14px rgba(166,255,63,.18)}.liveTrace i{font-style:normal;color:#385044;font-size:9px}
+.builderPreview{border-block:1px solid var(--line);background:radial-gradient(circle at 75% 40%,rgba(166,255,63,.06),transparent 28%)}.builderFlow{display:flex;align-items:center;gap:12px;margin:34px 0 28px}.builderFlow span{flex:1;min-height:92px;display:grid;place-items:center;text-align:center;padding:18px;border:1px solid rgba(166,255,63,.15);border-radius:18px;background:linear-gradient(145deg,#0a1d14,#06110d);font-size:12px;font-weight:750;box-shadow:inset 0 1px rgba(255,255,255,.025)}.builderFlow i{font-style:normal;color:var(--lime)}.builderPreview>.primary{display:inline-flex;align-items:center;gap:8px}
+@media(max-width:760px){.liveTrace{display:grid;grid-template-columns:1fr auto 1fr}.liveTrace i:nth-of-type(2){display:none}.builderFlow{display:grid;grid-template-columns:1fr}.builderFlow i{transform:rotate(90deg);justify-self:center}.builderFlow span{min-height:72px}}

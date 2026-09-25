@@ -88,3 +88,19 @@ html,body,#root,.app,.app>main{min-height:0!important;height:auto!important}
 .scaleLine i{font-style:normal;color:var(--lime)}
 @media(max-width:800px){.outcomeGrid{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.outcomeGrid{grid-template-columns:1fr}.scaleLine{align-items:stretch;flex-direction:column}.scaleLine i{transform:rotate(90deg);align-self:center}}
+
+/* Premium motion + 3D depth */
+.brandLogo{filter:drop-shadow(0 0 12px rgba(166,255,63,.16));transition:transform .35s ease,filter .35s ease}
+.brand:hover .brandLogo{transform:scale(1.06) rotate(-2deg);filter:drop-shadow(0 0 18px rgba(166,255,63,.28))}
+.heroWatermark{position:absolute;right:-7%;top:3%;width:min(46vw,650px);height:auto;opacity:.035;pointer-events:none;z-index:0;filter:saturate(.9);transform:rotate(-6deg)}
+.heroCopy{animation:kathyaRise .8s cubic-bezier(.2,.7,.2,1) both}
+.console{transform:perspective(1200px) rotateY(-2.5deg) rotateX(1deg);transform-origin:center;transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s ease,border-color .5s ease;animation:kathyaFloat 7s ease-in-out infinite}
+.console:hover{transform:perspective(1200px) rotateY(0) rotateX(0) translateY(-6px);box-shadow:0 45px 120px rgba(0,0,0,.48),0 0 55px rgba(166,255,63,.06);border-color:rgba(166,255,63,.28)}
+.bentoGrid article,.outcomeGrid article,.steps article{transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s ease,box-shadow .35s ease}
+.bentoGrid article:hover,.outcomeGrid article:hover,.steps article:hover{transform:perspective(900px) translateY(-7px) rotateX(1.5deg);border-color:rgba(166,255,63,.24);box-shadow:0 24px 55px rgba(0,0,0,.24)}
+.primary,.talk,.run{transition:transform .25s ease,box-shadow .25s ease,filter .25s ease}
+.primary:hover,.talk:hover,.run:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(166,255,63,.16);filter:brightness(1.05)}
+@keyframes kathyaRise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes kathyaFloat{0%,100%{translate:0 0}50%{translate:0 -7px}}
+@media(prefers-reduced-motion:reduce){.heroCopy,.console{animation:none!important}.brandLogo,.console,.bentoGrid article,.outcomeGrid article,.steps article,.primary,.talk,.run{transition:none!important}}
+@media(max-width:800px){.heroWatermark{width:85vw;right:-32%;top:8%;opacity:.025}.console{transform:none;animation:none}}

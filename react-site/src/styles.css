@@ -104,3 +104,11 @@ html,body,#root,.app,.app>main{min-height:0!important;height:auto!important}
 @keyframes kathyaFloat{0%,100%{translate:0 0}50%{translate:0 -7px}}
 @media(prefers-reduced-motion:reduce){.heroCopy,.console{animation:none!important}.brandLogo,.console,.bentoGrid article,.outcomeGrid article,.steps article,.primary,.talk,.run{transition:none!important}}
 @media(max-width:800px){.heroWatermark{width:85vw;right:-32%;top:8%;opacity:.025}.console{transform:none;animation:none}}
+
+
+/* KATHYA premium italic typography accents */
+.hero h1 em,.hero h1 i,.sectionHead h2 em,.sectionHead h2 i{font-style:italic;font-weight:inherit;letter-spacing:-.035em}
+.hero h1 .accent{font-style:italic}
+.eyebrow,.sectionHead small,.consoleTop small,.brandline{font-style:italic;letter-spacing:.12em}
+.heroCopy>p,.sectionHead>p{font-style:normal}
+nav a,.primary,.secondary,.talk,.run,button,input,textarea,select,.console,.pricingGrid,.footerLinks{font-style:normal}

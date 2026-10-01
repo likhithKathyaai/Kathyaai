@@ -1,7 +1,9 @@
 import nodemailer from'nodemailer';
 const clean=(v,max=2000)=>String(v||'').trim().slice(0,max);
 export default async function handler(req,res){
-  if(req.method!=='POST')return res.status(405).json({error:'Method not allowed'});
+  if(req.method!=='POST'){res.setHeader('Allow','POST');return res.status(405).json({error:'Method not allowed'})}
+  if(!process.env.SMTP_USER||!process.env.SMTP_PASSWORD)return res.status(503).json({error:'Contact service is temporarily unavailable.'});
+  const type=String(req.headers['content-type']||'');if(!type.includes('application/json'))return res.status(415).json({error:'Content-Type must be application/json.'});
   try{
     const {name,email,company,usecase,message,website}=req.body||{};
     if(website)return res.status(200).json({ok:true});

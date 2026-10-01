@@ -10,4 +10,7 @@
 <url><loc>https://kathyaai.com/resources</loc></url>
 <url><loc>https://kathyaai.com/trust</loc></url>
 <url><loc>https://kathyaai.com/demo</loc></url>
+  <url><loc>https://kathyaai.com/compare/kathya-vs-outpero</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kathyaai.com/compare/kathya-vs-retell</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kathyaai.com/compare/kathya-vs-bland</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>

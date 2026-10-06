@@ -15,3 +15,12 @@ create policy "own_insert" on public.conversations for insert to authenticated w
 create policy "own_insert" on public.user_settings for insert to authenticated with check ((select auth.uid())=user_id);create policy "own_update" on public.user_settings for update to authenticated using ((select auth.uid())=user_id) with check ((select auth.uid())=user_id);
 create or replace function public.handle_new_user() returns trigger language plpgsql security definer set search_path='' as $$ begin insert into public.profiles(id,email,full_name) values(new.id,new.email,new.raw_user_meta_data->>'full_name') on conflict(id) do nothing;insert into public.user_settings(user_id) values(new.id) on conflict(user_id) do nothing;insert into public.billing_accounts(user_id) values(new.id) on conflict(user_id) do nothing;return new;end;$$;
 drop trigger if exists on_auth_user_created on auth.users;create trigger on_auth_user_created after insert on auth.users for each row execute procedure public.handle_new_user();
+
+-- KATHYA privileged admin authorization. Never expose role assignment in client UI.
+create table if not exists public.admin_users(user_id uuid primary key references auth.users(id) on delete cascade,role text not null check(role in('owner','admin','support','billing')),created_at timestamptz not null default now());
+alter table public.admin_users enable row level security;
+revoke all on public.admin_users from anon,authenticated;
+create or replace function public.is_kathya_admin() returns boolean language sql stable security definer set search_path='' as $$ select exists(select 1 from public.admin_users where user_id=auth.uid() and role in('owner','admin')); $$;
+revoke all on function public.is_kathya_admin() from public;grant execute on function public.is_kathya_admin() to authenticated;
+-- Assign the first owner only from the Supabase SQL editor after that person's verified auth account exists:
+-- insert into public.admin_users(user_id,role) select id,'owner' from auth.users where email='OWNER_EMAIL' on conflict(user_id) do update set role='owner';

@@ -1,29 +1,61 @@
 <?php get_header(); ?>
 <main id="main-content" class="v5-home">
-<section class="v5-hero v82-hero">
-  <div class="v5-grid"></div><div class="v5-aurora"></div>
-  <div class="k-container v82-hero-grid">
-    <div class="v82-copy reveal">
-      <div class="v5-kicker"><span class="live-dot"></span> CONVERSATIONAL AI FOR REAL BUSINESS ACTIONS</div>
-      <h1>Conversations that<br><span>complete the work.</span></h1>
-      <p>KATHYA understands customer intent, connects to your business systems and moves every conversation toward a clear outcome.</p>
-      <div class="hero-actions"><a class="k-btn k-btn-primary" href="#talk">Talk to KATHYA →</a><a class="v5-text-link" href="<?php echo esc_url(home_url('/demo/')); ?>">See a business workflow <span>↗</span></a></div>
-      <div class="v5-proof"><span>Natural voice</span><span>Business actions</span><span>Human handoff</span></div>
+<section class="k3-hero" id="talk">
+  <div class="k3-grid"></div><div class="k3-glow"></div>
+  <div class="k-container k3-layout">
+    <div class="k3-copy reveal">
+      <div class="k3-kicker"><span></span> KATHYA AI · LIVE CONVERSATIONAL INTELLIGENCE</div>
+      <h1>Speak.<br><em>Understand.</em><br>Act.</h1>
+      <p>Conversations that complete the work.</p>
+      <div class="hero-actions"><button class="k-btn k-btn-primary" id="v5-talk" type="button"><span>●</span> Talk to KATHYA</button><a class="k-btn k-btn-ghost" href="<?php echo esc_url(home_url('/book-appointment/')); ?>">Book a Demo →</a></div>
+      <div class="k3-mini"><span>Natural voice</span><span>Connected actions</span><span>Human handoff</span></div>
     </div>
-    <div class="v82-product reveal" id="talk">
-      <div class="v82-top"><span><i></i> KATHYA LIVE</span><small>CONVERSATION → OUTCOME</small></div>
-      <div class="v82-conversation">
-        <div><small>CUSTOMER</small><p>Can you book a demo tomorrow afternoon?</p></div>
-        <div class="ai"><small>KATHYA</small><p>I can check availability and help you choose a time.</p></div>
+    <div class="k3-stage reveal">
+      <div class="k3-orb-shell">
+        <div class="k3-orbit o1"></div><div class="k3-orbit o2"></div><div class="k3-orbit o3"></div>
+        <div class="k3-particles"></div>
+        <div class="k3-orb"><img src="<?php echo esc_url(get_theme_file_uri('/assets/images/kathya-mark.png')); ?>" alt="KATHYA AI"></div>
+        <div class="k3-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </div>
-      <div class="v82-path"><span class="on"><b>01</b>Understand</span><i></i><span><b>02</b>Check</span><i></i><span><b>03</b>Act</span><i></i><span><b>04</b>Confirm</span></div>
-      <div class="v82-outcome"><div><small>INTENT</small><strong>Book appointment</strong></div><div><small>CONNECTED TOOL</small><strong>Calendar</strong></div><div><small>NEXT</small><strong>Find availability</strong></div></div>
-      <div class="v5-actions"><button id="v5-talk" type="button"><span>●</span> Experience KATHYA</button><a href="<?php echo esc_url(home_url('/book-appointment/')); ?>">Book directly →</a></div>
-      <div id="v5-status" class="v82-status">Ready for a request</div>
-      <div id="v5-chat" class="v82-hidden-chat" aria-hidden="true"></div>
+      <div class="k3-state s1 v8-step active"><b>01</b><span><small>LISTENING</small><strong>Voice detected</strong></span></div>
+      <div class="k3-state s2 v8-step"><b>02</b><span><small>UNDERSTANDING</small><strong id="v8-intent">Intent + context</strong></span></div>
+      <div class="k3-state s3 v8-step"><b>03</b><span><small>ACTING</small><strong id="v8-tool">Connected tools</strong></span></div>
+      <div class="k3-state s4 v8-step"><b>04</b><span><small>COMPLETE</small><strong id="v8-next">Outcome ready</strong></span></div>
+      <div class="k3-command">
+        <span class="k3-mic">●</span><div><small>TRY SAYING</small><strong>“Book a meeting tomorrow at 2 PM.”</strong></div>
+      </div>
+      <div id="v5-status" class="k3-status">KATHYA is ready. Tap the mic and start talking.</div>
+      <div id="v5-chat" class="k3-chat" aria-live="polite"></div>
     </div>
   </div>
+  <div class="k-container k3-capabilities">
+    <a href="<?php echo esc_url(home_url('/solutions/')); ?>"><b>◉</b><span><strong>AI Receptionist</strong><small>Answer & route calls</small></span></a>
+    <a href="<?php echo esc_url(home_url('/solutions/')); ?>"><b>⌁</b><span><strong>Customer Support</strong><small>Resolve requests 24/7</small></span></a>
+    <a href="<?php echo esc_url(home_url('/solutions/')); ?>"><b>◇</b><span><strong>Lead Qualification</strong><small>Identify & route leads</small></span></a>
+    <a href="<?php echo esc_url(home_url('/book-appointment/')); ?>"><b>▣</b><span><strong>Appointment Booking</strong><small>Schedule & confirm</small></span></a>
+    <a href="<?php echo esc_url(home_url('/integrations/')); ?>"><b>◎</b><span><strong>Workflow Automation</strong><small>Connect your tools</small></span></a>
+  </div>
 </section>
+<style>
+.k3-hero{position:relative;overflow:hidden;min-height:calc(100vh - 72px);padding:clamp(42px,5vw,76px) 0 28px;background:radial-gradient(circle at 67% 42%,rgba(92,255,126,.13),transparent 26%),radial-gradient(circle at 90% 10%,rgba(166,245,73,.06),transparent 24%),linear-gradient(135deg,#020806 0%,#06120d 50%,#020705 100%);isolation:isolate}
+.k3-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(137,255,158,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(137,255,158,.025) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 90%);pointer-events:none}
+.k3-glow{position:absolute;width:760px;height:760px;right:-120px;top:-170px;border-radius:50%;background:radial-gradient(circle,rgba(88,255,123,.09),transparent 66%);filter:blur(18px);pointer-events:none}
+.k3-layout{display:grid;grid-template-columns:minmax(0,.82fr) minmax(520px,1.18fr);align-items:center;gap:clamp(32px,5vw,74px);position:relative;z-index:2}
+.k3-kicker{font-size:10px;letter-spacing:.19em;color:#8ca096;font-weight:700}.k3-kicker span{display:inline-block;width:7px;height:7px;border-radius:50%;background:#9dff56;box-shadow:0 0 16px #9dff56;margin-right:8px}
+.k3-copy h1{font-size:clamp(68px,7.5vw,112px);line-height:.82;letter-spacing:-.065em;margin:22px 0 26px;font-weight:760}.k3-copy h1 em{font-style:normal;color:#9dff56;text-shadow:0 0 36px rgba(157,255,86,.16)}.k3-copy>p{font-size:20px;color:#a6b8ae;margin:0 0 28px}.k3-copy .hero-actions{display:flex;gap:12px;flex-wrap:wrap}.k3-mini{display:flex;gap:18px;flex-wrap:wrap;margin-top:25px;color:#71877b;font-size:10px}.k3-mini span:before{content:"✓";color:#9dff56;margin-right:6px}
+.k3-stage{position:relative;min-height:570px;perspective:1200px}.k3-orb-shell{position:absolute;left:50%;top:43%;width:390px;height:390px;transform:translate(-50%,-50%);display:grid;place-items:center;filter:drop-shadow(0 35px 70px rgba(0,0,0,.55))}
+.k3-orb{width:178px;height:178px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 36% 28%,rgba(203,255,180,.34),rgba(22,128,69,.25) 24%,rgba(2,24,14,.92) 65%);border:1px solid rgba(168,255,127,.42);box-shadow:inset 0 0 42px rgba(122,255,109,.25),0 0 55px rgba(80,255,118,.19),0 0 130px rgba(80,255,118,.1);animation:k3float 5s ease-in-out infinite;position:relative;z-index:3;backdrop-filter:blur(8px)}
+.k3-orb:after{content:"";position:absolute;inset:9px;border-radius:50%;border:1px solid rgba(255,255,255,.12);box-shadow:inset 12px 14px 28px rgba(255,255,255,.06)}.k3-orb img{width:105px;height:105px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(157,255,86,.35))}
+.k3-orbit{position:absolute;border-radius:50%;border:1px solid rgba(157,255,86,.18);animation:k3spin 12s linear infinite}.k3-orbit:after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:#a6ff62;box-shadow:0 0 18px #a6ff62;left:14%;top:16%}.k3-orbit.o1{width:240px;height:240px}.k3-orbit.o2{width:315px;height:315px;animation-duration:18s;animation-direction:reverse;transform:rotateX(66deg)}.k3-orbit.o3{width:370px;height:190px;animation-duration:15s;transform:rotate(24deg)}
+.k3-wave{position:absolute;z-index:5;bottom:35px;display:flex;align-items:center;gap:5px;height:42px}.k3-wave i{width:3px;height:15px;border-radius:4px;background:#9dff56;box-shadow:0 0 9px rgba(157,255,86,.55);animation:k3wave 1s ease-in-out infinite}.k3-wave i:nth-child(2n){animation-delay:.13s}.k3-wave i:nth-child(3n){animation-delay:.26s}
+.k3-state{position:absolute;width:180px;padding:13px!important;border-radius:16px!important;background:rgba(7,23,15,.76)!important;backdrop-filter:blur(16px);border:1px solid rgba(157,255,86,.12)!important;box-shadow:0 18px 50px rgba(0,0,0,.24);z-index:6}.k3-state.s1{left:0;top:70px}.k3-state.s2{right:0;top:95px}.k3-state.s3{left:10px;bottom:130px}.k3-state.s4{right:5px;bottom:145px}.k3-state.active{border-color:rgba(157,255,86,.55)!important;box-shadow:0 0 34px rgba(157,255,86,.1);transform:translateY(-3px)}
+.k3-command{position:absolute;left:50%;bottom:45px;transform:translateX(-50%);z-index:7;width:min(440px,82%);display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid rgba(157,255,86,.18);border-radius:18px;background:rgba(3,13,8,.82);backdrop-filter:blur(18px)}.k3-mic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#06110c;background:#9dff56;box-shadow:0 0 22px rgba(157,255,86,.3)}.k3-command small{display:block;font-size:7px;letter-spacing:.15em;color:#71877b}.k3-command strong{font-size:11px;color:#d9e8df}.k3-status{position:absolute;left:0;right:0;bottom:5px;text-align:center;font-size:9px;color:#6e8277}.k3-chat{display:none}
+.k3-capabilities{position:relative;z-index:3;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}.k3-capabilities a{display:flex;align-items:center;gap:11px;padding:14px 13px;border:1px solid rgba(255,255,255,.06);border-radius:15px;background:rgba(255,255,255,.025);color:inherit;text-decoration:none;transition:.25s}.k3-capabilities a:hover{transform:translateY(-4px);border-color:rgba(157,255,86,.22);background:rgba(157,255,86,.045)}.k3-capabilities b{color:#9dff56;font-size:20px}.k3-capabilities strong,.k3-capabilities small{display:block}.k3-capabilities strong{font-size:10px}.k3-capabilities small{font-size:8px;color:#72847a;margin-top:3px}
+@keyframes k3spin{to{transform:rotate(360deg)}}@keyframes k3float{50%{transform:translateY(-10px) scale(1.025)}}@keyframes k3wave{0%,100%{height:10px;opacity:.45}50%{height:36px;opacity:1}}
+@media(max-width:980px){.k3-layout{grid-template-columns:1fr}.k3-copy{text-align:center}.k3-copy .hero-actions,.k3-mini{justify-content:center}.k3-stage{min-height:520px;max-width:720px;width:100%;margin:auto}.k3-capabilities{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.k3-hero{padding-top:32px;min-height:0}.k3-copy h1{font-size:58px}.k3-copy>p{font-size:16px}.k3-stage{min-height:460px}.k3-orb-shell{width:290px;height:290px;top:42%}.k3-orb{width:132px;height:132px}.k3-orb img{width:80px;height:80px}.k3-orbit.o1{width:190px;height:190px}.k3-orbit.o2{width:250px;height:250px}.k3-orbit.o3{width:285px;height:150px}.k3-state{width:145px;padding:10px!important}.k3-state.s1{left:0;top:35px}.k3-state.s2{right:0;top:58px}.k3-state.s3{left:0;bottom:118px}.k3-state.s4{right:0;bottom:130px}.k3-command{bottom:36px}.k3-capabilities{grid-template-columns:1fr 1fr}.k3-capabilities a:last-child{grid-column:1/-1}.k3-mini{display:none}}
+@media(prefers-reduced-motion:reduce){.k3-orbit,.k3-orb,.k3-wave i{animation:none!important}}
+</style>
 <section class="v5-marquee"><div class="k-container"><span>VOICE</span><i>✦</i><span>KNOWLEDGE</span><i>✦</i><span>REASONING</span><i>✦</i><span>ACTIONS</span><i>✦</i><span>ANALYTICS</span><i>✦</i><span>HUMAN HANDOFF</span></div></section>
 <section class="v5-section v5-outcome"><div class="k-container"><div class="v5-section-head reveal"><span>HOW KATHYA WORKS</span><h2>One conversation.<br>Real action.</h2><p>Voice is the interface. Business outcomes are the product.</p></div><div class="v5-flow reveal"><article><b>01</b><h3>Speak</h3><p>Natural conversation</p><em>“I need an appointment.”</em></article><article><b>02</b><h3>Understand</h3><p>Intent + context</p><em>Appointment request</em></article><article><b>03</b><h3>Reason</h3><p>Rules + knowledge</p><em>Check availability</em></article><article><b>04</b><h3>Act</h3><p>Connected tools</p><em>4:00 PM booked</em></article><article class="active"><b>05</b><h3>Result</h3><p>Outcome captured</p><em>✓ Email&nbsp;&nbsp; ✓ Calendar</em></article></div></div></section>
 <section class="v5-section v5-bento-section"><div class="k-container"><div class="v5-section-head reveal"><span>THE PLATFORM</span><h2>Built to do more than talk.</h2></div><div class="v5-bento v5-bento-live">

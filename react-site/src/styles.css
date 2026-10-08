@@ -900,3 +900,28 @@ footer.kathyaFooter{display:block!important;position:relative!important;width:10
   background-position:54% center!important;
  }
 }
+
+
+/* Site-wide production polish: legible typography, keyboard access and reduced motion */
+:root{font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html{overflow-x:clip;text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{min-width:320px;overflow-x:clip}
+button,input,select,textarea{font:inherit}
+button,a,input,select,textarea{touch-action:manipulation}
+button:not(:disabled){cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.65}
+:where(a,button,input,textarea,select,[tabindex]):focus-visible{outline:3px solid #a6ff3f!important;outline-offset:3px!important}
+:where(p,h1,h2,h3,h4,li,small,span){overflow-wrap:break-word}
+:where(img,video,canvas,svg){max-width:100%}
+:where(input,textarea,select){max-width:100%}
+::selection{background:#85fba6;color:#052018}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto!important}
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+@media(max-width:680px){
+ .rebuildHero .rebuildCopy h1{font-size:clamp(42px,11vw,62px)!important;line-height:1.02!important;letter-spacing:-.045em}
+ .rebuildHero .rebuildInner{min-width:0!important}
+ .rebuildHero .rebuildFeatures,.rebuildHero .rebuildCopy,.rebuildHero .rebuildAvatar{min-width:0!important;max-width:100%!important}
+ .rebuildHero .rebuildCtas{flex-wrap:wrap}
+}

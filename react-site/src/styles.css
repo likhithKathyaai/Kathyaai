@@ -722,3 +722,16 @@ url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fi
 .goalSection .nodeActions{bottom:17%!important;right:0!important}
 }
 @media(max-width:1199px){.rebuildHero:before,.rebuildHero:after,.goalSection .goalHero:before{font-size:28px}.rebuildEyebrow:after{display:none}.goalSection .goalBuilderNode:after{display:none}}
+
+
+/* Hero vertical alignment correction: raise avatar to match headline and reference */
+@media(min-width:1101px){
+.rebuildHero .rebuildInner{align-items:center!important}
+.rebuildHero .rebuildAvatar{align-self:center!important;height:600px!important;min-height:600px!important;margin-top:-72px!important;margin-bottom:0!important;transform:translateY(-12px)!important}
+.rebuildHero .rebuildAvatarImage{inset:-16px -8px 0!important;background-position:center top!important;background-size:contain!important}
+.rebuildHero .rebuildSpeech{top:4%!important;right:-5%!important;transform:scale(.9)!important;transform-origin:top right!important}
+.rebuildHero .rebuildCopy{padding-bottom:0!important;align-self:center!important}
+.rebuildHero .rebuildFeatures{align-self:center!important}
+}
+@media(min-width:681px) and (max-width:1100px){.rebuildHero .rebuildAvatar{transform:translateY(-20px)!important}.rebuildHero .rebuildAvatarImage{background-position:center top!important}}
+@media(max-width:680px){.rebuildHero .rebuildAvatar{transform:none!important;margin-top:0!important}}

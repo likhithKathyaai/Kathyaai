@@ -499,3 +499,37 @@ linear-gradient(90deg,rgba(0,0,0,.36) 0%,transparent 42%,rgba(0,0,0,.16) 100%)!i
 .goalSection .goalWorkflowCard .workflowLink{display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;width:100%!important;min-height:46px!important;margin:14px 0 0!important;padding:12px!important;background:linear-gradient(100deg,#08b982,#04725d)!important;border:1px solid rgba(49,248,161,.45)!important;border-radius:999px!important;color:white!important;font-size:12px!important;font-weight:800!important}
 .goalSection .goalBottom{display:grid!important;grid-template-columns:1fr 1fr!important;gap:14px!important;margin-top:16px!important;padding:15px!important}
 }
+
+
+/* Reference comparison: change ONLY the goal-studio voice/speech bubble.
+   Keep the existing homepage, avatar, workflow cards and navigation intact. */
+.goalSection .goalHeroMessage{
+ box-sizing:border-box!important;
+ width:clamp(150px,18vw,214px)!important;
+ max-width:214px!important;
+ min-width:0!important;
+ padding:13px 15px!important;
+ border:1px solid rgba(41,242,160,.8)!important;
+ border-radius:15px!important;
+ background:linear-gradient(145deg,rgba(0,51,39,.94),rgba(1,24,23,.96))!important;
+ box-shadow:0 8px 28px rgba(0,0,0,.3),0 0 20px rgba(0,234,138,.12)!important;
+ transform:none!important;
+ z-index:6!important;
+}
+.goalSection .goalHeroMessage b{font-size:clamp(12px,1.1vw,15px)!important;line-height:1.2!important}
+.goalSection .goalHeroMessage span{font-size:clamp(10px,.95vw,12px)!important;line-height:1.45!important}
+.goalSection .goalHeroMessage small{display:block!important;max-width:100%!important;overflow:hidden!important;white-space:nowrap!important;font-size:clamp(12px,1.6vw,19px)!important;letter-spacing:1px!important;color:#22ffa4!important}
+@media(max-width:700px){
+ .goalSection .goalHeroMessage{
+  top:12px!important;
+  right:0!important;
+  left:auto!important;
+  width:142px!important;
+  max-width:44%!important;
+  padding:10px!important;
+  border-radius:12px!important;
+ }
+ .goalSection .goalHeroMessage b{font-size:11px!important}
+ .goalSection .goalHeroMessage span{font-size:10px!important;line-height:1.3!important}
+ .goalSection .goalHeroMessage small{font-size:12px!important;letter-spacing:0!important}
+}

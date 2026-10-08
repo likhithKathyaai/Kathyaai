@@ -380,3 +380,31 @@ nav a:not(.talk):hover:after,nav a:not(.talk):focus-visible:after{right:0}
 .rebuildProof>div{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;border-right:1px solid rgba(134,230,169,.19)}.rebuildProof>div:last-child{border-right:0}.rebuildProof b{font-size:19px;color:#a6ffba}.rebuildProof span{font-size:11px;color:#d2e4d7}
 @media(max-width:1100px){.rebuildInner{grid-template-columns:1fr 1fr!important}.rebuildAvatar{height:500px!important;min-height:500px!important}.rebuildSpeech{right:0!important}.rebuildProof{grid-template-columns:repeat(2,1fr);row-gap:16px}.rebuildProof>div:nth-child(2){border-right:0}}
 @media(max-width:680px){.rebuildHero{padding:28px 16px!important;min-height:0!important}.rebuildInner{display:flex!important;flex-direction:column!important;gap:8px!important}.rebuildCopy h1{font-size:clamp(54px,12.5vw,78px)!important}.rebuildAvatar{width:100%!important;height:390px!important;min-height:390px!important}.rebuildAvatarImage{inset:0 -12px -8px!important}.rebuildSpeech{right:0!important;top:2%!important;max-width:180px!important}.rebuildHero .rebuildScene{background:linear-gradient(180deg,rgba(2,13,10,.84),rgba(2,13,10,.56) 47%,rgba(2,13,10,.86)),url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1100&q=80") center/cover no-repeat!important}.rebuildHero .rebuildScene:before{opacity:.2}.rebuildProof{margin-top:20px;padding:14px 8px}.rebuildProof b{font-size:15px}.rebuildProof span{font-size:10px}}
+
+
+/* Cinematic reference layout — interactive elements remain real DOM controls */
+@media(min-width:1101px){
+.rebuildHero{min-height:780px!important;padding:48px max(30px,5vw) 30px!important;isolation:isolate}
+.rebuildInner{max-width:1550px!important;grid-template-columns:minmax(320px,1.02fr) minmax(410px,1.16fr) minmax(290px,.92fr)!important;gap:0!important;align-items:center!important}
+.rebuildCopy{align-self:center!important;padding-bottom:80px!important;z-index:5!important}
+.rebuildCopy h1{font-size:clamp(62px,5.2vw,91px)!important;line-height:.94!important;letter-spacing:-.065em!important;text-shadow:0 4px 22px rgba(0,0,0,.65)}
+.rebuildAvatar{height:575px!important;min-height:575px!important;align-self:end!important;z-index:4!important;margin-left:-48px!important;margin-right:-30px!important}
+.rebuildAvatarImage{inset:-15px -65px -22px!important;background-size:contain!important;background-position:center bottom!important}
+.rebuildSpeech{right:-18px!important;top:14%!important;z-index:8!important}
+.rebuildFeatures{z-index:6!important;align-self:center!important;gap:10px!important}
+.rebuildFeature{min-height:85px!important}
+.rebuildCommand{position:relative!important;z-index:8!important;max-width:640px!important;margin:-15px auto 0!important}
+.rebuildShortcuts{position:relative!important;z-index:8!important}
+.rebuildProof{margin-top:22px!important}
+}
+.rebuildHero .rebuildScene{background:
+linear-gradient(90deg,rgba(2,11,9,.76) 0%,rgba(2,11,9,.27) 29%,rgba(2,11,9,.08) 55%,rgba(2,11,9,.62) 100%),
+linear-gradient(0deg,rgba(1,12,8,.76),transparent 30%),
+url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2400&q=90") center center/cover no-repeat!important}
+.rebuildHero .rebuildScene:before{background:radial-gradient(ellipse at 52% 65%,rgba(12,240,119,.16),transparent 35%),linear-gradient(180deg,rgba(3,13,10,.12),rgba(3,13,10,.32))!important;opacity:1!important}
+.rebuildHero .rebuildScene:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 49% 44%,rgba(54,247,149,.1),transparent 24%);mix-blend-mode:screen}
+.rebuildOrb{display:none!important}
+.rebuildFeature{transition:transform .2s ease,border-color .2s ease!important}
+.rebuildFeature:focus-visible,.rebuildPrimary:focus-visible,.rebuildOutline:focus-visible,.rebuildCommand button:focus-visible{outline:3px solid #a6ff3f!important;outline-offset:3px!important}
+@media(max-width:1100px) and (min-width:681px){.rebuildInner{grid-template-columns:1fr 1fr!important}.rebuildFeatures{grid-column:1/-1!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important}.rebuildFeature{flex-direction:column!important;align-items:flex-start!important;gap:6px!important}.rebuildFeature>svg{display:none!important}.rebuildAvatar{height:520px!important}}
+@media(max-width:680px){.rebuildHero .rebuildScene{background:linear-gradient(180deg,rgba(2,12,9,.85),rgba(2,12,9,.37) 42%,rgba(2,12,9,.85)),url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1100&q=85") center/cover no-repeat!important}.rebuildHero .rebuildScene:before{opacity:1!important}}

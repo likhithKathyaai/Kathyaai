@@ -642,3 +642,28 @@ input,textarea,select{accent-color:#36eaa2}
 .goalSection .miniStart .goalWave.kathyaAudioWave{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:2px!important;width:100%!important;max-width:150px!important;height:31px!important;min-height:31px!important;padding:2px 0!important;overflow:hidden!important;line-height:normal!important;font-size:0!important;letter-spacing:0!important}
 .goalSection .miniStart .goalWave.kathyaAudioWave i{display:block!important;flex:0 0 3px!important;width:3px!important;min-width:3px!important;min-height:4px!important;height:calc(6px + (var(--wave-i) * 5px) / 4)!important;max-height:27px!important;border-radius:6px!important;background:linear-gradient(180deg,#d0ff95,#18f3a3)!important;box-shadow:0 0 7px rgba(33,255,161,.4)!important;animation:kathyaSignal .8s ease-in-out infinite alternate!important;animation-delay:calc(var(--wave-i) * -65ms)!important}
 @media(prefers-reduced-motion:reduce){.goalSection .miniStart .goalWave.kathyaAudioWave i{animation:none!important;height:14px!important}}
+
+
+/* Hero reference: keep KATHYA speech separate from cards and use gold Indian-inspired motifs */
+@media(min-width:1101px){
+.rebuildInner{grid-template-columns:minmax(310px,1.04fr) minmax(350px,1.12fr) minmax(315px,.94fr)!important;gap:20px!important}
+.rebuildAvatar{overflow:visible!important;margin:0!important;isolation:isolate!important}
+.rebuildSpeech{position:absolute!important;top:8%!important;left:auto!important;right:0!important;transform:translateX(6%) scale(.86)!important;transform-origin:top right!important;width:210px!important;max-width:210px!important;z-index:15!important}
+.rebuildFeatures{position:relative!important;z-index:10!important;gap:11px!important;margin-left:0!important}
+.rebuildFeature{display:flex!important;flex-direction:row!important;align-items:center!important;gap:12px!important;min-height:89px!important;padding:13px!important}
+.rebuildFeatureText{flex:1 1 auto!important;min-width:0!important}
+.rebuildFeatureWave{flex:0 0 68px!important}
+.rebuildFeatureArrow{flex:0 0 29px!important}
+}
+.rebuildFeature{border:1px solid rgba(55,247,152,.55)!important;background:linear-gradient(110deg,rgba(1,48,33,.95),rgba(0,20,17,.96))!important;box-shadow:0 8px 28px rgba(0,0,0,.25),inset 0 1px rgba(217,169,78,.13)!important}
+.rebuildFeatureIcon{position:relative!important;flex-shrink:0!important;background:radial-gradient(circle,rgba(1,60,39,.9),rgba(0,24,19,.92))!important;border:1px solid rgba(224,173,75,.6)!important;border-radius:15px!important;transform:rotate(45deg)!important}
+.rebuildFeatureIcon:before{content:"";position:absolute;inset:-5px;border:1px solid rgba(224,173,75,.38);border-radius:17px;pointer-events:none}
+.rebuildFeatureIcon svg{transform:rotate(-45deg)!important;color:#e8c16a!important}
+.rebuildFeatureArrow{display:grid!important;place-items:center!important;width:29px!important;height:29px!important;border:1px solid rgba(217,169,78,.75)!important;border-radius:50%!important;color:#f3d27d!important}
+.rebuildFeatureWave.kathyaAudioWave{display:flex!important;align-items:center!important;justify-content:center!important;gap:2px!important;height:28px!important;min-width:0!important}
+.rebuildFeatureWave.kathyaAudioWave i{width:2px!important;min-width:2px!important;flex:0 0 2px!important;max-height:23px!important}
+.rebuildSpeech{border:1px solid rgba(227,182,84,.85)!important;background:linear-gradient(135deg,rgba(1,49,36,.98),rgba(0,23,19,.98))!important;box-shadow:0 8px 28px rgba(0,0,0,.4),0 0 15px rgba(225,180,79,.15)!important}
+.rebuildTrust{display:flex!important;align-items:center!important;gap:12px!important;flex-wrap:wrap!important}
+.rebuildTrust .rebuildDot{background:#d9a94e!important;box-shadow:0 0 8px rgba(217,169,78,.6)!important}
+@media(max-width:1100px){.rebuildFeatureWave{display:none!important}.rebuildFeatureIcon{transform:none!important}.rebuildFeatureIcon svg{transform:none!important}.rebuildSpeech{max-width:175px!important;right:0!important;top:2%!important;transform:scale(.8)!important;transform-origin:right top!important}}
+@media(prefers-reduced-motion:reduce){.rebuildFeatureWave.kathyaAudioWave i{animation:none!important}}

@@ -744,3 +744,27 @@ url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fi
 .rebuildHero .rebuildSpeech{top:10%!important;right:-4%!important;transform:scale(.85)!important;transform-origin:top right!important}
 }
 @media(min-width:681px) and (max-width:1100px){.rebuildHero .rebuildAvatar{transform:none!important;margin-top:0!important}.rebuildHero .rebuildAvatarImage{background-position:center center!important}}
+
+
+/* Premium Trust & Security showcase — remove empty footer gap */
+.section.trust.trustShowcase{width:calc(100% - 8vw)!important;max-width:1390px!important;margin:44px auto 42px!important;padding:clamp(30px,5vw,74px)!important;min-height:410px!important;display:grid!important;grid-template-columns:minmax(0,1.08fr) minmax(310px,.92fr)!important;align-items:center!important;gap:30px!important;border:1px solid rgba(58,224,151,.3)!important;border-radius:28px!important;background:radial-gradient(circle at 75% 46%,rgba(18,173,112,.17),transparent 38%),linear-gradient(125deg,#00140f,#003021 67%,#001810)!important;overflow:hidden!important;box-shadow:0 24px 65px rgba(0,0,0,.16)!important}
+.trustShowcase .trustCopy{position:relative;z-index:3}
+.trustShowcase .trustEyebrow{display:inline-flex;align-items:center;gap:10px;color:#e7bf69;font-size:12px;letter-spacing:.14em;font-weight:800}
+.trustShowcase .trustEyebrow svg{color:#e7bf69!important}
+.trustShowcase h2{font-size:clamp(40px,4.6vw,70px)!important;line-height:1.02!important;letter-spacing:-.055em!important;margin:19px 0!important;max-width:650px}
+.trustShowcase h2 em{font-style:normal;color:#64ffb5}
+.trustShowcase p{font-size:clamp(14px,1.15vw,17px)!important;line-height:1.7!important;max-width:570px;color:#b6d7c9!important}
+.trustShowcase .trustPoints{display:flex;flex-wrap:wrap;gap:13px 22px;margin:23px 0 28px}
+.trustShowcase .trustPoints span{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#e1f5e9}
+.trustShowcase .trustPoints svg{color:#e5b954!important}
+.trustShowcase a.trustExplore{display:inline-flex!important;align-items:center;justify-content:center;gap:10px;padding:15px 23px!important;width:max-content;max-width:100%;background:linear-gradient(105deg,#45f1a8,#a4ff56)!important;color:#032218!important;border-radius:999px!important;font-weight:800;font-size:14px;text-decoration:none}
+.trustShowcase .trustVisual{position:relative;min-height:330px;width:100%;display:grid;place-items:center;isolation:isolate}
+.trustShowcase .trustVisualHalo{position:absolute;width:300px;height:300px;border-radius:50%;border:1px dashed rgba(77,255,171,.6);box-shadow:0 0 0 25px rgba(43,232,136,.035),0 0 0 55px rgba(43,232,136,.025),0 0 70px rgba(43,232,136,.1);transform:rotate(-18deg)}
+.trustShowcase .trustVisualCenter{position:relative;z-index:2;width:205px;height:205px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;border:2px solid #66ffc0;background:radial-gradient(circle at 30% 20%,#176b4d,#003c2a 60%,#001a15);box-shadow:0 0 60px rgba(19,242,133,.24),inset 0 0 30px rgba(32,242,147,.12)}
+.trustShowcase .trustVisualCenter svg{color:#e8c46b!important}
+.trustShowcase .trustVisualCenter span{font-size:10px;letter-spacing:.17em;color:#e6ffd9;font-weight:800}
+.trustShowcase .trustVisualTag{position:absolute;z-index:4;display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border-radius:12px;background:rgba(0,38,29,.96);border:1px solid rgba(69,244,154,.6);font-size:12px;font-weight:700;color:#e8fff1;white-space:nowrap;box-shadow:0 10px 25px rgba(0,0,0,.24)}
+.trustShowcase .trustVisualTag svg{color:#e8c46b!important}
+.trustShowcase .trustTagOne{left:0;top:17%}.trustShowcase .trustTagTwo{right:0;top:27%}.trustShowcase .trustTagThree{right:4%;bottom:9%}
+@media(max-width:900px){.section.trust.trustShowcase{grid-template-columns:1fr!important;gap:0!important;width:calc(100% - 36px)!important;margin:25px auto 32px!important;padding:32px 24px!important}.trustShowcase .trustVisual{min-height:330px;margin-top:12px}.trustShowcase .trustVisualHalo{width:250px;height:250px}.trustShowcase .trustVisualCenter{width:180px;height:180px}}
+@media(max-width:520px){.section.trust.trustShowcase{padding:28px 20px!important}.trustShowcase h2{font-size:39px!important}.trustShowcase .trustVisual{min-height:285px}.trustShowcase .trustVisualHalo{width:200px;height:200px}.trustShowcase .trustVisualCenter{width:150px;height:150px}.trustShowcase .trustVisualCenter svg{width:52px}.trustShowcase .trustVisualTag{font-size:10px;padding:8px}.trustShowcase .trustTagOne{left:-10px;top:9%}.trustShowcase .trustTagTwo{right:-10px;top:26%}.trustShowcase .trustTagThree{right:0;bottom:5%}}

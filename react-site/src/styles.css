@@ -965,3 +965,23 @@ button:disabled{cursor:not-allowed;opacity:.65}
  .rebuildHero .rebuildFeatures{gap:8px!important;margin-left:0!important}
  .rebuildHero .rebuildFeature{min-height:70px!important;padding:10px 12px!important}
 }
+
+
+/* Hero alignment correction: prevent cropped avatar and reserve space for speech bubble */
+@media(min-width:1101px){
+ .rebuildHero{padding-top:clamp(78px,7vw,112px)!important;overflow:hidden!important}
+ .rebuildHero .rebuildInner{min-height:560px!important;align-items:center!important}
+ .rebuildHero .rebuildAvatar{height:510px!important;min-height:510px!important;align-self:center!important;overflow:visible!important;transform:none!important}
+ .rebuildHero .rebuildAvatarImage{inset:30px 0 0!important;background-size:contain!important;background-position:center center!important}
+ .rebuildHero .rebuildSpeech{top:7%!important;right:0!important}
+ .rebuildHero .rebuildFeatures{max-width:320px!important;gap:7px!important}
+ .rebuildHero .rebuildFeature{min-height:64px!important;padding:8px 10px!important}
+}
+@media(min-width:681px) and (max-width:1100px){
+ .rebuildHero .rebuildAvatar{height:470px!important;min-height:470px!important;transform:none!important}
+ .rebuildHero .rebuildAvatarImage{inset:18px 0 0!important;background-size:contain!important}
+}
+@media(max-width:680px){
+ .rebuildHero .rebuildAvatar{height:380px!important;min-height:380px!important;transform:none!important}
+ .rebuildHero .rebuildAvatarImage{inset:18px 0 0!important;background-size:contain!important}
+}

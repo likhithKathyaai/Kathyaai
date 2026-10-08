@@ -571,3 +571,33 @@ linear-gradient(90deg,rgba(0,0,0,.36) 0%,transparent 42%,rgba(0,0,0,.16) 100%)!i
 .goalSection .goalBuilderCore img{width:45%!important;height:45%!important;max-width:135px!important;max-height:135px!important;position:relative!important;object-fit:contain!important}
 .goalSection .goalBuilderNode{visibility:visible!important;opacity:1!important}
 @media(max-width:900px){.goalSection .goalHero{display:flex!important;flex-direction:column!important;gap:10px!important}.goalSection .goalHeroVisual.goalBuilderVisual{display:block!important;width:100%!important;flex:0 0 auto!important;min-height:390px!important}.goalSection .goalBuilderCore img{max-width:105px!important}}
+
+
+/* KATHYA unified Indian-inspired emerald/gold design language */
+:root{--lime:#66ffad;--green:#23e69a;--line:rgba(73,242,165,.18);--muted:#a7c9ba;--kathya-gold:#d9a94e}
+body{background:#02120e!important;color:#f2fff8}
+header{background:rgba(0,20,15,.95)!important;border-bottom:1px solid rgba(49,226,142,.2)!important}
+header .talk,.rebuildPrimary,.goalHeroPrimary{background:linear-gradient(105deg,#49efad,#a5ff49)!important;color:#052014!important;box-shadow:0 9px 24px rgba(17,244,134,.16)!important}
+header nav a:hover,.brand i{color:#73ffb0!important}
+.section{position:relative}
+.section:before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:min(92%,1200px);height:1px;background:linear-gradient(90deg,transparent,rgba(204,159,64,.3),rgba(61,239,155,.25),transparent);pointer-events:none}
+.sectionHead small,.goalKicker,.eyebrow{color:#76ffc0!important}
+.sectionHead h2 em,.goalHeroCopy h2 em{color:#69ffb1!important}
+.steps article,.bentoGrid article,.goalWorkflowCard,.agentStudioShell,.console,.messages article,.studioSection article{border-color:rgba(48,225,145,.2)!important}
+.goalSection .goalHero{background:radial-gradient(ellipse at 78% 49%,rgba(6,151,92,.25),transparent 43%),linear-gradient(120deg,#00130f,#002b20 65%,#00150f)!important;border:1px solid rgba(53,244,151,.4)!important}
+.goalSection .goalHero:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.48;background:radial-gradient(circle at 96% 91%,rgba(217,169,78,.28),transparent 19%),radial-gradient(circle at 9% 10%,rgba(217,169,78,.08),transparent 17%);border-radius:inherit}
+.goalSection .goalHeroCopy,.goalSection .goalBuilderVisual{z-index:2!important}
+.goalSection .goalBuilderCore{border-color:#52ffb0!important;box-shadow:0 0 0 12px rgba(18,255,146,.09),0 0 0 23px rgba(14,255,148,.045),0 0 65px rgba(0,255,145,.58),inset 0 0 45px rgba(24,255,147,.36),0 28px 35px rgba(0,0,0,.45)!important}
+.goalSection .goalBuilderCore:before{content:"";position:absolute;inset:-32px;border-radius:50%;border:1px solid rgba(218,168,65,.36);pointer-events:none}
+.goalSection .goalBuilderNode{border-color:rgba(51,244,157,.65)!important;box-shadow:0 8px 28px rgba(0,0,0,.3),0 0 16px rgba(0,243,140,.13)!important}
+.goalSection .goalBuilderNode svg{color:#e1b45a!important;filter:drop-shadow(0 0 5px rgba(227,177,78,.23))}
+.goalSection .goalBuilderNode:after{content:"";position:absolute;bottom:5px;right:13px;width:25px;height:1px;background:linear-gradient(90deg,#42ffa6,transparent)}
+.kathyaAudioWave{display:flex!important;align-items:center!important;justify-content:center!important;gap:3px!important;letter-spacing:normal!important;white-space:normal!important}
+.kathyaAudioWave i{display:block!important;width:3px!important;flex:0 0 3px!important;height:calc(5px + (var(--wave-i) * 7px) / 9)!important;min-height:5px!important;max-height:33px!important;border-radius:8px!important;background:linear-gradient(180deg,#b6ff8b,#19e9a4)!important;box-shadow:0 0 9px rgba(36,255,161,.48);animation:kathyaSignal 1.15s ease-in-out infinite alternate;animation-delay:calc(var(--wave-i) * -75ms)}
+.goalSection .goalBuilderWave.kathyaAudioWave{bottom:1%!important;left:24%!important;width:52%!important;height:36px!important;opacity:1!important;text-shadow:none!important}
+.rebuildSpeech .kathyaAudioWave{height:24px!important;min-height:24px!important}
+@keyframes kathyaSignal{0%,100%{transform:scaleY(.32);opacity:.62}45%{transform:scaleY(1);opacity:1}70%{transform:scaleY(.57);opacity:.82}}
+.goalHeroActions a,.workflowLink,.rebuildFeature,.goalBuilderNode{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.goalHeroActions a:hover,.workflowLink:hover,.rebuildFeature:hover{transform:translateY(-2px)}
+@media(max-width:600px){.goalSection .goalBuilderWave.kathyaAudioWave{display:flex!important;bottom:0!important;height:24px!important}.kathyaAudioWave i{max-height:22px!important}.goalSection .goalBuilderNode svg{color:#e1b45a!important}}
+@media(prefers-reduced-motion:reduce){.kathyaAudioWave i{animation:none!important;transform:scaleY(.75)}}

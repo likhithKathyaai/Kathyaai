@@ -865,3 +865,20 @@ footer.kathyaFooter{display:block!important;position:relative!important;width:10
 .workspaceIdentity{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:17px 20px;border:1px solid #dce7df;border-radius:12px;background:white;margin-bottom:22px;color:#264a36;font-size:13px}
 @media(max-width:800px){.workspaceOverview{gap:9px}.workspaceOverview article{padding:14px}.workspaceEditor form{grid-template-columns:1fr}.workspaceEditor form label:nth-child(3){grid-column:auto}.workspaceRecordsHeader{align-items:stretch;flex-direction:column}.workspaceRecordFilters>div{flex:1}.workspaceRecordFilters input{width:100%}}
 @media(max-width:520px){.workspaceOverview{grid-template-columns:1fr 1fr}.workspaceOverview article:last-child{grid-column:1/-1}.workspaceV2 .workspaceModuleTemplates{grid-template-columns:1fr 1fr}.workspaceRecords{padding:16px}.workspaceRecordList article{flex-wrap:wrap}.workspaceRecordFilters{flex-wrap:wrap}}
+
+
+/* Hero screenshot fix: restore top breathing room and remove unnecessary tall empty area */
+@media(min-width:1101px){
+.rebuildHero{padding-top:94px!important;padding-bottom:24px!important;min-height:0!important}
+.rebuildHero .rebuildInner{align-items:center!important;min-height:540px!important}
+.rebuildHero .rebuildCopy{align-self:center!important;padding-top:12px!important;padding-bottom:0!important}
+.rebuildHero .rebuildCopy h1{margin-top:0!important}
+.rebuildHero .rebuildAvatar{height:530px!important;min-height:530px!important;align-self:center!important;margin-top:0!important;transform:none!important}
+.rebuildHero .rebuildAvatarImage{inset:0 -10px!important;background-position:center center!important}
+.rebuildHero .rebuildFeatures{align-self:center!important}
+.rebuildHero .rebuildCommand{margin:8px auto 0!important}
+.rebuildHero .rebuildShortcuts{margin-top:12px!important}
+.rebuildHero .rebuildProof{margin-top:24px!important}
+}
+@media(min-width:681px) and (max-width:1100px){.rebuildHero{padding-top:85px!important;min-height:0!important}.rebuildHero .rebuildCopy{padding-top:15px!important}.rebuildHero .rebuildCommand{margin-top:12px!important}}
+@media(max-width:680px){.rebuildHero{padding-top:42px!important;min-height:0!important}.rebuildHero .rebuildCopy{padding-top:12px!important}.rebuildHero .rebuildCommand{margin-top:16px!important}}

@@ -636,3 +636,9 @@ header nav a:focus-visible,main a:focus-visible,main button:focus-visible{outlin
 input,textarea,select{accent-color:#36eaa2}
 @media(max-width:700px){.section{padding-left:18px;padding-right:18px}.goalSection .goalHeroCopy:after{display:none}.goalSection .goalBuilderNode{box-shadow:0 5px 15px rgba(0,0,0,.3)!important}}
 @media(prefers-reduced-motion:reduce){.goalWorkflowCard,.steps article,.bentoGrid article{transition:none!important}}
+
+
+/* Audio signal within each workflow card — replaces static glyph bars */
+.goalSection .miniStart .goalWave.kathyaAudioWave{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:2px!important;width:100%!important;max-width:150px!important;height:31px!important;min-height:31px!important;padding:2px 0!important;overflow:hidden!important;line-height:normal!important;font-size:0!important;letter-spacing:0!important}
+.goalSection .miniStart .goalWave.kathyaAudioWave i{display:block!important;flex:0 0 3px!important;width:3px!important;min-width:3px!important;min-height:4px!important;height:calc(6px + (var(--wave-i) * 5px) / 4)!important;max-height:27px!important;border-radius:6px!important;background:linear-gradient(180deg,#d0ff95,#18f3a3)!important;box-shadow:0 0 7px rgba(33,255,161,.4)!important;animation:kathyaSignal .8s ease-in-out infinite alternate!important;animation-delay:calc(var(--wave-i) * -65ms)!important}
+@media(prefers-reduced-motion:reduce){.goalSection .miniStart .goalWave.kathyaAudioWave i{animation:none!important;height:14px!important}}

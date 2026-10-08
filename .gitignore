@@ -26,3 +26,20 @@ wp-content/uploads/
 wp-content/cache/
 wp-content/upgrade/
 wp-content/backup*/
+
+# React/Vite build output and local tooling
+dist/
+build/
+coverage/
+.vite/
+.vercel/
+.playwright/
+test-results/
+playwright-report/
+*.tsbuildinfo
+
+# Local caches and generated assets
+.cache/
+*.map
+*.bak
+*.orig

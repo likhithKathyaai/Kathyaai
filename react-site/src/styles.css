@@ -667,3 +667,58 @@ input,textarea,select{accent-color:#36eaa2}
 .rebuildTrust .rebuildDot{background:#d9a94e!important;box-shadow:0 0 8px rgba(217,169,78,.6)!important}
 @media(max-width:1100px){.rebuildFeatureWave{display:none!important}.rebuildFeatureIcon{transform:none!important}.rebuildFeatureIcon svg{transform:none!important}.rebuildSpeech{max-width:175px!important;right:0!important;top:2%!important;transform:scale(.8)!important;transform-origin:right top!important}}
 @media(prefers-reduced-motion:reduce){.rebuildFeatureWave.kathyaAudioWave i{animation:none!important}}
+
+
+/* Reference-locked visual treatment: Indian gold filigree, emerald panels, cinematic contrast */
+.rebuildHero,.goalSection .goalHero{--ref-gold:#e9b950;--ref-green:#56f6a5}
+.rebuildHero{background:#00140f!important}
+.rebuildHero .rebuildScene{background:
+radial-gradient(ellipse at 3% 5%,rgba(228,163,58,.15),transparent 19%),
+radial-gradient(ellipse at 94% 7%,rgba(231,169,63,.16),transparent 18%),
+linear-gradient(90deg,rgba(0,12,10,.88) 0%,rgba(0,18,15,.46) 37%,rgba(0,13,12,.3) 59%,rgba(0,12,10,.85) 100%),
+url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2400&q=90") center 43%/cover no-repeat!important}
+.rebuildHero:before,.goalSection .goalHero:before{content:"❖";position:absolute;left:14px;top:10px;z-index:2;color:#e9b950;font-size:48px;line-height:1;text-shadow:0 0 15px rgba(230,168,66,.5);opacity:.85;pointer-events:none}
+.rebuildHero:after{content:"❖";position:absolute;right:16px;top:12px;z-index:2;color:#e9b950;font-size:48px;line-height:1;text-shadow:0 0 15px rgba(230,168,66,.5);opacity:.85;pointer-events:none}
+.rebuildEyebrow:after{content:"  ✧ ───────── ✧";color:#e9b950;letter-spacing:2px}
+.rebuildCopy h1{letter-spacing:-.062em!important}
+.rebuildCopy h1 em{font-style:normal!important;color:#54f5a2!important}
+.rebuildTrust .rebuildDot{width:11px!important;height:11px!important;border-radius:0!important;transform:rotate(45deg)!important;background:#e8b653!important}
+.rebuildFeature{border-radius:20px!important;border-color:rgba(47,234,132,.75)!important;min-height:94px!important}
+.rebuildFeatureIcon{border-radius:12px!important}
+.rebuildFeatureText b{font-size:clamp(12px,1vw,17px)!important;line-height:1.3!important}
+.rebuildFeatureText small{font-size:clamp(10px,.85vw,13px)!important}
+.rebuildFeatureWave.kathyaAudioWave{opacity:1!important}
+.rebuildFeatureArrow{width:34px!important;height:34px!important;flex-basis:34px!important}
+.rebuildSpeech{padding:15px!important;border-radius:17px!important}
+.rebuildSpeech b{font-size:16px!important}
+.rebuildSpeech small{font-size:12px!important}
+.goalSection .goalHero{border-radius:0!important;border-color:rgba(36,226,133,.35)!important;background:radial-gradient(ellipse at 72% 52%,rgba(2,113,77,.36),transparent 40%),linear-gradient(100deg,#00130f,#003022 70%,#00120d)!important}
+.goalSection .goalHero:before{content:"❖";left:auto;right:20px;top:14px;opacity:.6}
+.goalSection .goalHeroCopy h2{font-size:clamp(46px,4.6vw,78px)!important;line-height:1.04!important;letter-spacing:-.06em!important}
+.goalSection .goalHeroCopy h2 em{font-style:normal!important;color:#54f5a2!important}
+.goalSection .goalBuilderVisual:before{background:radial-gradient(ellipse at 49% 54%,rgba(0,255,141,.32),transparent 53%)!important}
+.goalSection .goalBuilderCore{border:4px solid #53ffa8!important;box-shadow:0 0 0 10px rgba(18,255,146,.09),0 0 0 25px rgba(14,255,148,.05),0 0 90px rgba(0,255,145,.62),inset 0 0 45px rgba(24,255,147,.44)!important}
+.goalSection .goalBuilderNode{border:1px solid rgba(51,248,147,.7)!important;border-radius:18px!important;box-shadow:0 10px 30px rgba(0,0,0,.35),0 0 19px rgba(0,240,134,.15)!important}
+.goalSection .goalBuilderNode svg{color:#e9b950!important}
+.goalSection .goalBuilderNode:after{content:"➜";color:#4df6a5;margin-left:auto;font-size:20px}
+.goalSection .goalBuilderNode b{font-size:13px!important}
+.goalSection .goalBuilderNode small{font-size:10px!important}
+.goalSection .goalBuilderOrbit{border-style:dashed!important;border-color:rgba(75,255,163,.66)!important}
+.goalSection .goalBenefits svg{color:#6af4b2!important}
+@media(min-width:1200px){
+.rebuildHero{padding-top:55px!important}
+.rebuildInner{grid-template-columns:minmax(0,1.08fr) minmax(0,1.12fr) minmax(0,1.07fr)!important;gap:18px!important}
+.rebuildAvatar{height:600px!important;min-height:600px!important;margin:0!important}
+.rebuildAvatarImage{inset:0 -8px -25px!important}
+.rebuildSpeech{top:5%!important;right:-5%!important;transform:translateX(0) scale(.9)!important}
+.rebuildFeatures{margin-left:28px!important}
+.goalSection .goalHero{grid-template-columns:minmax(0,.96fr) minmax(0,1.3fr)!important;min-height:590px!important;padding:56px 3.4%!important}
+.goalSection .goalHeroVisual.goalBuilderVisual{height:510px!important;min-height:510px!important}
+.goalSection .goalBuilderCore{width:280px!important}
+.goalSection .nodeAnswer{top:0!important;left:38%!important}
+.goalSection .nodeBooking{top:25%!important;left:0!important}
+.goalSection .nodeKnowledge{top:21%!important;right:0!important}
+.goalSection .nodeLeads{bottom:18%!important;left:0!important}
+.goalSection .nodeActions{bottom:17%!important;right:0!important}
+}
+@media(max-width:1199px){.rebuildHero:before,.rebuildHero:after,.goalSection .goalHero:before{font-size:28px}.rebuildEyebrow:after{display:none}.goalSection .goalBuilderNode:after{display:none}}

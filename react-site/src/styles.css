@@ -555,3 +555,19 @@ linear-gradient(90deg,rgba(0,0,0,.36) 0%,transparent 42%,rgba(0,0,0,.16) 100%)!i
 @media(max-width:900px){.goalSection .goalHeroVisual.goalBuilderVisual{min-height:410px!important}.goalSection .goalBuilderCore{width:220px}.goalSection .goalBuilderNode{min-width:120px;max-width:160px;padding:9px}.goalSection .goalBuilderNode b{font-size:10px}.goalSection .goalBuilderNode small{font-size:9px}}
 @media(max-width:600px){.goalSection .goalHeroVisual.goalBuilderVisual{min-height:365px!important;margin-top:18px}.goalSection .goalBuilderCore{width:175px}.goalSection .goalBuilderNode{min-width:0;max-width:132px;padding:8px;gap:5px}.goalSection .goalBuilderNode svg{width:17px;flex-basis:17px}.goalSection .goalBuilderNode b{font-size:9px}.goalSection .goalBuilderNode small{font-size:8px}.goalSection .nodeAnswer{left:32%;top:0}.goalSection .nodeBooking{left:0;top:20%}.goalSection .nodeKnowledge{right:0;top:21%}.goalSection .nodeLeads{left:0;bottom:14%}.goalSection .nodeActions{right:0;bottom:12%}.goalSection .goalBuilderWave{display:none}}
 @media(prefers-reduced-motion:reduce){.goalSection .goalBuilderCore,.goalSection .goalBuilderCore:after{animation:none}}
+
+
+/* Fix screenshot regression: desktop agent-builder columns and giant inherited logo */
+@media(min-width:901px){
+.goalSection .goalHero{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr)!important;align-items:center!important;gap:25px!important;min-height:510px!important;padding:46px 4%!important}
+.goalSection .goalHeroCopy{width:100%!important;max-width:580px!important;align-self:center!important;z-index:7!important}
+.goalSection .goalHeroCopy h2{font-size:clamp(42px,4.2vw,66px)!important;line-height:1.04!important;margin:18px 0!important;max-width:600px!important}
+.goalSection .goalHeroActions{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important}
+.goalSection .goalHeroVisual.goalBuilderVisual{display:block!important;position:relative!important;width:100%!important;min-width:0!important;height:440px!important;min-height:440px!important;align-self:center!important;overflow:visible!important;z-index:3!important}
+}
+.goalSection .goalBuilderVisual{background:none!important;background-image:none!important}
+.goalSection .goalBuilderVisual:after{content:none!important;background:none!important}
+.goalSection .goalBuilderCore{background-image:radial-gradient(circle at 35% 26%,#1a8f66,#003b2a 49%,#00150f 74%)!important}
+.goalSection .goalBuilderCore img{width:45%!important;height:45%!important;max-width:135px!important;max-height:135px!important;position:relative!important;object-fit:contain!important}
+.goalSection .goalBuilderNode{visibility:visible!important;opacity:1!important}
+@media(max-width:900px){.goalSection .goalHero{display:flex!important;flex-direction:column!important;gap:10px!important}.goalSection .goalHeroVisual.goalBuilderVisual{display:block!important;width:100%!important;flex:0 0 auto!important;min-height:390px!important}.goalSection .goalBuilderCore img{max-width:105px!important}}

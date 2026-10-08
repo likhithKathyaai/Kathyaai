@@ -735,3 +735,12 @@ url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fi
 }
 @media(min-width:681px) and (max-width:1100px){.rebuildHero .rebuildAvatar{transform:translateY(-20px)!important}.rebuildHero .rebuildAvatarImage{background-position:center top!important}}
 @media(max-width:680px){.rebuildHero .rebuildAvatar{transform:none!important;margin-top:0!important}}
+
+
+/* Screenshot hotfix: undo excessive avatar lift that clipped the head at header */
+@media(min-width:1101px){
+.rebuildHero .rebuildAvatar{height:520px!important;min-height:520px!important;margin-top:0!important;margin-bottom:0!important;transform:translateY(0)!important;align-self:center!important}
+.rebuildHero .rebuildAvatarImage{inset:0 -10px 0!important;background-size:contain!important;background-position:center center!important;mask-image:radial-gradient(ellipse 65% 57% at 50% 48%,#000 68%,transparent 100%)!important;-webkit-mask-image:radial-gradient(ellipse 65% 57% at 50% 48%,#000 68%,transparent 100%)!important}
+.rebuildHero .rebuildSpeech{top:10%!important;right:-4%!important;transform:scale(.85)!important;transform-origin:top right!important}
+}
+@media(min-width:681px) and (max-width:1100px){.rebuildHero .rebuildAvatar{transform:none!important;margin-top:0!important}.rebuildHero .rebuildAvatarImage{background-position:center center!important}}

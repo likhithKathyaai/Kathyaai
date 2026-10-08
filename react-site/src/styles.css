@@ -768,3 +768,24 @@ url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fi
 .trustShowcase .trustTagOne{left:0;top:17%}.trustShowcase .trustTagTwo{right:0;top:27%}.trustShowcase .trustTagThree{right:4%;bottom:9%}
 @media(max-width:900px){.section.trust.trustShowcase{grid-template-columns:1fr!important;gap:0!important;width:calc(100% - 36px)!important;margin:25px auto 32px!important;padding:32px 24px!important}.trustShowcase .trustVisual{min-height:330px;margin-top:12px}.trustShowcase .trustVisualHalo{width:250px;height:250px}.trustShowcase .trustVisualCenter{width:180px;height:180px}}
 @media(max-width:520px){.section.trust.trustShowcase{padding:28px 20px!important}.trustShowcase h2{font-size:39px!important}.trustShowcase .trustVisual{min-height:285px}.trustShowcase .trustVisualHalo{width:200px;height:200px}.trustShowcase .trustVisualCenter{width:150px;height:150px}.trustShowcase .trustVisualCenter svg{width:52px}.trustShowcase .trustVisualTag{font-size:10px;padding:8px}.trustShowcase .trustTagOne{left:-10px;top:9%}.trustShowcase .trustTagTwo{right:-10px;top:26%}.trustShowcase .trustTagThree{right:0;bottom:5%}}
+
+
+/* Footer rebuild — clean columns, mobile horizontal wrapping, consistent spacing */
+footer.kathyaFooter{display:block!important;position:relative!important;width:100%!important;margin:0!important;padding:44px clamp(20px,5vw,80px) 20px!important;background:linear-gradient(135deg,#00130e,#00251b 65%,#00120e)!important;border-top:1px solid rgba(80,237,153,.27)!important;color:#c7e3d3!important}
+.kathyaFooterMain{max-width:1390px;margin:auto;display:grid;grid-template-columns:minmax(240px,.95fr) minmax(0,1.4fr);gap:clamp(35px,7vw,110px);align-items:start;padding-bottom:35px}
+.kathyaFooterBrand .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:#f3fff8;font-size:22px;font-weight:900}
+.kathyaFooterBrand .brandLogo{width:45px;height:45px;object-fit:contain;background:transparent}
+.kathyaFooterBrand .brand i{font-style:normal;color:#7bffad}
+.kathyaFooterBrand p{font-size:17px;color:#f0d18b;margin:15px 0 8px}
+.kathyaFooterBrand>span{display:block;font-size:13px;color:#9ac7af}
+.kathyaFooterNav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.kathyaFooterNav>div{display:flex;flex-direction:column;align-items:flex-start;gap:13px}
+.kathyaFooterNav b{font-size:13px;letter-spacing:.07em;color:#e8c477;margin-bottom:6px}
+.kathyaFooterNav a{font-size:13px;line-height:1.4;color:#c7e3d3;text-decoration:none;transition:color .2s}
+.kathyaFooterNav a:hover{color:#62ffaf}
+.kathyaFooterBottom{max-width:1390px;margin:auto;padding-top:19px;border-top:1px solid rgba(87,218,147,.2);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.kathyaFooterBottom small{font-size:11px;color:#8db4a0}
+.kathyaFooterBottom>span{font-size:11px;color:#8db4a0}
+.kathyaFooterBottom>span span{color:#e8c477}
+@media(max-width:760px){footer.kathyaFooter{padding:30px 20px 20px!important}.kathyaFooterMain{grid-template-columns:1fr;gap:28px;padding-bottom:28px}.kathyaFooterNav{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.kathyaFooterNav>div{gap:11px}.kathyaFooterNav a{font-size:12px}.kathyaFooterBottom{align-items:flex-start;flex-direction:column;gap:8px}}
+@media(max-width:400px){.kathyaFooterNav{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:24px}}

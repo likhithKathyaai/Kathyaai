@@ -985,3 +985,26 @@ button:disabled{cursor:not-allowed;opacity:.65}
  .rebuildHero .rebuildAvatar{height:380px!important;min-height:380px!important;transform:none!important}
  .rebuildHero .rebuildAvatarImage{inset:18px 0 0!important;background-size:contain!important}
 }
+
+
+/* KATHYA cinematic authentication — video-inspired, product-branded glass UI */
+.kathyaAuthPage{position:relative;isolation:isolate;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:100px 20px 60px;background:#030b13;color:#f4fbff;overflow:hidden;font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+.kathyaAuthAmbient{position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% 44%,rgba(10,93,125,.23),transparent 48%),radial-gradient(ellipse at 10% 7%,rgba(30,130,109,.15),transparent 42%),radial-gradient(ellipse at 93% 87%,rgba(14,79,145,.16),transparent 46%),repeating-linear-gradient(115deg,transparent 0,transparent 72px,rgba(255,255,255,.012) 73px,transparent 74px)}
+.kathyaAuthBrand{position:absolute;left:clamp(20px,5vw,75px);top:25px;display:flex;align-items:center;gap:11px;color:white;text-decoration:none;font-size:20px;font-weight:850;letter-spacing:-.03em}.kathyaAuthBrand img{width:35px;height:35px;object-fit:contain}.kathyaAuthBrand em{font-style:normal;color:#7effa2}
+.kathyaAuthBack{position:absolute;right:clamp(20px,5vw,75px);top:32px;color:#9fb7c6;text-decoration:none;font-size:13px}.kathyaAuthBack:hover{color:#fff}
+.kathyaAuthStage{width:min(100%,440px);display:flex;align-items:center;flex-direction:column;position:relative}
+.kathyaAuthOrb{height:90px;width:90px;position:relative;margin-bottom:-26px;z-index:3;border-radius:50%;background:radial-gradient(circle at 32% 24%,#a5fffd 0,#35c9ff 18%,#026ec7 48%,#001b65 77%);box-shadow:0 0 36px rgba(38,168,255,.46),inset -10px -15px 20px rgba(0,8,41,.62);animation:kathyaAuthFloat 5s ease-in-out infinite}
+.kathyaAuthOrb span{position:absolute;inset:15px;border-radius:50%;border:1px solid rgba(255,255,255,.4);transform:rotate(-35deg) scaleX(1.25)}
+.kathyaAuthCard{width:100%;padding:65px clamp(22px,5vw,38px) 30px;border-radius:24px;border:1px solid rgba(75,179,229,.27);background:linear-gradient(160deg,rgba(17,51,72,.87),rgba(5,22,39,.95) 65%);box-shadow:0 26px 100px rgba(0,0,0,.5),0 0 55px rgba(13,154,215,.15),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(18px)}
+.kathyaAuthKicker{font-size:10px;letter-spacing:.22em;color:#62dcce;font-weight:800;text-align:center;margin-bottom:13px}
+.kathyaAuthCard h1{text-align:center;font-size:clamp(27px,3vw,36px);letter-spacing:-.05em;line-height:1.12;margin:0 0 8px;color:white}.kathyaAuthCard>p{text-align:center;color:#a5bfcb;font-size:13px;margin:0 0 27px}
+.kathyaAuthCard form{display:flex;flex-direction:column;gap:10px}.kathyaAuthCard label{color:#d4e7ee;font-size:12px;font-weight:700}.kathyaAuthCard input{display:block;width:100%;height:47px;border:1px solid rgba(122,177,201,.2);border-radius:11px;background:rgba(4,20,33,.77);color:white;padding:0 14px;outline:none;font-size:14px}.kathyaAuthCard input::placeholder{color:#6f8d9d}.kathyaAuthCard input:focus{border-color:#4bdaec;box-shadow:0 0 0 3px rgba(33,184,219,.13)}
+.kathyaAuthLabelRow{display:flex;align-items:center;justify-content:space-between;margin-top:4px}.kathyaAuthLabelRow button,.kathyaAuthSwitch button{border:0;background:transparent;color:#60d7fa;font-size:12px;font-weight:700;padding:3px;cursor:pointer}
+.kathyaAuthPassword{position:relative}.kathyaAuthPassword input{padding-right:60px}.kathyaAuthPassword button{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:transparent;border:0;color:#8eb6c7;font-size:12px;padding:8px;cursor:pointer}
+.kathyaAuthSubmit{margin-top:10px;width:100%;min-height:48px;border:0;border-radius:11px;color:white;background:linear-gradient(95deg,#0575dc,#15b5ee);box-shadow:0 7px 24px rgba(0,125,255,.27);font-weight:800;display:flex;align-items:center;justify-content:center;gap:12px}.kathyaAuthSubmit:hover{filter:brightness(1.1)}
+.kathyaAuthDivider{display:flex;align-items:center;gap:12px;color:#829ba9;font-size:11px;margin:21px 0 16px;white-space:nowrap}.kathyaAuthDivider span{height:1px;background:rgba(138,181,199,.2);flex:1}
+.kathyaAuthGoogle{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:44px;border:1px solid rgba(131,185,204,.24);background:rgba(2,13,25,.55);border-radius:10px;color:white;font-weight:650}.kathyaAuthGoogle:hover{border-color:#54bce2}.kathyaAuthGoogle .googleG{font-size:19px;color:#fbbc05;font-weight:850}
+.kathyaAuthSwitch{text-align:center;color:#a0b9c7;font-size:12px;margin-top:22px}.kathyaAuthMessage{margin-top:14px;padding:12px;border:1px solid rgba(65,208,181,.35);border-radius:9px;background:rgba(24,102,97,.18);color:#c3fff0;font-size:12px;line-height:1.5}.kathyaAuthNote{margin-top:21px;color:#7795a5;font-size:11px;text-align:center}
+@keyframes kathyaAuthFloat{50%{transform:translateY(-9px)}}
+@media(max-width:520px){.kathyaAuthPage{padding:105px 16px 40px}.kathyaAuthCard{padding:61px 22px 27px}.kathyaAuthBrand{font-size:17px}.kathyaAuthBack{font-size:11px}.kathyaAuthOrb{width:76px;height:76px}}
+@media(prefers-reduced-motion:reduce){.kathyaAuthOrb{animation:none}}

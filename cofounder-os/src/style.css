@@ -7,3 +7,6 @@
 
 /* Phase 4 workflow studio */
 .workflowselect{width:100%;padding:13px 14px;border:1px solid #2a4b40;border-radius:10px;background:#071812;color:#fff}.workflowlist{margin-top:20px}.workflowlist .executionactions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.workflowlist .executionplan{max-height:420px;overflow:auto}.workflowlist .executiontitle .status{text-transform:capitalize;color:#b8ffca;font-size:12px}.workflowlist .executionplan p{overflow-wrap:anywhere}
+
+/* Phase 5 operations */
+.opsline{padding:12px 0;border-bottom:1px solid #274735;display:flex;justify-content:space-between;gap:12px;align-items:center}.opsline b{font-size:13px}.opsline small{font-size:11px;color:#9cbaa7}.opsnote{font-size:12px;color:#9bb5a4;line-height:1.6}.executiontoolbar button{display:flex;align-items:center;gap:7px}.execution .create>label{display:block;margin:14px 0 7px}.execution .create>.primary{margin-top:18px;width:100%}

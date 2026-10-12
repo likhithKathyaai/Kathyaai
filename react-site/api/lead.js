@@ -18,7 +18,7 @@ export default async function handler(req,res){
    if(target.protocol!=='https:'||!target.pathname.endsWith('/api/integrations/website-lead'))throw Error('Invalid CRM endpoint');
    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
    try{
-    const r=await fetch(target.toString(),{method:'POST',headers:{'Content-Type':'application/json','x-kathya-lead-secret':secret},body:JSON.stringify({name:n,email:e,company:c,usecase:u,message:m,submissionId:randomUUID()}),signal:controller.signal});
+    const r=await fetch(target.toString(),{method:'POST',headers:{'Content-Type':'application/json','x-kathya-lead-secret':secret,...(process.env.FOUNDER_CRM_VERCEL_BYPASS_SECRET?{'x-vercel-protection-bypass':process.env.FOUNDER_CRM_VERCEL_BYPASS_SECRET}:{})},body:JSON.stringify({name:n,email:e,company:c,usecase:u,message:m,submissionId:randomUUID()}),signal:controller.signal});
     crmSynced=r.ok;
     if(!r.ok)console.error('Founder CRM sync failed',{status:r.status});
    }finally{clearTimeout(timer)}

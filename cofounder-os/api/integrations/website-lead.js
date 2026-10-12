@@ -19,7 +19,8 @@ export default async function handler(req,res){
   const{data:allow,error:allowError}=await supabase.from('founder_allowlist').select('email').ilike('email',userData.user.email).limit(1);
   if(allowError||!allow?.length)return reply(res,503,{error:'CRM founder owner is not approved'});
   const payload={owner_id:owner,external_submission_id:submissionId,company:company||'Individual inquiry',contact_name:name,email,source:'KATHYA website form',stage:'new',fit:'unknown',intent:'unknown',engagement:'none',notes:['Use case: '+(usecase||'Not specified'),message&&'Request: '+message].filter(Boolean).join('\n')};
-  const{error}=await supabase.from('founder_sales_leads').upsert(payload,{onConflict:'owner_id,external_submission_id',ignoreDuplicates:true});
+  const{error}=await supabase.from('founder_sales_leads').insert(payload);
+  if(error?.code==='23505')return reply(res,200,{ok:true,duplicate:true});
   if(error){console.error('Website lead sync database error',{code:error.code});return reply(res,500,{error:'CRM save failed'})}
   return reply(res,200,{ok:true});
  }catch(e){console.error('Website lead sync unexpected error',e?.message);return reply(res,500,{error:'CRM sync unavailable'})}

@@ -20,7 +20,7 @@ export default async function handler(req,res){
    try{
     const r=await fetch(target.toString(),{method:'POST',headers:{'Content-Type':'application/json','x-kathya-lead-secret':secret,...(process.env.FOUNDER_CRM_VERCEL_BYPASS_SECRET?{'x-vercel-protection-bypass':process.env.FOUNDER_CRM_VERCEL_BYPASS_SECRET}:{})},body:JSON.stringify({name:n,email:e,company:c,usecase:u,message:m,submissionId:randomUUID()}),signal:controller.signal});
     crmSynced=r.ok;
-    if(!r.ok)console.error('Founder CRM sync failed',{status:r.status});
+    if(!r.ok){const contentType=r.headers.get('content-type')||'';let reason='non-json upstream response';if(contentType.includes('application/json')){const body=await r.json().catch(()=>({}));const allowed=['Website lead sync not configured','CRM founder owner is not verified','CRM founder owner is not approved','CRM owner ID misconfigured','CRM save failed','Unauthorized','CRM sync unavailable','Method not allowed'];reason=allowed.includes(body?.error)?body.error:'unknown upstream error'}console.error('Founder CRM sync failed',{status:r.status,reason,upstreamHost:target.hostname,redirected:r.redirected});}
    }finally{clearTimeout(timer)}
   }catch(err){console.error('Founder CRM sync unavailable',err?.message)}
  }

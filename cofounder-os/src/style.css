@@ -19,3 +19,6 @@
 
 /* Phase 9 Sales CRM */
 .sales-lead{border-bottom:1px solid #2d493c;padding:16px 0}.sales-lead-head,.sales-actions{display:flex;align-items:center;justify-content:space-between;gap:10px}.sales-lead-head small{color:#a8bfb1}.sales-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin:12px 0}.sales-fields label,.sales-form label{display:grid;gap:5px;font-size:12px}.sales-fields select,.sales-fields input,.sales-form input,.sales-form textarea{width:100%;min-width:0}.sales-actions button,.sales-crm .panelhead button{display:inline-flex;align-items:center;gap:6px}.sales-form{display:grid;gap:13px}.sales-form button{justify-self:start}
+
+/* Phase 10 sales command center */
+.sales-funnel{display:grid;grid-template-columns:repeat(auto-fit,minmax(85px,1fr));gap:10px;margin:18px 0}.sales-funnel>div{border:1px solid #2e6553;border-radius:12px;padding:14px 9px;text-align:center;background:linear-gradient(160deg,rgba(42,119,83,.18),transparent)}.sales-funnel strong{display:block;font-size:24px}.sales-funnel small{display:block;text-transform:capitalize;color:#a5cbb5}.sales-priorities{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.sales-priorities span{border:1px solid #365a49;border-radius:999px;padding:7px 12px;font-size:12px}.sales-crm .panel>h3{margin-top:18px}

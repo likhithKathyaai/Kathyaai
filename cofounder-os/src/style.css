@@ -16,3 +16,6 @@
 
 /* Phase 8 growth intelligence */
 .growth .executionintro h2{display:flex;align-items:center;gap:10px}.growth-record{padding:15px 0;border-bottom:1px solid #244739}.growth-record .executiontitle{display:flex;justify-content:space-between;align-items:center;gap:10px}.growth-record-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0}.growth-record-row select{max-width:210px}.growth .panelhead button{display:flex;align-items:center;gap:6px}.growth .create>button{display:flex;align-items:center;gap:7px;margin:12px 0}.growth .executionplan p{white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* Phase 9 Sales CRM */
+.sales-lead{border-bottom:1px solid #2d493c;padding:16px 0}.sales-lead-head,.sales-actions{display:flex;align-items:center;justify-content:space-between;gap:10px}.sales-lead-head small{color:#a8bfb1}.sales-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin:12px 0}.sales-fields label,.sales-form label{display:grid;gap:5px;font-size:12px}.sales-fields select,.sales-fields input,.sales-form input,.sales-form textarea{width:100%;min-width:0}.sales-actions button,.sales-crm .panelhead button{display:inline-flex;align-items:center;gap:6px}.sales-form{display:grid;gap:13px}.sales-form button{justify-self:start}

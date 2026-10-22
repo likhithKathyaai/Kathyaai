@@ -1012,3 +1012,56 @@ button:disabled{cursor:not-allowed;opacity:.65}
 /* Replace generic blue orb with KATHYA brand emblem on authentication pages */
 .kathyaAuthBrandOrb{display:grid;place-items:center;background:radial-gradient(circle at 32% 20%,#13533b,#022419 65%,#01130e)!important;border:1px solid rgba(114,255,155,.65);box-shadow:0 0 35px rgba(65,250,133,.38),inset 0 0 24px rgba(73,255,144,.15)!important;overflow:hidden}
 .kathyaAuthBrandOrb img{width:69%;height:69%;object-fit:contain;display:block;filter:drop-shadow(0 0 8px rgba(100,255,135,.38))}
+
+
+/* KATHYA AI — Midnight Navy + Mint LIGHT preview. Preview branch only; preserve official logo assets. */
+:root{
+ color:#101c2c;background:#f4f7fa;
+ --lime:#bdf56b;--green:#48d6b0;--line:rgba(16,28,44,.12);--muted:#52667a;
+}
+body{background:radial-gradient(circle at 83% 6%,rgba(72,214,176,.13),transparent 26%),#f4f7fa;color:#101c2c}
+header{background:rgba(244,247,250,.92);border-bottom:1px solid rgba(16,28,44,.10);box-shadow:0 6px 26px rgba(16,28,44,.035)}
+.brand{color:#101c2c}.brand i{color:#48d6b0}
+.brandLogo{object-fit:contain;filter:none}
+.mark{background:linear-gradient(145deg,#bdf56b,#48d6b0);color:#101c2c;box-shadow:none}
+nav a{color:#23364a}nav a:hover{color:#168c78}
+.talk,.actions button,.run,.primary,.featured>a,.trust>a{background:#48d6b0!important;color:#101c2c!important;box-shadow:0 8px 24px rgba(72,214,176,.18)}
+.menu{color:#101c2c}
+nav.open{background:#f4f7fa;border-color:rgba(16,28,44,.12)}
+.hero{background:radial-gradient(ellipse at 92% 45%,rgba(72,214,176,.13),transparent 35%)}
+.eyebrow,.sectionHead small{color:#52667a}
+.eyebrow span{background:#48d6b0;box-shadow:0 0 10px rgba(72,214,176,.4)}
+.hero h1,.sectionHead h2,.steps h3,.bentoGrid h3,.plans h3,.trust h2{color:#101c2c}
+.hero h1 em{color:#159b81}
+.heroCopy>p,.sectionHead>p{color:#40566c}
+.actions a{color:#101c2c}
+.proof span{color:#52667a}
+.console{border:1px solid rgba(16,28,44,.10);background:linear-gradient(145deg,#fff,#edf3f8);box-shadow:0 28px 72px rgba(16,28,44,.12)}
+.consoleTop{border-color:rgba(16,28,44,.10);color:#101c2c}.consoleTop b span{background:#48d6b0;box-shadow:0 0 8px rgba(72,214,176,.35)}.consoleTop small{color:#64788a}
+.messages article{border-color:rgba(16,28,44,.10);background:rgba(35,54,74,.045)}.messages .ai{background:rgba(72,214,176,.13);border-color:rgba(72,214,176,.35)}
+.messages small,.outcomes small{color:#64788a}.messages p{color:#101c2c}
+.flow div{color:#64788a}.flow div.active{color:#101c2c}.flow div b{background:#e5edf4;color:#101c2c}.flow div.active b{background:#bdf56b;color:#101c2c;box-shadow:0 0 14px rgba(189,245,107,.2)}
+.outcomes span{background:#fff;border-color:rgba(16,28,44,.1)}.outcomes b{color:#101c2c}
+.ticker{border-color:rgba(16,28,44,.12);color:#64788a}.ticker b{color:#168c78}
+.steps article,.bentoGrid article{border-color:rgba(16,28,44,.10);background:linear-gradient(145deg,#fff,#edf3f8);box-shadow:0 12px 35px rgba(16,28,44,.045)}
+.steps article b,.bentoGrid svg{color:#168c78}
+.steps p,.bentoGrid p,.plans p,.trust p{color:#52667a}
+.plans article{border-color:rgba(16,28,44,.12);background:linear-gradient(155deg,#fff,#edf3f8)}
+.plans article.featured{border-color:#48d6b0;box-shadow:0 18px 45px rgba(16,28,44,.09)}
+.plans article>small{color:#168c78}.plans label{background:#bdf56b;color:#101c2c}
+.plans li{border-color:rgba(16,28,44,.10);color:#23364a}.plans li svg{color:#168c78}
+.plans article>a{border-color:rgba(16,28,44,.2);color:#101c2c}.featured>a{background:#48d6b0;color:#101c2c}
+.trust{border-color:rgba(16,28,44,.10);background:radial-gradient(circle at 85% 20%,rgba(72,214,176,.15),transparent 30%),#edf3f8}
+.trust svg{color:#168c78}
+footer{background:#101c2c;color:#edf4f8;border-top:1px solid rgba(255,255,255,.08)}footer small{color:#b8c7d5}
+.primary{border:0}
+.miniMark{background:rgba(72,214,176,.14);border-color:rgba(72,214,176,.3);color:#168c78}
+.leadForm,.formSuccess{border-color:rgba(16,28,44,.12);background:linear-gradient(145deg,#fff,#edf3f8);box-shadow:0 12px 35px rgba(16,28,44,.05)}
+.leadForm h3,.formSuccess h3{color:#101c2c}
+.leadForm label{color:#52667a}
+.leadForm input,.leadForm select,.leadForm textarea{border-color:rgba(16,28,44,.18);background:#fff;color:#101c2c}
+.leadForm input:focus,.leadForm select:focus,.leadForm textarea:focus{border-color:#48d6b0}
+.inner{color:#101c2c}
+a:hover{color:#168c78}
+@media(max-width:980px){nav.open{background:#f4f7fa}}
+/* Keep embedded auth/product widgets legible while retaining the official logo asset. */

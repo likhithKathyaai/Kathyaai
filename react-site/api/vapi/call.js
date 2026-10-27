@@ -7,7 +7,7 @@ export default async function handler(req,res){
  if(!apiKey||!phoneNumberId)return json(res,503,{error:'Vapi calling is not fully configured. Set VAPI_PRIVATE_API_KEY and VAPI_PHONE_NUMBER_ID on the server.'});
  const url=process.env.VITE_SUPABASE_URL,key=process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
  if(!url||!key)return json(res,503,{error:'Workspace authentication is not configured'});
- const token=(req.headers.authorization||'').replace(/^Bearer\\s+/i,'');
+ const token=(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
  if(!token)return json(res,401,{error:'Sign in required'});
  const db=createClient(url,key,{global:{headers:{Authorization:'Bearer '+token}},auth:{persistSession:false}});
  const {data:{user},error:authError}=await db.auth.getUser(token);
@@ -15,7 +15,7 @@ export default async function handler(req,res){
  const {recordId,phoneNumber,consentConfirmed}=req.body||{};
  if(consentConfirmed!==true)return json(res,400,{error:'Confirm that the recipient has consented to receive this call.'});
  if(typeof recordId!=='string'||! /^[0-9a-f-]{36}$/i.test(recordId))return json(res,400,{error:'Valid agent record required'});
- if(typeof phoneNumber!=='string'||! /^\\+[1-9]\\d{7,14}$/.test(phoneNumber))return json(res,400,{error:'Enter the recipient number in international format, e.g. +14155550123.'});
+ if(typeof phoneNumber!=='string'||! /^\+[1-9]\d{7,14}$/.test(phoneNumber))return json(res,400,{error:'Enter the recipient number in international format, e.g. +14155550123.'});
  const {data:record,error:readError}=await db.from('workspace_records').select('id,title,payload,status').eq('id',recordId).eq('user_id',user.id).eq('category','agents').single();
  if(readError||!record)return json(res,404,{error:'Agent not found'});
  const assistantId=record.payload?.vapiAssistantId;

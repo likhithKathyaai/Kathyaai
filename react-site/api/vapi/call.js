@@ -1,13 +1,33 @@
+import crypto from 'node:crypto';
 import {createClient} from '@supabase/supabase-js';
+
 const json=(res,status,data)=>res.status(status).json(data);
+const b64url=value=>Buffer.from(value).toString('base64url');
+function livekitToken(apiKey,apiSecret,roomName){
+ const now=Math.floor(Date.now()/1000);
+ const header=b64url(JSON.stringify({alg:'HS256',typ:'JWT'}));
+ const payload=b64url(JSON.stringify({
+  iss:apiKey,sub:'kathya-preview-call',nbf:now-5,iat:now,exp:now+300,
+  video:{room:roomName,roomJoin:true,roomCreate:true,roomAdmin:true},
+  sip:true
+ }));
+ const unsigned=header+'.'+payload;
+ const signature=crypto.createHmac('sha256',apiSecret).update(unsigned).digest('base64url');
+ return unsigned+'.'+signature;
+}
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');
- if(req.method!=='POST')return json(res,405,{error:'Method not allowed'});
- const apiKey=process.env.VAPI_PRIVATE_API_KEY,phoneNumberId=process.env.VAPI_PHONE_NUMBER_ID;
- if(!apiKey||!phoneNumberId)return json(res,503,{error:'Vapi calling is not fully configured. Set VAPI_PRIVATE_API_KEY and VAPI_PHONE_NUMBER_ID on the server.'});
+ if(req.method!=='POST'){res.setHeader('Allow','POST');return json(res,405,{error:'Method not allowed'});}
+ const livekitUrl=process.env.LIVEKIT_URL;
+ const apiKey=process.env.LIVEKIT_API_KEY;
+ const apiSecret=process.env.LIVEKIT_API_SECRET;
+ const trunkId=process.env.LIVEKIT_SIP_OUTBOUND_TRUNK_ID;
+ if(!livekitUrl||!apiKey||!apiSecret||!trunkId){
+  return json(res,503,{error:'LiveKit outbound calling is not configured. Add LIVEKIT_URL, LIVEKIT_API_KEY, LIVEKIT_API_SECRET, and LIVEKIT_SIP_OUTBOUND_TRUNK_ID to this Preview deployment. An outbound SIP carrier is required; LiveKit Cloud phone numbers are inbound-only.'});
+ }
  const url=process.env.VITE_SUPABASE_URL,key=process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
  if(!url||!key)return json(res,503,{error:'Workspace authentication is not configured'});
- const token=(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
+ const token=(req.headers.authorization||'').replace(/^Bearer\\s+/i,'');
  if(!token)return json(res,401,{error:'Sign in required'});
  const db=createClient(url,key,{global:{headers:{Authorization:'Bearer '+token}},auth:{persistSession:false}});
  const {data:{user},error:authError}=await db.auth.getUser(token);
@@ -15,18 +35,33 @@ export default async function handler(req,res){
  const {recordId,phoneNumber,consentConfirmed}=req.body||{};
  if(consentConfirmed!==true)return json(res,400,{error:'Confirm that the recipient has consented to receive this call.'});
  if(typeof recordId!=='string'||! /^[0-9a-f-]{36}$/i.test(recordId))return json(res,400,{error:'Valid agent record required'});
- if(typeof phoneNumber!=='string'||! /^\+[1-9]\d{7,14}$/.test(phoneNumber))return json(res,400,{error:'Enter the recipient number in international format, e.g. +14155550123.'});
+ if(typeof phoneNumber!=='string'||! /^\\+[1-9]\\d{7,14}$/.test(phoneNumber))return json(res,400,{error:'Enter the recipient number in international format, e.g. +14155550123.'});
  const {data:record,error:readError}=await db.from('workspace_records').select('id,title,payload,status').eq('id',recordId).eq('user_id',user.id).eq('category','agents').single();
  if(readError||!record)return json(res,404,{error:'Agent not found'});
- const assistantId=record.payload?.vapiAssistantId;
- if(!assistantId)return json(res,409,{error:'Deploy this agent to Vapi before placing a test call.'});
+ const roomName='kathya-'+crypto.randomUUID();
+ const participantIdentity='customer-'+crypto.randomUUID();
+ const participantName=String(record.title||'KATHYA customer').slice(0,80);
+ const base=livekitUrl.replace(/\\/$/,'').replace(/^http:/,'https:');
+ const endpoint=base+'/twirp/livekit.SIP/CreateSIPParticipant';
+ const auth=livekitToken(apiKey,apiSecret,roomName);
  try{
-  const response=await fetch('https://api.vapi.ai/call/phone',{method:'POST',headers:{Authorization:'Bearer '+apiKey,'Content-Type':'application/json'},body:JSON.stringify({assistantId,phoneNumberId,customer:{number:phoneNumber},metadata:{workspaceUserId:user.id,workspaceRecordId:record.id,callType:'manual-consented-test'}})});
+  const response=await fetch(endpoint,{method:'POST',headers:{Authorization:'Bearer '+auth,'Content-Type':'application/json'},body:JSON.stringify({
+   sip_trunk_id:trunkId,sip_call_to:phoneNumber,room_name:roomName,
+   participant_identity:participantIdentity,participant_name:participantName,
+   wait_until_answered:true,
+   room_config:{agents:[{agent_name:process.env.LIVEKIT_AGENT_NAME||'kathya-voice-agent'}]}
+  })});
   const data=await response.json().catch(()=>({}));
-  if(!response.ok)return json(res,502,{error:'Vapi could not start the call',details:data?.message||data?.error||response.status});
-  const payload={...record.payload,lastOutboundCall:{id:data.id||null,status:data.status||'queued',to:phoneNumber,createdAt:new Date().toISOString()}};
+  if(!response.ok){
+   console.error('LiveKit outbound SIP request failed',response.status);
+   return json(res,502,{error:'LiveKit could not start the outbound call. Check the SIP trunk, API credentials, and agent worker configuration.',providerStatus:response.status});
+  }
+  const payload={...record.payload,voiceProvider:'livekit',lastOutboundCall:{id:data.participant_id||participantIdentity,roomName,status:'initiated',to:phoneNumber,createdAt:new Date().toISOString()}};
   const {error:saveError}=await db.from('workspace_records').update({payload,status:'configured'}).eq('id',record.id).eq('user_id',user.id);
-  if(saveError)return json(res,200,{callId:data.id||null,status:data.status||'queued',warning:'Call request accepted; call details could not be synced to the dashboard.'});
-  return json(res,200,{callId:data.id||null,status:data.status||'queued'});
- }catch(e){return json(res,502,{error:'Vapi service unavailable'})}
+  if(saveError)return json(res,200,{callId:data.participant_id||participantIdentity,roomName,status:'initiated',warning:'Call request accepted; dashboard sync failed.'});
+  return json(res,200,{callId:data.participant_id||participantIdentity,roomName,status:'initiated',provider:'livekit'});
+ }catch(e){
+  console.error('LiveKit outbound call request failed');
+  return json(res,502,{error:'LiveKit service unavailable'});
+ }
 }

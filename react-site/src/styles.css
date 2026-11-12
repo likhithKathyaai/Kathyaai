@@ -1012,3 +1012,54 @@ button:disabled{cursor:not-allowed;opacity:.65}
 /* Replace generic blue orb with KATHYA brand emblem on authentication pages */
 .kathyaAuthBrandOrb{display:grid;place-items:center;background:radial-gradient(circle at 32% 20%,#13533b,#022419 65%,#01130e)!important;border:1px solid rgba(114,255,155,.65);box-shadow:0 0 35px rgba(65,250,133,.38),inset 0 0 24px rgba(73,255,144,.15)!important;overflow:hidden}
 .kathyaAuthBrandOrb img{width:69%;height:69%;object-fit:contain;display:block;filter:drop-shadow(0 0 8px rgba(100,255,135,.38))}
+
+
+/* KATHYA AI dashboard motion system — preview-only */
+@keyframes kathyaRiseIn{from{opacity:0;transform:translate3d(0,16px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes kathyaSoftFade{from{opacity:0}to{opacity:1}}
+@keyframes kathyaGlowPulse{0%,100%{box-shadow:0 0 0 0 rgba(85,216,121,0)}50%{box-shadow:0 0 0 7px rgba(85,216,121,.08)}}
+@keyframes kathyaOrbFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-5px,0)}}
+@keyframes kathyaBarGrow{from{transform:scaleX(.2);opacity:.45}to{transform:scaleX(1);opacity:1}}
+.portalBody{min-width:0;animation:kathyaSoftFade .42s ease both}
+.portalSide{transition:box-shadow .3s ease,background-color .3s ease}
+.portalBrand img{transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s ease}
+.portalBrand:hover img{transform:rotate(-5deg) scale(1.07);filter:drop-shadow(0 0 10px rgba(85,216,121,.28))}
+.quickCreate{transition:transform .22s ease,box-shadow .22s ease,background-color .22s ease!important}
+.quickCreate:hover{transform:translateY(-2px)!important;box-shadow:0 9px 22px rgba(85,216,121,.12)!important}
+.menuGroup button{transition:background .2s ease,color .2s ease,transform .2s ease,padding-left .2s ease}
+.menuGroup button:hover{transform:translateX(3px);padding-left:13px}
+.portalTop{transition:box-shadow .25s ease,background .25s ease}
+.portalSearch{transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.portalSearch:focus-within{border-color:rgba(36,160,91,.35);box-shadow:0 0 0 4px rgba(36,160,91,.08);transform:translateY(-1px)}
+.portalAccount{transition:background .2s ease,transform .2s ease!important}
+.portalAccount:active{transform:scale(.985)}
+.dashMain,.workspaceV2{animation:kathyaRiseIn .5s cubic-bezier(.2,.75,.25,1) both}
+.dashWelcome{animation:kathyaRiseIn .48s .04s cubic-bezier(.2,.75,.25,1) both}
+.metricRow article,.workspaceOverview article{animation:kathyaRiseIn .48s cubic-bezier(.2,.75,.25,1) both;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.metricRow article:nth-child(2),.workspaceOverview article:nth-child(2){animation-delay:.07s}
+.metricRow article:nth-child(3),.workspaceOverview article:nth-child(3){animation-delay:.14s}
+.metricRow article:nth-child(4){animation-delay:.21s}
+.metricRow article:hover,.workspaceOverview article:hover{transform:translateY(-4px);box-shadow:0 15px 34px rgba(8,50,26,.09);border-color:rgba(39,153,88,.25)}
+.dashGrid>article{animation:kathyaRiseIn .55s cubic-bezier(.2,.75,.25,1) both;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease}
+.dashGrid>article:nth-child(2){animation-delay:.07s}
+.dashGrid>article:nth-child(3){animation-delay:.14s}
+.dashGrid>article:nth-child(4){animation-delay:.21s}
+.dashGrid>article:hover{transform:translateY(-3px);box-shadow:0 16px 38px rgba(8,50,26,.075);border-color:rgba(39,153,88,.2)}
+.pulseCore{animation:kathyaOrbFloat 4.5s ease-in-out infinite}
+.pulseOrbit{transition:transform .35s ease,box-shadow .35s ease}
+.pulseOrbit:hover{transform:scale(1.06);box-shadow:0 0 0 7px rgba(85,216,121,.09)}
+.funnel>div i{transform-origin:left center;animation:kathyaBarGrow .9s cubic-bezier(.2,.75,.25,1) both}
+.agentLine{transition:background .2s ease,transform .2s ease}
+.agentLine:hover{background:rgba(85,216,121,.055);transform:translateX(3px)}
+.workspaceModuleTemplates button,.workspaceRecordList article{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.workspaceModuleTemplates button:hover,.workspaceRecordList article:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(8,50,26,.07);border-color:rgba(39,153,88,.28)}
+.workspaceEditor,.workspaceRecords,.workspaceTemplateSection{animation:kathyaRiseIn .45s cubic-bezier(.2,.75,.25,1) both}
+.workspaceEditor{animation-delay:.08s}.workspaceRecords{animation-delay:.14s}
+.workspaceEditor input,.workspaceEditor textarea,.workspaceRecordFilters input,.workspaceRecordFilters select{transition:border-color .2s ease,box-shadow .2s ease}
+.workspaceEditor input:focus,.workspaceEditor textarea:focus,.workspaceRecordFilters input:focus{outline:none;border-color:#48b878;box-shadow:0 0 0 4px rgba(39,153,88,.09)}
+.portal button:focus-visible,.portal a:focus-visible,.workspaceV2 button:focus-visible,.workspaceV2 a:focus-visible{outline:3px solid rgba(39,153,88,.42);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){
+ .portalBody,.dashMain,.workspaceV2,.dashWelcome,.metricRow article,.workspaceOverview article,.dashGrid>article,.workspaceEditor,.workspaceRecords,.workspaceTemplateSection{animation:none!important}
+ .pulseCore{animation:none!important}
+ .portalSide,.portalBrand img,.quickCreate,.menuGroup button,.portalTop,.portalSearch,.portalAccount,.metricRow article,.workspaceOverview article,.dashGrid>article,.pulseOrbit,.agentLine,.workspaceModuleTemplates button,.workspaceRecordList article{transition:none!important}
+}

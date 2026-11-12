@@ -10,7 +10,7 @@ export default function handler(req,res){
   emailNotifications:Boolean(process.env.SMTP_USER&&process.env.SMTP_PASSWORD),
   founderCrmSync:Boolean(process.env.FOUNDER_CRM_INGEST_URL&&process.env.WEBSITE_LEAD_SYNC_SECRET),
   founderCrmPreviewBypass:Boolean(process.env.FOUNDER_CRM_VERCEL_BYPASS_SECRET),
-  whatsappSend:Boolean(process.env.WHATSAPP_ACCESS_TOKEN&&process.env.WHATSAPP_PHONE_NUMBER_ID),
+  whatsappSend:Boolean(process.env.WHATSAPP_ACCESS_TOKEN),
   whatsappWebhook:Boolean(process.env.WHATSAPP_APP_SECRET&&process.env.WHATSAPP_VERIFY_TOKEN&&process.env.SUPABASE_SERVICE_ROLE_KEY),
   stripeBilling:Boolean(process.env.STRIPE_SECRET_KEY&&process.env.STRIPE_WEBHOOK_SECRET)
  };

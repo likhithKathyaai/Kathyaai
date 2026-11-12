@@ -22,11 +22,20 @@ The current production WordPress site should remain live until this React build 
 
 ## Customer workspace setup
 
-The customer dashboard uses Supabase Auth and the `workspace_records` table. Apply these SQL files in the Supabase SQL Editor, in this order:
+The customer dashboard uses Supabase Auth and the `workspace_records` table.
 
-1. `supabase/schema.sql` — profiles, auth trigger, tenant tables and row-level security.
-2. `supabase/workspace_records.sql` — customer workspace records and row-level security.
+**Recommended setup:** open the Supabase SQL Editor and run `supabase/full_platform_setup.sql` once. This single script creates the customer schema, workspace records, protected admin overview, Vapi live-call state, WhatsApp inbox tables and shared per-user rate limits. It is designed to be safe to re-run.
 
+For manual or staged setup, run the files in this order:
+
+1. `supabase/schema.sql`
+2. `supabase/workspace_records.sql`
+3. `supabase/admin_dashboard.sql`
+4. `supabase/vapi_calls.sql`
+5. `supabase/whatsapp.sql`
+6. `supabase/api_rate_limits.sql`
+
+The admin migration assigns the existing `likhit@pamedlogtalent.com` auth account as the first owner if that account already exists. If the account is created later, re-run the final INSERT statement in `admin_dashboard.sql`.
 Configure these Vercel environment variables for the preview branch before testing integrations:
 
 | Variable | Purpose |
@@ -65,17 +74,6 @@ The WhatsApp integration stores message text in the tenant-scoped inbox. It does
 
 The `/api/health` endpoint reports whether required integration variables exist without returning their values. The dashboard uses this to display setup readiness.
 
-
-## Platform admin setup
-
-After applying the two customer-workspace SQL files above, apply:
-
-3. `supabase/admin_dashboard.sql` — owner/admin-only platform aggregates and the founder owner assignment.
-4. `supabase/vapi_calls.sql` — tenant-scoped live call status for the operations pulse.
-5. `supabase/whatsapp.sql` — tenant-scoped WhatsApp channels and message inbox.
-6. `supabase/api_rate_limits.sql` — shared per-user limits for Vapi and WhatsApp actions.
-
-The migration assigns the existing `likhit@pamedlogtalent.com` auth account as the first owner if that account already exists. If the account is created later, re-run the final INSERT statement in the migration. The admin overview is read-only and uses a security-definer RPC that checks the admin role on every request.
 
 ## Preview integration readiness
 

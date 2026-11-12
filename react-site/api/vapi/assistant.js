@@ -20,7 +20,8 @@ export default async function handler(req,res){
  const name=(record.title||'KATHYA Agent').slice(0,40);
  const prompt=String(fields.Instructions||'You are a helpful business voice assistant. Answer questions accurately, ask clarifying questions, and offer a human handoff when needed. Do not invent facts.').slice(0,6000);
  const purpose=String(fields.Purpose||'Customer support').slice(0,300);
- const body={name,firstMessage:'Hello! You are speaking with '+name+'. How can I help you?',model:{provider:'openai',model:'gpt-4o-mini',messages:[{role:'system',content:'You are '+name+'. Business purpose: '+purpose+'. '+prompt}]},voice:{provider:'openai',voiceId:'alloy',model:'tts-1'},maxDurationSeconds:300};
+ const llmModel=process.env.KATHYA_VAPI_MODEL||'gpt-6-luna';
+ const body={name,firstMessage:'Hello! You are speaking with '+name+'. How can I help you?',model:{provider:'openai',model:llmModel,messages:[{role:'system',content:'You are '+name+'. Business purpose: '+purpose+'. '+prompt}]},voice:{provider:'openai',voiceId:'alloy',model:'tts-1'},maxDurationSeconds:300};
  try{
   const result=await fetch('https://api.vapi.ai/assistant',{method:'POST',headers:{Authorization:'Bearer '+process.env.VAPI_PRIVATE_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
   const response=await result.json().catch(()=>({}));

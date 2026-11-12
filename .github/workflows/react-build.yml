@@ -18,3 +18,5 @@ jobs:
           node-version: 24
       - run: npm install
       - run: npm run build
+      - name: Check serverless API syntax
+        run: find api -name '*.js' -print0 | xargs -0 -n1 node --check

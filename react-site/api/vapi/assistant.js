@@ -27,7 +27,7 @@ export default async function handler(req,res){
  const body={name,firstMessage:'Hello! You are speaking with '+name+'. How can I help you?',model:{provider:'openai',model:llmModel,messages:[{role:'system',content:'You are '+name+'. Business purpose: '+purpose+'. '+prompt}]},voice:{provider:'openai',voiceId:'alloy',model:'tts-1'},maxDurationSeconds:300};
  const webhookSecret=process.env.KATHYA_VAPI_WEBHOOK_SECRET;
  const webhookUrl=process.env.KATHYA_VAPI_WEBHOOK_URL||(process.env.VERCEL_URL?'https://'+process.env.VERCEL_URL+'/api/vapi/webhook':null);
- if(webhookSecret&&webhookUrl){body.server={url:webhookUrl,headers:{'x-kathya-webhook-secret':webhookSecret},timeoutSeconds:20};body.serverMessages=['end-of-call-report','status-update'];}
+ if(webhookSecret&&webhookUrl){body.server={url:webhookUrl,headers:{'x-kathya-webhook-secret':webhookSecret,...(process.env.KATHYA_VERCEL_BYPASS_SECRET?{'x-vercel-protection-bypass':process.env.KATHYA_VERCEL_BYPASS_SECRET}:{})},timeoutSeconds:20};body.serverMessages=['end-of-call-report','status-update'];}
  try{
   const result=await fetch('https://api.vapi.ai/assistant',{method:'POST',headers:{Authorization:'Bearer '+process.env.VAPI_PRIVATE_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
   const response=await result.json().catch(()=>({}));

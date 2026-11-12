@@ -19,6 +19,9 @@ export default async function handler(req,res){
  if(!/^\d{8,15}$/.test(to)||!body||!/^\d{5,30}$/.test(phoneNumberId))return json(res,400,{error:'Enter a valid recipient number, message and connected WhatsApp channel.'});
  const {data:channel,error:channelError}=await db.from('whatsapp_channels').select('id,phone_number_id,display_phone_number').eq('user_id',user.id).eq('phone_number_id',phoneNumberId).single();
  if(channelError||!channel)return json(res,404,{error:'Connect this WhatsApp channel to your workspace first.'});
+ const {data:allowed,error:limitError}=await db.rpc('consume_kathya_rate_limit',{p_action:'whatsapp_send'});
+ if(limitError)return json(res,503,{error:'Apply supabase/api_rate_limits.sql before sending WhatsApp messages.'});
+ if(!allowed)return json(res,429,{error:'WhatsApp message limit reached. Try again later.'});
  try{
   const version=process.env.WHATSAPP_GRAPH_API_VERSION||'v23.0';
   const response=await fetch('https://graph.facebook.com/'+version+'/'+encodeURIComponent(channel.phone_number_id)+'/messages',{method:'POST',headers:{Authorization:'Bearer '+apiToken,'Content-Type':'application/json'},body:JSON.stringify({messaging_product:'whatsapp',to,type:'text',text:{body}})});

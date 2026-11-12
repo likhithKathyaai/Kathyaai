@@ -24,6 +24,7 @@ export default async function handler(req,res){
   const parsedDuration=startedAt&&endedAt?Math.round((Date.parse(endedAt)-Date.parse(startedAt))/1000):null;
   const durationSeconds=Number.isFinite(parsedDuration)?Math.max(0,parsedDuration):null;
   const status=type==='end-of-call-report'?'ended':String(message.status||call.status||'in-progress').slice(0,40);
+  const structuredData=message.analysis?.structuredData||message.analysis?.structured_data||{};
   const summary=String(message.analysis?.summary||message.summary||transcript.slice(0,240)||'').slice(0,1000);
   const callRow={user_id:agent.user_id,agent_record_id:agent.id,call_id:callId,assistant_id:assistantId,customer_number:call.customer?.number||call.customerNumber||null,direction:call.type||null,status,ended_reason:message.endedReason||call.endedReason||null,started_at:startedAt,ended_at:endedAt,duration_seconds:durationSeconds,summary:summary||null,transcript:transcript||null,recording_url:artifact.recording?.url||null,updated_at:new Date().toISOString()};
   const{error:callSaveError}=await db.from('vapi_calls').upsert(callRow,{onConflict:'call_id'});
@@ -32,7 +33,7 @@ export default async function handler(req,res){
   const{data:existing,error:existingError}=await db.from('workspace_records').select('id').eq('user_id',agent.user_id).eq('category','conversations').contains('payload',{vapiCallId:callId}).maybeSingle();
   if(existingError)return json(res,500,{error:'Could not check conversation history'});
   if(existing)return json(res,200,{ok:true,duplicate:true});
-  const payload={vapiCallId:callId,vapiAssistantId:assistantId,agentRecordId:agent.id,agentName:agent.title,channel:'voice',status:'completed',endedReason:callRow.ended_reason,startedAt,endedAt,durationSeconds,summary:summary||'Call completed',transcript,recordingUrl:artifact.recording?.url||null,recordingAvailable:Boolean(artifact.recording?.url),createdAt:new Date().toISOString()};
+  const payload={vapiCallId:callId,vapiAssistantId:assistantId,agentRecordId:agent.id,agentName:agent.title,channel:'voice',status:'completed',endedReason:callRow.ended_reason,startedAt,endedAt,durationSeconds,summary:summary||'Call completed',transcript,structuredData,intent:structuredData.intent||structuredData.customerIntent||null,outcome:structuredData.outcome||structuredData.result||null,outcomeType:structuredData.outcomeType||structuredData.outcome_type||null,humanHandoff:Boolean(structuredData.humanHandoff||structuredData.human_handoff),actionStarted:Boolean(structuredData.actionStarted||structuredData.action_started||structuredData.action),recordingUrl:artifact.recording?.url||null,recordingAvailable:Boolean(artifact.recording?.url),createdAt:new Date().toISOString()};
   const{error:insertError}=await db.from('workspace_records').insert({user_id:agent.user_id,category:'conversations',title:agent.title+' · '+new Date(endedAt||Date.now()).toLocaleString('en-US'),payload,status:'configured'});
   if(insertError)return json(res,500,{error:'Could not save the call report'});
   return json(res,200,{ok:true,saved:true});

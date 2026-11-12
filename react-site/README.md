@@ -52,3 +52,47 @@ Never prefix private keys or the service-role key with `VITE_`. Never place them
 6. Completed Vapi end-of-call reports are saved to the customer's `conversations` records and appear in **AI Conversations** and the dashboard.
 
 The `/api/health` endpoint reports whether required integration variables exist without returning their values. The dashboard uses this to display setup readiness.
+
+
+## Platform admin setup
+
+After applying the two customer-workspace SQL files above, apply:
+
+3. `supabase/admin_dashboard.sql` — owner/admin-only platform aggregates and the founder owner assignment.
+
+The migration assigns the existing `likhit@pamedlogtalent.com` auth account as the first owner if that account already exists. If the account is created later, re-run the final INSERT statement in the migration. The admin overview is read-only and uses a security-definer RPC that checks the admin role on every request.
+
+## Preview integration readiness
+
+The preview branch currently has the Supabase URL and publishable key configured. The following server-side credentials are separate setup requirements; add them directly in Vercel → Project → Settings → Environment Variables, scoped to Preview (and the `preview/dashboard-motion` branch where applicable). Never paste secrets into chat or commit them to GitHub.
+
+| Variable | Needed for |
+| --- | --- |
+| `VAPI_PRIVATE_API_KEY` | Creating assistants and placing calls |
+| `SUPABASE_SERVICE_ROLE_KEY` | Saving provider webhooks server-side |
+| `KATHYA_VAPI_WEBHOOK_SECRET` | Authenticating Vapi webhooks |
+| `VAPI_PHONE_NUMBER_ID` | Outbound calling |
+| `FOUNDER_CRM_VERCEL_BYPASS_SECRET` | Allowing preview lead sync to reach the protected Founder CRM deployment |
+| `SMTP_USER`, `SMTP_PASSWORD` | Email notifications for website leads |
+| `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID` | WhatsApp Cloud API sending |
+| `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` | WhatsApp webhook verification and signature validation |
+| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Billing checkout and signed billing events (not yet enabled) |
+
+Optional: `LEAD_NOTIFICATION_EMAIL`, `KATHYA_VAPI_MODEL`, `KATHYA_VAPI_WEBHOOK_URL`.
+
+The Founder CRM sync endpoint currently responds with HTTP 401 from the preview deployment because the preview bypass secret is not configured. Add the existing bypass secret directly in Vercel; do not share its value in chat.
+
+## Launch gates
+
+The site is not production-launch-ready until all of these are verified:
+
+- [ ] Supabase SQL migrations applied and auth signup/sign-in/password recovery tested.
+- [ ] Founder owner role verified at `/admin`.
+- [ ] Vapi assistant creation and a consented test call completed using a real connected number.
+- [ ] Vapi end-of-call webhook saved a transcript/summary to the correct customer workspace.
+- [ ] Website lead submission succeeded through Founder CRM or SMTP.
+- [ ] WhatsApp webhook verification, inbound persistence and outbound delivery tested with the approved Meta business number.
+- [ ] Billing provider, plan IDs, tax settings, customer terms and webhook reconciliation approved and tested before any charge is enabled.
+- [ ] Mobile/desktop browser checks, accessibility, SEO, security headers and production-domain cutover reviewed.
+
+A green Vercel build confirms compilation and deployment only; it does not prove external provider credentials, database migrations, or real-world calls/messages are working. Production domain and production branch must remain unchanged until the owner explicitly approves launch.

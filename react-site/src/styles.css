@@ -1070,3 +1070,17 @@ button:disabled{cursor:not-allowed;opacity:.65}
 .workspaceDeployButton:hover:not(:disabled){transform:translateY(-2px);background:rgba(174,255,72,.18)!important;border-color:rgba(174,255,72,.8)!important}
 .workspaceDeployButton:disabled{opacity:.55;cursor:wait}
 .workspaceDeployedTag{display:inline-flex;align-items:center;border:1px solid rgba(74,222,128,.28);background:rgba(74,222,128,.09);color:#72e5a0;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:700;white-space:nowrap}
+
+
+/* Live voice test controls */
+.workspaceCallInput{width:142px;min-width:112px;border:1px solid rgba(174,255,72,.22)!important;background:rgba(255,255,255,.045)!important;color:inherit!important;border-radius:9px!important;padding:8px 10px!important;font:inherit;font-size:12px!important}
+.workspaceCallInput::placeholder{color:rgba(220,230,225,.42)}
+.workspaceCallButton{border:1px solid rgba(174,255,72,.5)!important;background:rgba(174,255,72,.15)!important;color:var(--lime,#b8ff55)!important;border-radius:9px!important;padding:8px 11px!important;font:inherit;font-size:12px!important;font-weight:700!important;white-space:nowrap;transition:transform .2s ease,background .2s ease}
+.workspaceCallButton:hover:not(:disabled){transform:translateY(-2px);background:rgba(174,255,72,.23)!important}
+.workspaceCallButton:disabled{opacity:.55;cursor:wait}
+.workspaceNotice{margin:12px 0;padding:10px 13px;border:1px solid rgba(74,222,128,.25);border-radius:10px;background:rgba(74,222,128,.08);color:#80e7a8;font-size:13px}
+.workspaceRecordList article{flex-wrap:wrap}
+.workspaceRecordList article details{flex-basis:100%;margin:8px 0 2px 48px;color:rgba(235,243,238,.76);font-size:12px}
+.workspaceRecordList article details summary{cursor:pointer;color:var(--lime,#b8ff55)}
+.workspaceRecordList article details p{white-space:pre-wrap;line-height:1.6;max-height:240px;overflow:auto}
+.workspaceRecordList article details a{color:var(--lime,#b8ff55)}

@@ -22,6 +22,9 @@ export default async function handler(req,res){
  if(!assistantId)return json(res,409,{error:'Deploy this agent to Vapi before placing a call'});
  const phoneNumberId=agent.payload?.vapiPhoneNumberId||agent.payload?.fields?.['Vapi phone number ID (optional)']||process.env.VAPI_PHONE_NUMBER_ID;
  if(!phoneNumberId)return json(res,503,{error:'No Vapi phone number is connected. Add VAPI_PHONE_NUMBER_ID in Vercel or assign a phone number to this agent.'});
+ const {data:allowed,error:limitError}=await db.rpc('consume_kathya_rate_limit',{p_action:'vapi_test_call'});
+ if(limitError)return json(res,503,{error:'Apply supabase/api_rate_limits.sql before placing test calls.'});
+ if(!allowed)return json(res,429,{error:'Test call limit reached. Try again later.'});
  try{
   const response=await fetch('https://api.vapi.ai/call',{method:'POST',headers:{Authorization:'Bearer '+apiKey,'Content-Type':'application/json'},body:JSON.stringify({assistantId,phoneNumberId,customer:{number}})});
   const result=await response.json().catch(()=>({}));

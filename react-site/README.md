@@ -36,6 +36,7 @@ Configure these Vercel environment variables for the preview branch before testi
 | `VAPI_PRIVATE_API_KEY` | Vapi private API key; server-side only |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service-role key; server-side only, required for call-report webhook persistence |
 | `KATHYA_VAPI_WEBHOOK_SECRET` | Long random secret shared between the Vapi webhook header and this server |
+| `KATHYA_VERCEL_BYPASS_SECRET` | Vercel Preview protection bypass secret sent by Vapi to reach the protected webhook route |
 | `VAPI_PHONE_NUMBER_ID` | Default Vapi phone-number ID for outbound test calls (can be overridden per agent) |
 | `KATHYA_VAPI_MODEL` | Optional model override; defaults to `gpt-6-luna` |
 | `KATHYA_VAPI_WEBHOOK_URL` | Optional public webhook URL; otherwise the Vercel deployment URL is used |
@@ -56,7 +57,7 @@ Never prefix private keys or the service-role key with `VITE_`. Never place them
 1. Apply `supabase/whatsapp.sql`.
 2. Configure `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` and `SUPABASE_SERVICE_ROLE_KEY` in Vercel Preview.
 3. In the workspace, open **Providers**, choose **WhatsApp Cloud API**, and enter the Meta Phone Number ID and display number. This links the number to the signed-in tenant.
-4. Set the Meta webhook callback to `https://<preview-domain>/api/whatsapp-webhook` and use the configured verify token. Subscribe to the `messages` webhook field.
+4. Set the Meta webhook callback to `https://<preview-domain>/api/whatsapp-webhook?x-vercel-protection-bypass=<WHATSAPP_WEBHOOK_BYPASS_SECRET>` and use the configured verify token. Subscribe to the `messages` webhook field. The query parameter is required because this Vercel project protects Preview deployments with SSO.
 5. The signed webhook validates `X-Hub-Signature-256` and persists inbound messages and delivery statuses for the matching tenant.
 6. Open **WhatsApp Inbox** to review messages or send a message to an opted-in recipient. Meta template rules apply outside the customer-service window.
 
@@ -78,7 +79,7 @@ The migration assigns the existing `likhit@pamedlogtalent.com` auth account as t
 
 ## Preview integration readiness
 
-The preview branch currently has the Supabase URL and publishable key configured. The following server-side credentials are separate setup requirements; add them directly in Vercel → Project → Settings → Environment Variables, scoped to Preview (and the `preview/dashboard-motion` branch where applicable). Never paste secrets into chat or commit them to GitHub.
+The preview branch currently has the Supabase URL and publishable key configured. Vercel Preview deployments are SSO-protected, so server-to-server callbacks also need the appropriate deployment-protection bypass secret. The following server-side credentials are separate setup requirements; add them directly in Vercel → Project → Settings → Environment Variables, scoped to Preview (and the `preview/dashboard-motion` branch where applicable). Never paste secrets into chat or commit them to GitHub.
 
 | Variable | Needed for |
 | --- | --- |
@@ -90,6 +91,7 @@ The preview branch currently has the Supabase URL and publishable key configured
 | `SMTP_USER`, `SMTP_PASSWORD` | Email notifications for website leads |
 | `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID` | WhatsApp Cloud API sending |
 | `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` | WhatsApp webhook verification and signature validation |
+| `WHATSAPP_WEBHOOK_BYPASS_SECRET` | Vercel Preview protection bypass secret embedded in the Meta webhook callback URL |
 | `WHATSAPP_GRAPH_API_VERSION` | Optional Graph API version override; defaults to `v23.0` |
 | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Billing checkout and signed billing events (not yet enabled) |
 

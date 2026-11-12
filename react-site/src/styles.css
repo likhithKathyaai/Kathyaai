@@ -1094,3 +1094,75 @@ button:disabled{cursor:not-allowed;opacity:.65}
 .workspaceReadinessItems span{font-size:11px;padding:7px 9px;border:1px solid rgba(255,190,90,.22);border-radius:999px;color:#f0c27b;background:rgba(255,190,90,.06)}
 .workspaceReadinessItems span.ready{border-color:rgba(74,222,128,.25);color:#7fe5a2;background:rgba(74,222,128,.07)}
 @media(max-width:760px){.workspaceReadiness{align-items:flex-start;flex-direction:column}.workspaceReadinessItems{justify-content:flex-start}}
+
+
+/* Conversation outcome dashboard — preview branch */
+.kathyaOutcomeDashboard{max-width:1540px;margin:0 auto;padding-bottom:48px}
+.kathyaOutcomeWelcome{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin:22px 0 25px}
+.kathyaOutcomeWelcome>div:first-child>small{font-size:10px;letter-spacing:.2em;font-weight:850;color:#61c982}
+.kathyaOutcomeWelcome h1{max-width:760px;margin:9px 0 8px;font-size:clamp(30px,3.5vw,47px);line-height:1.08;letter-spacing:-.055em;color:var(--ink,#14271d)}
+.kathyaOutcomeWelcome h1 em{font-style:normal;color:#26965a}
+.kathyaOutcomeWelcome p{margin:0;color:var(--muted,#738078);font-size:14px}
+.kathyaDashControls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.kathyaRangeTabs{display:flex;gap:3px;padding:4px;border:1px solid rgba(29,92,57,.12);border-radius:12px;background:rgba(255,255,255,.7)}
+.kathyaRangeTabs button{border:0;background:transparent;color:#66776c;border-radius:8px;padding:9px 11px;font-size:11px;font-weight:750}
+.kathyaRangeTabs button.selected{background:#e8f7ed;color:#176c3b;box-shadow:inset 0 0 0 1px rgba(38,150,90,.12)}
+.kathyaNewAgent{display:inline-flex;align-items:center;gap:7px;border:0;border-radius:11px;padding:12px 15px;background:#126b3d;color:#fff;font-weight:750;font-size:12px;box-shadow:0 8px 20px rgba(18,107,61,.16)}
+.kathyaNewAgent:hover{background:#0b5730;transform:translateY(-1px)}
+.kathyaOutcomeMetrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:17px}
+.kathyaOutcomeMetrics article{min-width:0;padding:18px 19px;border:1px solid rgba(26,87,51,.1);border-radius:16px;background:linear-gradient(145deg,#fff,#f8fcf9);box-shadow:0 8px 24px rgba(18,65,38,.035);animation:kathyaRiseIn .45s ease both}
+.kathyaOutcomeMetrics article:nth-child(2){animation-delay:.06s}.kathyaOutcomeMetrics article:nth-child(3){animation-delay:.12s}.kathyaOutcomeMetrics article:nth-child(4){animation-delay:.18s}
+.kathyaOutcomeMetrics article>div{display:flex;align-items:center;gap:9px;color:#52665a}
+.kathyaOutcomeMetrics article>div>span{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;background:#eaf7ee;color:#25854f}
+.kathyaOutcomeMetrics article small{font-size:11px;font-weight:700}
+.kathyaOutcomeMetrics article>b{display:block;margin:13px 0 3px;color:#152c20;font-size:30px;line-height:1;font-weight:850;letter-spacing:-.045em}
+.kathyaOutcomeMetrics article>i{font-style:normal;color:#87958b;font-size:10px}
+.kathyaLivePanel,.kathyaFlowPanel,.kathyaAgentsPanel{border:1px solid rgba(26,87,51,.1);border-radius:18px;background:#fff;box-shadow:0 9px 28px rgba(18,65,38,.035);padding:20px}
+.kathyaPanelHeading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.kathyaPanelHeading small{display:block;color:#6d9a7c;font-size:9px;letter-spacing:.19em;font-weight:850;margin-bottom:6px}
+.kathyaPanelHeading h2{margin:0;color:#183323;font-size:19px;letter-spacing:-.035em}
+.kathyaLiveTag{display:inline-flex;align-items:center;gap:7px;border-radius:99px;padding:7px 10px;background:#eff9f1;color:#267847;font-size:9px;font-weight:850;letter-spacing:.1em}
+.kathyaLiveTag i{width:7px;height:7px;border-radius:50%;background:#38b76b;box-shadow:0 0 0 4px rgba(56,183,107,.12)}
+.kathyaPulseContent{display:grid;grid-template-columns:180px minmax(0,1fr);align-items:center;gap:28px;padding:20px 5px 4px}
+.kathyaPulseOrb{width:142px;height:142px;justify-self:center;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;background:radial-gradient(circle at 50% 42%,#f5fff7 0,#e4f7e9 48%,#d5efdf 100%);border:1px solid #c9e8d2;box-shadow:0 0 0 10px rgba(50,166,91,.045),inset 0 0 28px rgba(46,151,83,.08);animation:kathyaOrbFloat 5s ease-in-out infinite}
+.kathyaPulseOrb img{width:39px;height:39px;object-fit:contain;margin-bottom:1px}
+.kathyaPulseOrb b{font-size:26px;color:#155c34;line-height:1.05}
+.kathyaPulseOrb small{font-size:10px;color:#6a8975}
+.kathyaChannelTags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.kathyaChannelTags span{display:inline-flex;align-items:center;gap:7px;border:1px solid #e4eee7;border-radius:9px;padding:8px 11px;color:#466451;font-size:11px;font-weight:700;background:#fbfdfb}
+.kathyaPulseStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.kathyaPulseStats>div{padding:12px 14px;border-left:2px solid #b7e7c5;background:linear-gradient(90deg,#f5fbf6,transparent)}
+.kathyaPulseStats b{display:block;color:#173b27;font-size:23px;letter-spacing:-.04em}
+.kathyaPulseStats small{color:#7b8c80;font-size:10px}
+.kathyaPulseRight>p{margin:12px 0 0;color:#89958d;font-size:10px;line-height:1.5}
+.kathyaOutcomeGrid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:16px;margin-top:17px}
+.kathyaFlowPanel,.kathyaAgentsPanel{min-width:0}
+.kathyaOutcomeFunnel{display:grid;gap:15px;margin:24px 0 19px}
+.kathyaFunnelRow>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:7px}
+.kathyaFunnelRow b{color:#1c3c29;font-size:17px;letter-spacing:-.03em}
+.kathyaFunnelRow>div span{color:#708076;font-size:11px}
+.kathyaFunnelRow>i{display:block;height:8px;border-radius:99px;background:#edf4ef;overflow:hidden}
+.kathyaFunnelRow>i>span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#16814b,#9eea74);transition:width .5s ease}
+.kathyaOutcomeRate{display:flex;align-items:center;gap:9px;padding:13px;border-radius:12px;background:#f0f9f2;color:#297b48}
+.kathyaOutcomeRate b{font-size:19px;color:#175d35}
+.kathyaOutcomeRate span{font-size:11px;color:#65816e}
+.kathyaDataNote{display:block;margin-top:10px;color:#98a49b;font-size:9px}
+.kathyaAgentsPanel .kathyaPanelHeading button,.kathyaRecentPanel .cardHead button{display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;color:#25834d;font-size:11px;font-weight:800}
+.kathyaAgentRow{display:flex;align-items:center;gap:11px;padding:13px 0;border-bottom:1px solid #eff3f0}
+.kathyaAgentRow:first-of-type{margin-top:11px}
+.kathyaAgentAvatar{width:36px;height:36px;flex:none;display:grid;place-items:center;border-radius:11px;background:#eaf7ee;color:#267b48;font-size:11px;font-weight:850}
+.kathyaAgentRow>div{min-width:0;flex:1}
+.kathyaAgentRow>div b{display:block;color:#294333;font-size:12px}
+.kathyaAgentRow>div small{display:block;margin-top:3px;color:#8a978e;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kathyaAgentRow>i{font-style:normal;color:#8c988f;font-size:10px;white-space:nowrap}
+.kathyaAgentRow>i.deployed{color:#27834e}
+.kathyaEmptyState{display:flex;align-items:center;flex-direction:column;text-align:center;padding:26px 12px;color:#71907b}
+.kathyaEmptyState b{margin-top:9px;color:#294333;font-size:13px}
+.kathyaEmptyState p{max-width:260px;margin:6px 0 13px;color:#87948b;font-size:11px;line-height:1.5}
+.kathyaEmptyState button{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:9px;padding:9px 12px;background:#eaf7ee;color:#207343;font-size:11px;font-weight:800}
+.kathyaRecentPanel{margin-top:17px}
+.kathyaRecentPanel .cardHead h2{color:#183323}
+@media(max-width:1000px){.kathyaOutcomeWelcome{align-items:flex-start;flex-direction:column}.kathyaDashControls{justify-content:flex-start}.kathyaOutcomeMetrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.kathyaPulseContent{grid-template-columns:1fr;gap:16px}.kathyaPulseOrb{width:126px;height:126px}.kathyaOutcomeGrid{grid-template-columns:1fr}.kathyaLivePanel,.kathyaFlowPanel,.kathyaAgentsPanel{padding:16px}.kathyaOutcomeWelcome h1{font-size:32px}.kathyaDashControls{width:100%;justify-content:space-between}.kathyaRangeTabs button{padding:8px 9px;font-size:10px}}
+@media(max-width:420px){.kathyaOutcomeMetrics{gap:8px}.kathyaOutcomeMetrics article{padding:13px}.kathyaOutcomeMetrics article>b{font-size:25px}.kathyaOutcomeMetrics article small{font-size:10px}.kathyaPulseStats{gap:5px}.kathyaPulseStats>div{padding:9px 7px}.kathyaPulseStats b{font-size:19px}}
+@media(prefers-reduced-motion:reduce){.kathyaPulseOrb,.kathyaOutcomeMetrics article{animation:none!important}}

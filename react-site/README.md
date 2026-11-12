@@ -72,6 +72,7 @@ After applying the two customer-workspace SQL files above, apply:
 3. `supabase/admin_dashboard.sql` — owner/admin-only platform aggregates and the founder owner assignment.
 4. `supabase/vapi_calls.sql` — tenant-scoped live call status for the operations pulse.
 5. `supabase/whatsapp.sql` — tenant-scoped WhatsApp channels and message inbox.
+6. `supabase/api_rate_limits.sql` — shared per-user limits for Vapi and WhatsApp actions.
 
 The migration assigns the existing `likhit@pamedlogtalent.com` auth account as the first owner if that account already exists. If the account is created later, re-run the final INSERT statement in the migration. The admin overview is read-only and uses a security-definer RPC that checks the admin role on every request.
 
@@ -92,7 +93,7 @@ The preview branch currently has the Supabase URL and publishable key configured
 | `WHATSAPP_GRAPH_API_VERSION` | Optional Graph API version override; defaults to `v23.0` |
 | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Billing checkout and signed billing events (not yet enabled) |
 
-Optional: `LEAD_NOTIFICATION_EMAIL`, `KATHYA_VAPI_MODEL`, `KATHYA_VAPI_WEBHOOK_URL`.
+Optional: `LEAD_NOTIFICATION_EMAIL`, `KATHYA_VAPI_MODEL`, `KATHYA_VAPI_WEBHOOK_URL`, `WHATSAPP_GRAPH_API_VERSION`.
 
 The Founder CRM sync endpoint currently responds with HTTP 401 from the preview deployment because the preview bypass secret is not configured. Add the existing bypass secret directly in Vercel; do not share its value in chat.
 
@@ -101,6 +102,7 @@ The Founder CRM sync endpoint currently responds with HTTP 401 from the preview 
 The site is not production-launch-ready until all of these are verified:
 
 - [ ] Supabase SQL migrations applied and auth signup/sign-in/password recovery tested.
+- [ ] Database-backed rate-limit migration applied before testing cost-bearing provider actions.
 - [ ] Founder owner role verified at `/admin`.
 - [ ] Vapi assistant creation and a consented test call completed using a real connected number.
 - [ ] Vapi end-of-call webhook saved a transcript/summary to the correct customer workspace.

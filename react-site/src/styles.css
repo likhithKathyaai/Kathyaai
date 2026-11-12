@@ -1063,3 +1063,10 @@ button:disabled{cursor:not-allowed;opacity:.65}
  .pulseCore{animation:none!important}
  .portalSide,.portalBrand img,.quickCreate,.menuGroup button,.portalTop,.portalSearch,.portalAccount,.metricRow article,.workspaceOverview article,.dashGrid>article,.pulseOrbit,.agentLine,.workspaceModuleTemplates button,.workspaceRecordList article{transition:none!important}
 }
+
+
+/* Agent deployment controls */
+.workspaceDeployButton{border:1px solid rgba(174,255,72,.42)!important;background:rgba(174,255,72,.10)!important;color:var(--lime,#b8ff55)!important;border-radius:10px!important;padding:8px 12px!important;font:inherit;font-size:12px!important;font-weight:700!important;white-space:nowrap;transition:transform .2s ease,background .2s ease,border-color .2s ease}
+.workspaceDeployButton:hover:not(:disabled){transform:translateY(-2px);background:rgba(174,255,72,.18)!important;border-color:rgba(174,255,72,.8)!important}
+.workspaceDeployButton:disabled{opacity:.55;cursor:wait}
+.workspaceDeployedTag{display:inline-flex;align-items:center;border:1px solid rgba(74,222,128,.28);background:rgba(74,222,128,.09);color:#72e5a0;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:700;white-space:nowrap}

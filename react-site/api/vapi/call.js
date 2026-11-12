@@ -20,7 +20,7 @@ export default async function handler(req,res){
  if(readError||!agent)return json(res,404,{error:'Agent not found'});
  const assistantId=agent.payload?.vapiAssistantId;
  if(!assistantId)return json(res,409,{error:'Deploy this agent to Vapi before placing a call'});
- const phoneNumberId=agent.payload?.vapiPhoneNumberId||process.env.VAPI_PHONE_NUMBER_ID;
+ const phoneNumberId=agent.payload?.vapiPhoneNumberId||agent.payload?.fields?.['Vapi phone number ID (optional)']||process.env.VAPI_PHONE_NUMBER_ID;
  if(!phoneNumberId)return json(res,503,{error:'No Vapi phone number is connected. Add VAPI_PHONE_NUMBER_ID in Vercel or assign a phone number to this agent.'});
  try{
   const response=await fetch('https://api.vapi.ai/call',{method:'POST',headers:{Authorization:'Bearer '+apiKey,'Content-Type':'application/json'},body:JSON.stringify({assistantId,phoneNumberId,customer:{number}})});

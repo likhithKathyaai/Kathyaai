@@ -16,6 +16,9 @@ export default async function handler(req,res){
  const {data:record,error:readError}=await db.from('workspace_records').select('id,title,payload,status').eq('id',recordId).eq('user_id',user.id).eq('category','agents').single();
  if(readError||!record)return json(res,404,{error:'Agent not found'});
  if(record.payload?.vapiAssistantId)return json(res,409,{error:'Agent already deployed to Vapi'});
+ const {data:allowed,error:limitError}=await db.rpc('consume_kathya_rate_limit',{p_action:'vapi_assistant_create'});
+ if(limitError)return json(res,503,{error:'Apply supabase/api_rate_limits.sql before deploying agents.'});
+ if(!allowed)return json(res,429,{error:'Agent deployment limit reached. Try again later.'});
  const fields=record.payload?.fields||{};
  const name=(record.title||'KATHYA Agent').slice(0,40);
  const prompt=String(fields.Instructions||'You are a helpful business voice assistant. Answer questions accurately, ask clarifying questions, and offer a human handoff when needed. Do not invent facts.').slice(0,6000);

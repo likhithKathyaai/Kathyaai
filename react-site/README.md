@@ -49,7 +49,18 @@ Never prefix private keys or the service-role key with `VITE_`. Never place them
 3. Deploy the agent to Vapi. New assistants use GPT-6 Luna by default.
 4. To receive completed call reports, set the webhook and service-role variables above, then redeploy the preview branch.
 5. Use **Test call** with an E.164 number such as `+14155550123`. Calls may incur Vapi and telephony charges; only press the button when you intend to place a real call.
-6. Completed Vapi end-of-call reports are saved to the customer's `conversations` records and appear in **AI Conversations** and the dashboard.
+6. Vapi status events update the live-call table; completed call reports are saved to `conversations` and appear in **AI Conversations** and the dashboard.
+
+### WhatsApp Cloud API workflow
+
+1. Apply `supabase/whatsapp.sql`.
+2. Configure `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` and `SUPABASE_SERVICE_ROLE_KEY` in Vercel Preview.
+3. In the workspace, open **Providers**, choose **WhatsApp Cloud API**, and enter the Meta Phone Number ID and display number. This links the number to the signed-in tenant.
+4. Set the Meta webhook callback to `https://<preview-domain>/api/whatsapp-webhook` and use the configured verify token. Subscribe to the `messages` webhook field.
+5. The signed webhook validates `X-Hub-Signature-256` and persists inbound messages and delivery statuses for the matching tenant.
+6. Open **WhatsApp Inbox** to review messages or send a message to an opted-in recipient. Meta template rules apply outside the customer-service window.
+
+The WhatsApp integration stores message text in the tenant-scoped inbox. It does not yet generate AI replies; automated responses require an approved model, knowledge source, consent policy and action workflow.
 
 The `/api/health` endpoint reports whether required integration variables exist without returning their values. The dashboard uses this to display setup readiness.
 
@@ -59,6 +70,8 @@ The `/api/health` endpoint reports whether required integration variables exist 
 After applying the two customer-workspace SQL files above, apply:
 
 3. `supabase/admin_dashboard.sql` — owner/admin-only platform aggregates and the founder owner assignment.
+4. `supabase/vapi_calls.sql` — tenant-scoped live call status for the operations pulse.
+5. `supabase/whatsapp.sql` — tenant-scoped WhatsApp channels and message inbox.
 
 The migration assigns the existing `likhit@pamedlogtalent.com` auth account as the first owner if that account already exists. If the account is created later, re-run the final INSERT statement in the migration. The admin overview is read-only and uses a security-definer RPC that checks the admin role on every request.
 
@@ -76,6 +89,7 @@ The preview branch currently has the Supabase URL and publishable key configured
 | `SMTP_USER`, `SMTP_PASSWORD` | Email notifications for website leads |
 | `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID` | WhatsApp Cloud API sending |
 | `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET` | WhatsApp webhook verification and signature validation |
+| `WHATSAPP_GRAPH_API_VERSION` | Optional Graph API version override; defaults to `v23.0` |
 | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Billing checkout and signed billing events (not yet enabled) |
 
 Optional: `LEAD_NOTIFICATION_EMAIL`, `KATHYA_VAPI_MODEL`, `KATHYA_VAPI_WEBHOOK_URL`.

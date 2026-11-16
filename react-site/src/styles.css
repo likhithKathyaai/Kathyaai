@@ -1197,3 +1197,15 @@ button:disabled{cursor:not-allowed;opacity:.65}
 .billingGrid article small{color:#728278;font-size:10px;font-weight:750}
 .billingGrid article b{color:#193c28;font-size:22px;letter-spacing:-.035em;overflow-wrap:anywhere}
 .billingPanel>p,.performancePanel>p{margin:10px 0 0;color:#7b8a80;font-size:11px;line-height:1.6}
+
+
+/* Saved-agent actions: keep open/edit and deployment controls visible on all screen sizes */
+.workspaceRecordIdentity{flex:1 1 180px;display:flex;flex-direction:column;gap:5px;min-width:140px}
+.workspaceRecordIdentity b{color:#193d2c;font-size:13px}
+.workspaceRecordIdentity small{color:#7d9585;font-size:11px}
+.workspaceEditButton{border:1px solid #0b8f5b!important;background:#effaf3!important;color:#075b3b!important;border-radius:9px!important;padding:9px 13px!important;font:inherit;font-size:12px!important;font-weight:800!important;white-space:nowrap;cursor:pointer}
+.workspaceEditButton:hover{background:#dcf5e6!important}
+.workspaceRecordList article>details{flex:1 1 100%;order:10;padding:10px 12px;background:#f7fbf8;border-radius:9px;color:#234b36;font-size:12px}
+.workspaceRecordList article>details summary{cursor:pointer;font-weight:750}
+.workspaceRecordList article>details p{white-space:pre-wrap;line-height:1.55}
+@media(max-width:700px){.workspaceRecordList article{align-items:flex-start}.workspaceRecordIdentity{flex-basis:calc(100% - 60px)}.workspaceEditButton,.workspaceDeployButton{flex:1 1 auto}}

@@ -9,7 +9,7 @@ export default async function handler(req,res){
  if(!phoneNumberId)return json(res,503,{error:'Vapi phone number ID is not configured on the server'});
  const url=process.env.VITE_SUPABASE_URL,key=process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
  if(!url||!key)return json(res,503,{error:'Supabase auth is not configured'});
- const token=(req.headers.authorization||'').replace(/^Bearer\\s+/i,'');
+ const token=(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
  if(!token)return json(res,401,{error:'Sign in required'});
  const db=createClient(url,key,{global:{headers:{Authorization:'Bearer '+token}},auth:{persistSession:false}});
  const {data:{user},error:authError}=await db.auth.getUser(token);

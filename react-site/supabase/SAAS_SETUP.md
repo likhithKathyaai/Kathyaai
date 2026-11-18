@@ -54,3 +54,15 @@ For existing users, each account receives a default organization and an owner me
 ## Deployment
 
 This commit is on `kathya-react`. It does not change the production domain, Supabase database, Vapi configuration or Vercel environment variables by itself. Apply the SQL manually only after reviewing the target Supabase project. Validate the app on a preview deployment before any production cutover.
+
+## Platform Owner dashboard (Phase 2)
+
+The owner-only dashboard uses the read-only RPC in `supabase/platform_admin_overview.sql`.
+
+1. Confirm the intended platform owner exists in `auth.users` and has `admin_users.role = 'owner'`.
+2. Run `platform_admin_overview.sql` in the same Supabase project.
+3. Sign in to the React application with the platform-owner account and open `/admin`.
+4. The page calls the RPC with the signed-in Supabase session. The database function checks `admin_users.role = 'owner'` before returning platform-wide organization and activity summaries.
+5. If the SQL has not been applied, the page displays the database error and a retry action.
+
+This first release is intentionally read-only. It does not create organizations, invite members, change plans, suspend accounts, or modify customer data. Those actions require separate audited server-side workflows and explicit authorization. Do not add the Supabase service-role key to browser environment variables.

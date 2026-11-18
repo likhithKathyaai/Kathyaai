@@ -66,3 +66,20 @@ The owner-only dashboard uses the read-only RPC in `supabase/platform_admin_over
 5. If the SQL has not been applied, the page displays the database error and a retry action.
 
 This first release is intentionally read-only. It does not create organizations, invite members, change plans, suspend accounts, or modify customer data. Those actions require separate audited server-side workflows and explicit authorization. Do not add the Supabase service-role key to browser environment variables.
+
+
+## Platform Admin management (Phase 3 preview)
+
+The owner console now includes customer creation, plan/status controls, workspace-member management and an audit-log view. Before using these controls, apply `platform_admin_management.sql` in the same Supabase project after `platform_admin_overview.sql`.
+
+Important operating rules:
+
+- Creating a workspace requires the owner to have already registered a KATHYA account. The RPC creates the organization and its owner membership together.
+- Additional members must also already have registered KATHYA accounts. This release does not send invitation emails.
+- Supported workspace plans are `launch`, `growth`, `scale` and `enterprise`.
+- Supported member roles are `admin`, `member` and `viewer`. The workspace owner cannot be demoted or removed in this console.
+- Workspace status can be set to `active`, `suspended` or `closed`. Confirm business impact before suspending or closing an account.
+- Every successful mutation creates an entry in `platform_admin_audit_logs`. The owner-only audit RPC returns the latest 100 entries.
+- These functions are SECURITY DEFINER and verify `admin_users.role = 'owner'` inside PostgreSQL. Do not expose service-role credentials in the browser.
+
+After applying the SQL, test on the preview deployment: create a test workspace using a registered test account, change its plan/status, add a test member, change that member's role, remove the test member, and confirm each operation appears in Audit log. Do not test destructive actions on a real customer.

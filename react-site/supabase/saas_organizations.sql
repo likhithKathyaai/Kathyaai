@@ -119,6 +119,12 @@ begin
   values (org_id, new.id, 'owner')
   on conflict (organization_id, user_id) do nothing;
 
+  -- The existing auth trigger may create the billing row before this trigger
+  -- runs, so attach that row now as well.
+  update public.billing_accounts
+  set organization_id = org_id
+  where user_id = new.id and organization_id is null;
+
   return new;
 end;
 $$;

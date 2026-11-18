@@ -84,44 +84,98 @@ function WorkspaceModule({name,user,profile}){const cfg=moduleConfig[name]||modu
 function XIcon(){return <span aria-hidden="true">×</span>}
 export function Workspace(){const[range,setRange]=useState('7 days');const[user,setUser]=useState(null);const[profile,setProfile]=useState(null);const[loading,setLoading]=useState(true);useEffect(()=>{if(!supabase){setLoading(false);return}supabase.auth.getUser().then(({data})=>{if(!data.user){location.replace('/sign-in');return}setUser(data.user);supabase.from('profiles').select('*').eq('id',data.user.id).maybeSingle().then(({data:p})=>{setProfile(p);setLoading(false)})});const{data:{subscription}}=supabase.auth.onAuthStateChange((_e,s)=>{if(!s?.user)location.replace('/sign-in');else setUser(s.user)});return()=>subscription.unsubscribe()},[]);if(loading)return <div className="authLoading">Securing your KATHYA workspace…</div>;if(!authConfigured)return <div className="authLoading">Authentication configuration required.</div>;if(!user)return null;if(profile&&!profile.onboarding_complete)return <Shell user={user}><main className="setupMain"><div className="setupIntro"><small>ACCOUNT SETUP</small><h1>Finish setting up your account</h1><p>This information is saved securely to your KATHYA customer profile.</p></div><form className="setupCard" onSubmit={async e=>{e.preventDefault();const fd=new FormData(e.currentTarget);const{error}=await supabase.from('profiles').update({full_name:fd.get('name'),business_name:fd.get('business'),mobile:fd.get('mobile'),primary_goal:fd.get('goal'),onboarding_complete:true,updated_at:new Date().toISOString()}).eq('id',user.id);if(!error)setProfile(p=>({...p,onboarding_complete:true}))}}><label>Your name<input name="name" defaultValue={profile.full_name||''} required/></label><label>Business name<input name="business" defaultValue={profile.business_name||''} required/></label><label>Your mobile number<div className="phoneField"><span>+1</span><input name="mobile" defaultValue={profile.mobile||''} required/></div></label><label>Primary goal<select name="goal" defaultValue={profile.primary_goal||''} required><option value="" disabled>Select a goal</option><option>Answer calls</option><option>Qualify leads</option><option>Book appointments</option><option>Customer support</option><option>Automate workflows</option></select></label><button className="setupContinue" type="submit">Save & open dashboard</button><small className="setupPrivacy">Your account setup is stored under your authenticated user ID.</small></form></main></Shell>;const metrics=[['Conversations','1,284','+18.4%',MessageSquare],['Completed outcomes','847','+12.1%',CheckCircle2],['Appointments','126','+9.8%',CalendarCheck],['Human handoffs','7.5%','-2.3%',Headphones]];const outcomes=[['Appointment booked','Inbound Receptionist','2m 18s','Completed'],['Lead qualified','Growth Agent','3m 42s','Completed'],['Support resolved','Care Agent','4m 09s','Completed'],['Human handoff','Inbound Receptionist','1m 37s','Escalated']];return <Shell user={user}>{(active,setActive)=>active!=="Dashboard"?<WorkspaceModule key={active} name={active} user={user} profile={profile}/>:<main className="dashMain"><div className="dashBreadcrumb"><span>Workspace</span><i>/</i><b>Dashboard</b></div><div className="dashWelcome"><div><small>GOOD AFTERNOON</small><h1>Your conversations are turning into <em>outcomes.</em></h1><p>See what KATHYA understood, acted on and completed across your customer workflows.</p></div><div className="dashActions"><select value={range} onChange={e=>setRange(e.target.value)}><option>24 hours</option><option>7 days</option><option>30 days</option></select><button onClick={()=>setActive("Create Agent")}><Plus size={16}/>New agent</button></div></div><section className="metricRow">{metrics.map(([n,v,d,I])=><article key={n}><div><span><I size={17}/></span><small>{n}</small></div><b>{v}</b><i className={d[0]==='-'?'down':''}>{d}<ArrowUpRight size={11}/></i></article>)}</section><section className="dashGrid"><article className="liveCard"><div className="cardHead"><div><small>LIVE OPERATIONS</small><h2>Conversation pulse</h2></div><span className="liveBadge"><i/>LIVE</span></div><div className="pulseVisual"><div className="pulseCore"><img src="/kathya-logo.png" alt=""/><span>12</span><small>active now</small></div><div className="pulseOrbit one"><span>Voice</span></div><div className="pulseOrbit two"><span>Chat</span></div><div className="pulseOrbit three"><span>Actions</span></div></div><div className="pulseStats"><span><b>96%</b><small>understood</small></span><span><b>84%</b><small>completed</small></span><span><b>1.8s</b><small>response</small></span></div></article><article className="goalCard"><div className="cardHead"><div><small>OUTCOME ENGINE</small><h2>Today’s flow</h2></div><Activity size={18}/></div><div className="funnel"><div><span>1,284</span><b>Conversations</b><i style={{width:'100%'}}/></div><div><span>1,067</span><b>Intent understood</b><i style={{width:'83%'}}/></div><div><span>932</span><b>Action started</b><i style={{width:'73%'}}/></div><div><span>847</span><b>Outcome completed</b><i style={{width:'66%'}}/></div></div><div className="completion"><Sparkles size={15}/><span><b>66%</b> conversation-to-outcome rate</span></div></article><article className="agentCard"><div className="cardHead"><div><small>AI TEAM</small><h2>Agents at work</h2></div><button onClick={()=>setActive("My Agents")}>View all <ChevronRight size={14}/></button></div>{[['Inbound Receptionist','Voice · Booking','Online','72%'],['Growth Agent','Lead qualification','Online','61%'],['Care Agent','Customer support','Online','88%']].map((a,i)=><div className="agentLine" key={a[0]}><span className="agentAvatar">{['IR','GA','CA'][i]}</span><div><b>{a[0]}</b><small>{a[1]}</small></div><i>{a[2]}</i><strong>{a[3]}</strong></div>)}</article><article className="actionCard"><small>NEXT BEST ACTION</small><h2>Build your next workflow.</h2><p>Connect an agent to a goal, knowledge source and approved business action.</p><div className="miniFlow"><span>Listen</span><i>→</i><span>Decide</span><i>→</i><span>Act</span></div><button onClick={()=>setActive("Create Agent")}><Play size={14}/>Launch Agent Studio</button></article></section><section className="outcomeTable"><div className="cardHead"><div><small>RECENT OUTCOMES</small><h2>What KATHYA completed</h2></div><button onClick={()=>setActive("AI Conversations")}>View conversations <ChevronRight size={14}/></button></div><div className="tableHead"><span>Outcome</span><span>Agent</span><span>Duration</span><span>Status</span></div>{outcomes.map((o,i)=><div className="outcomeLine" key={o[0]}><span><i className={'outcomeIcon i'+i}>{i<3?<CheckCircle2 size={15}/>:<Headphones size={15}/>}</i><b>{o[0]}</b></span><span>{o[1]}</span><span><Clock3 size={13}/>{o[2]}</span><span className={o[3]==='Completed'?'statusDone':'statusEsc'}>{o[3]}</span></div>)}</section></main>}</Shell>}
 export function Admin(){
- const [user,setUser]=useState(null),[access,setAccess]=useState('loading'),[data,setData]=useState(null),[error,setError]=useState(''),[refreshing,setRefreshing]=useState(false);
+ const [user,setUser]=useState(null),[access,setAccess]=useState('loading'),[data,setData]=useState(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[tab,setTab]=useState('overview'),[selectedOrg,setSelectedOrg]=useState(null),[members,setMembers]=useState([]),[audit,setAudit]=useState([]);
+ const [newOrg,setNewOrg]=useState({name:'',slug:'',owner_email:'',plan:'launch'}),[memberForm,setMemberForm]=useState({email:'',role:'member'});
  const load=async()=>{
   if(!supabase){setAccess('config');return}
-  const {data:authData,error:authError}=await supabase.auth.getUser();
-  if(authError||!authData?.user){location.replace('/sign-in?next=/admin');return}
-  setUser(authData.user);
-  const {data:overview,error:overviewError}=await supabase.rpc('platform_admin_overview');
-  if(overviewError){setError(overviewError.message);setAccess(overviewError.code==='42501'?'denied':'error');return}
-  setData(overview);setAccess('owner');setError('');
+  const {data:a,error:ae}=await supabase.auth.getUser();
+  if(ae||!a?.user){location.replace('/sign-in?next=/admin');return}
+  setUser(a.user);
+  const {data:d,error:e}=await supabase.rpc('platform_admin_overview');
+  if(e){setError(e.message);setAccess(e.code==='42501'?'denied':'error');return}
+  setData(d);setAccess('owner');setError('');
  };
  useEffect(()=>{load()},[]);
- const refresh=async()=>{setRefreshing(true);await load();setRefreshing(false)};
+ const refresh=async()=>{setBusy(true);await load();setBusy(false)};
+ const run=async(name,args,success)=>{
+  setBusy(true);setError('');
+  const {data:d,error:e}=await supabase.rpc(name,args);
+  if(e)setError(e.message);else{if(success)success(d);await load()}
+  setBusy(false);
+ };
+ const openMembers=async(org)=>{
+  setSelectedOrg(org);setTab('members');setError('');
+  const {data:d,error:e}=await supabase.rpc('platform_admin_list_members',{p_org_id:org.id});
+  if(e)setError(e.message);else setMembers(d||[]);
+ };
+ const refreshMembers=async()=>{
+  if(!selectedOrg)return;
+  const {data:d,error:e}=await supabase.rpc('platform_admin_list_members',{p_org_id:selectedOrg.id});
+  if(e)setError(e.message);else setMembers(d||[]);
+ };
+ const createOrg=async(e)=>{
+  e.preventDefault();
+  const slug=newOrg.slug.trim()||newOrg.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  await run('platform_admin_manage_organization',{p_action:'create',p_name:newOrg.name,p_slug:slug,p_owner_email:newOrg.owner_email,p_plan:newOrg.plan},()=>setNewOrg({name:'',slug:'',owner_email:'',plan:'launch'}));
+ };
+ const updateOrg=async(org,field,value)=>{
+  if(!confirm('Apply this '+field+' change to '+org.name+'?'))return;
+  await run('platform_admin_manage_organization',{p_action:'update',p_org_id:org.id,[field==='status'?'p_status':'p_plan']:value});
+ };
+ const addMember=async(e)=>{
+  e.preventDefault();
+  await run('platform_admin_manage_member',{p_action:'add',p_org_id:selectedOrg.id,p_email:memberForm.email,p_role:memberForm.role},async()=>{setMemberForm({email:'',role:'member'});await refreshMembers()});
+  await refreshMembers();
+ };
+ const changeRole=async(m,role)=>{
+  if(m.role==='owner')return;
+  await run('platform_admin_manage_member',{p_action:'role',p_org_id:selectedOrg.id,p_user_id:m.user_id,p_role:role});
+  await refreshMembers();
+ };
+ const removeMember=async(m)=>{
+  if(m.role==='owner'||!confirm('Remove '+m.email+' from '+selectedOrg.name+'?'))return;
+  await run('platform_admin_manage_member',{p_action:'remove',p_org_id:selectedOrg.id,p_user_id:m.user_id});
+  await refreshMembers();
+ };
+ const loadAudit=async()=>{
+  setTab('audit');const {data:d,error:e}=await supabase.rpc('platform_admin_audit_log');
+  if(e)setError(e.message);else setAudit(d||[]);
+ };
  if(access==='loading')return <div className="authLoading">Verifying platform-owner access…</div>;
  if(access==='config')return <div className="authLoading">Supabase authentication is not configured.</div>;
  if(access==='denied')return <section className="adminDenied"><img src="/kathya-logo.png" alt="KATHYA"/><small>RESTRICTED AREA</small><h1>Platform Owner</h1><p>This account does not have platform-owner permission.</p><a href="/workspace">Return to workspace</a></section>;
- if(access==='error')return <section className="adminDenied"><img src="/kathya-logo.png" alt="KATHYA"/><small>CONTROL PLANE NOT READY</small><h1>Database setup required</h1><p>{error}</p><p>Apply platform_admin_overview.sql in the connected Supabase project, then refresh.</p><button onClick={refresh}>Retry</button></section>;
- const metrics=data?.metrics||{}, organizations=data?.organizations||[];
+ if(access==='error')return <section className="adminDenied"><img src="/kathya-logo.png" alt="KATHYA"/><small>CONTROL PLANE NOT READY</small><h1>Database setup required</h1><p>{error}</p><p>Apply the platform admin SQL migrations in Supabase, then refresh.</p><button onClick={refresh}>Retry</button></section>;
+ const metrics=data?.metrics||{},orgs=data?.organizations||[];
  const cards=[['Customer workspaces',metrics.organizations??0,Users],['Active workspaces',metrics.active_organizations??0,CheckCircle2],['AI agents',metrics.agents??0,Bot],['Conversations',metrics.conversations??0,MessageSquare]];
  return <section className="adminApp">
-  <aside className="adminSide">
-   <a href="/admin" className="portalBrand"><img src="/kathya-logo.png" alt="KATHYA"/><div><b>KATHYA</b><small>PLATFORM OWNER</small></div></a>
-   <small>CONTROL PLANE</small>
-   <div className="adminNavActive"><LayoutDashboard size={16}/>Overview</div>
-   <div className="adminNavHint"><Users size={16}/>Customer workspaces</div>
-   <div className="adminNavHint"><Bot size={16}/>AI operations</div>
-   <div className="adminNavHint"><WalletCards size={16}/>Plans & billing</div>
+  <aside className="adminSide"><a href="/admin" className="portalBrand"><img src="/kathya-logo.png" alt="KATHYA"/><div><b>KATHYA</b><small>PLATFORM OWNER</small></div></a><small>CONTROL PLANE</small>
+   {[['overview','Overview',LayoutDashboard],['customers','Customers',Users],['audit','Audit log',ShieldCheck]].map(([id,label,Icon])=><button key={id} className={tab===id?'adminNavActive':'adminNavHint'} onClick={()=>id==='audit'?loadAudit():setTab(id)}><Icon size={16}/>{label}</button>)}
+   <button className={tab==='members'?'adminNavActive':'adminNavHint'} disabled={!selectedOrg} onClick={()=>setTab('members')}><Users size={16}/>Workspace members</button>
    <div className="adminGuard"><CheckCircle2 size={15}/><div><b>Owner verified</b><small>Database-enforced access</small></div></div>
   </aside>
   <div className="adminBody">
-   <header><div><small>KATHYA CONTROL PLANE</small><b>Platform Overview</b></div><div className="adminIdentity"><span>{(user?.email||'O')[0].toUpperCase()}</span><div><b>Platform Owner</b><small>{user?.email}</small></div><button onClick={refresh} disabled={refreshing}>{refreshing?'Refreshing…':'Refresh'}</button><button onClick={async()=>{await supabase.auth.signOut();location.href='/sign-in'}}><LogOut size={15}/>Logout</button></div></header>
+   <header><div><small>KATHYA CONTROL PLANE</small><b>{tab==='overview'?'Platform Overview':tab==='customers'?'Customer Management':tab==='members'?'Workspace Members':'Platform Audit Log'}</b></div><div className="adminIdentity"><span>{(user?.email||'O')[0].toUpperCase()}</span><div><b>Platform Owner</b><small>{user?.email}</small></div><button onClick={refresh} disabled={busy}>{busy?'Working…':'Refresh'}</button><button onClick={async()=>{await supabase.auth.signOut();location.href='/sign-in'}}><LogOut size={15}/>Logout</button></div></header>
    <main>
-    <div className="adminHero"><div><small>PLATFORM OPERATIONS</small><h1>One control plane.<br/><em>Every customer workspace.</em></h1><p>Monitor KATHYA customer organizations and platform activity from a privileged, read-only overview.</p></div><span>OWNER</span></div>
-    <div className="adminMetrics">{cards.map(([label,value,Icon])=><article key={label}><small>{label}</small><b>{Number(value).toLocaleString()}</b><span><Icon size={13}/> Live database count</span></article>)}</div>
-    <section className="adminCustomerPanel">
-     <div className="adminPanelHead"><div><small>CUSTOMER DIRECTORY</small><h2>Organizations & workspaces</h2><p>{organizations.length} customer workspaces currently registered.</p></div><span>{metrics.suspended_organizations??0} suspended</span></div>
-     {organizations.length===0?<div className="adminEmpty">No organizations have been created yet.</div>:<div className="adminTableWrap"><table className="adminTable"><thead><tr><th>Organization</th><th>Owner</th><th>Plan</th><th>Status</th><th>Members</th><th>Agents</th><th>Conversations</th></tr></thead><tbody>{organizations.map(org=><tr key={org.id}><td><b>{org.name}</b><small>{org.slug}</small></td><td>{org.owner_email||'—'}</td><td><span className="adminPlan">{org.plan}</span></td><td><span className={'adminStatus '+(org.status==='active'?'isActive':'isSuspended')}>{org.status}</span></td><td>{org.members}</td><td>{org.agents}</td><td>{org.conversations}</td></tr>)}</tbody></table></div>}
-    </section>
-    <div className="adminReadOnlyNote"><ShieldCheck size={17}/><span><b>Safe first release:</b> this dashboard only reads organization and activity summaries. Creating customers, changing plans, suspending accounts and inviting members will be added with audited server-side actions.</span></div>
+    <div className="adminHero"><div><small>PLATFORM OPERATIONS</small><h1>One control plane.<br/><em>Every customer workspace.</em></h1><p>Manage customer organizations, workspace access and privileged platform activity.</p></div><span>OWNER</span></div>
+    {error&&<div className="adminActionError" role="alert">{error}</div>}
+    {tab==='overview'&&<>
+     <div className="adminMetrics">{cards.map(([label,value,Icon])=><article key={label}><small>{label}</small><b>{Number(value).toLocaleString()}</b><span><Icon size={13}/> Live database count</span></article>)}</div>
+     <section className="adminCustomerPanel"><div className="adminPanelHead"><div><small>CUSTOMER DIRECTORY</small><h2>Organizations & workspaces</h2><p>{orgs.length} customer workspaces currently registered.</p></div><span>{metrics.suspended_organizations??0} suspended</span></div>
+      <div className="adminTableWrap"><table className="adminTable"><thead><tr><th>Organization</th><th>Owner</th><th>Plan</th><th>Status</th><th>Members</th><th>Agents</th><th>Conversations</th><th>Manage</th></tr></thead><tbody>{orgs.map(org=><tr key={org.id}><td><b>{org.name}</b><small>{org.slug}</small></td><td>{org.owner_email||'—'}</td><td>{org.plan}</td><td><span className={'adminStatus '+(org.status==='active'?'isActive':'isSuspended')}>{org.status}</span></td><td>{org.members}</td><td>{org.agents}</td><td>{org.conversations}</td><td><button className="adminSmallButton" onClick={()=>openMembers(org)}>Members</button></td></tr>)}</tbody></table></div>
+     </section>
+    </>}
+    {tab==='customers'&&<div className="adminManageGrid">
+     <section className="adminCustomerPanel"><div className="adminPanelHead"><div><small>NEW CUSTOMER</small><h2>Create workspace</h2><p>Owner must already have a KATHYA account.</p></div></div>
+      <form className="adminForm" onSubmit={createOrg}><label>Business / workspace name<input required value={newOrg.name} onChange={e=>setNewOrg(v=>({...v,name:e.target.value}))} placeholder="Acme Healthcare"/></label><label>Workspace slug<input value={newOrg.slug} onChange={e=>setNewOrg(v=>({...v,slug:e.target.value}))} placeholder="acme-healthcare (auto-generated if blank)"/></label><label>Owner registered email<input required type="email" value={newOrg.owner_email} onChange={e=>setNewOrg(v=>({...v,owner_email:e.target.value}))} placeholder="owner@company.com"/></label><label>Plan<select value={newOrg.plan} onChange={e=>setNewOrg(v=>({...v,plan:e.target.value}))}><option value="launch">Launch</option><option value="growth">Growth</option><option value="scale">Scale</option><option value="enterprise">Enterprise</option></select></label><button disabled={busy} type="submit">{busy?'Creating…':'Create customer workspace'}</button></form>
+     </section>
+     <section className="adminCustomerPanel"><div className="adminPanelHead"><div><small>ACCOUNT CONTROLS</small><h2>Plans & account status</h2><p>Changes are recorded in the audit log.</p></div></div><div className="adminActionList">{orgs.map(org=><article key={org.id}><div><b>{org.name}</b><small>{org.owner_email||org.slug}</small></div><label>Plan<select disabled={busy} value={org.plan} onChange={e=>updateOrg(org,'plan',e.target.value)}><option value="launch">Launch</option><option value="growth">Growth</option><option value="scale">Scale</option><option value="enterprise">Enterprise</option></select></label><label>Status<select disabled={busy} value={org.status} onChange={e=>updateOrg(org,'status',e.target.value)}><option value="active">Active</option><option value="suspended">Suspended</option><option value="closed">Closed</option></select></label></article>)}</div></section>
+    </div>}
+    {tab==='members'&&<section className="adminCustomerPanel"><div className="adminPanelHead"><div><small>ACCESS CONTROL</small><h2>{selectedOrg?.name||'Choose a workspace'}</h2><p>Add registered users and control their workspace permissions.</p></div><button className="adminSmallButton" onClick={()=>setTab('customers')}>Back to customers</button></div>
+     {selectedOrg&&<><form className="adminMemberForm" onSubmit={addMember}><label>Registered user email<input required type="email" value={memberForm.email} onChange={e=>setMemberForm(v=>({...v,email:e.target.value}))} placeholder="user@company.com"/></label><label>Role<select value={memberForm.role} onChange={e=>setMemberForm(v=>({...v,role:e.target.value}))}><option value="admin">Admin</option><option value="member">Member</option><option value="viewer">Viewer</option></select></label><button disabled={busy} type="submit">Add / update member</button></form>
+     <div className="adminTableWrap"><table className="adminTable"><thead><tr><th>Email</th><th>Role</th><th>Joined</th><th>Action</th></tr></thead><tbody>{members.map(m=><tr key={m.user_id}><td>{m.email}</td><td>{m.role==='owner'?'Owner':<select value={m.role} disabled={busy} onChange={e=>changeRole(m,e.target.value)}><option value="admin">Admin</option><option value="member">Member</option><option value="viewer">Viewer</option></select>}</td><td>{new Date(m.created_at).toLocaleDateString()}</td><td>{m.role==='owner'?'Protected':<button className="adminSmallButton danger" disabled={busy} onClick={()=>removeMember(m)}>Remove</button>}</td></tr>)}</tbody></table></div></>}
+    </section>}
+    {tab==='audit'&&<section className="adminCustomerPanel"><div className="adminPanelHead"><div><small>SECURITY & GOVERNANCE</small><h2>Recent admin actions</h2><p>Latest 100 privileged platform changes.</p></div></div><div className="adminTableWrap"><table className="adminTable"><thead><tr><th>Action</th><th>Actor</th><th>Details</th><th>Time</th></tr></thead><tbody>{audit.map(x=><tr key={x.id}><td>{x.action}</td><td>{x.actor_email}</td><td>{JSON.stringify(x.details)}</td><td>{new Date(x.created_at).toLocaleString()}</td></tr>)}</tbody></table></div>{audit.length===0&&<div className="adminEmpty">No admin actions recorded yet.</div>}</section>}
+    <div className="adminReadOnlyNote"><ShieldCheck size={17}/><span><b>Security:</b> all management operations call owner-verified database functions. Workspace owners cannot be removed or demoted from this console. Mutations are written to the audit log.</span></div>
    </main>
   </div>
  </section>

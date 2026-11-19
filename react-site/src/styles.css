@@ -1076,7 +1076,7 @@ button:disabled{cursor:not-allowed;opacity:.65}
 /* KATHYA workspace theme system + official logo watermark */
 .portalBody{position:relative;isolation:isolate;min-width:0}
 .portalBody::before{content:"";position:fixed;inset:82px 0 0 246px;z-index:0;pointer-events:none;background-image:url('/kathya-logo.png');background-repeat:no-repeat;background-position:center 48%;background-size:min(38vw,390px);opacity:.045;filter:grayscale(1)}
-.portalBody>*{position:relative;z-index:1}
+.portalBody>*:not(.portalTop){position:relative;z-index:1}
 .portalTop{gap:10px}
 .portalThemeToggle{height:39px!important;min-width:68px;width:auto!important;padding:0 10px!important;display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:11px!important;font-size:10px;font-weight:750;cursor:pointer;white-space:nowrap}
 .portal.theme-light{background:#f6f9f7;color:#14231b}

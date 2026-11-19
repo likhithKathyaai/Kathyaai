@@ -37,7 +37,7 @@ export function SignIn(){
   setBusy(true);
   try{
    if(mode==='reset'){
-    const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+'/sign-in?mode=update-password&next='+encodeURIComponent(nextPath)});
+    const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+'/?mode=update-password&next='+encodeURIComponent(nextPath)});
     setMessage(error?error.message:'Password reset email sent. Check your inbox, then open the link on this device.');
    }else if(mode==='update'){
     const {error}=await supabase.auth.updateUser({password});

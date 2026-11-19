@@ -4,6 +4,10 @@ This checklist is the release gate for the multi-tenant SaaS application. A succ
 
 ## Current development scope
 
+- The development branch has code changes for live tenant-derived dashboard metrics, onboarding recovery, owner-role protection, PDF/DOCX/TXT/Markdown/CSV extraction and Vapi prompt context injection. These newest changes are committed but the Vercel deployment API has reached its daily deployment quota, so the latest commit has not yet been built into a preview.
+- Knowledge injection is a bounded static context window, not semantic/vector search. URL crawling, embeddings and retrieval ranking are not implemented.
+- Automations and campaigns currently support tenant-scoped draft records; a production trigger/action runner, scheduling, retries and provider delivery are not complete.
+
 - Application source: `react-site/`
 - Development branch: `feature/platform-admin-management`
 - Production branch: `kathya-react`
@@ -65,9 +69,9 @@ Run against two separate test organizations with separate users. Do not use real
 | Agent builder | Draft saves, edits and deletes are tenant-scoped; unsupported languages/voice settings are rejected clearly. |
 | Vapi | Assistant deploy, phone attach, inbound/outbound test, webhook authentication, retries and idempotent usage posting all pass. |
 | CRM | Contacts create, read, update, search and delete work within one organization only. |
-| Knowledge | File upload, private storage policy, extraction, indexing, agent retrieval and document deletion work. Pending files must not be represented as indexed/ready. |
-| Automations | Draft creation, activation, trigger validation, action authorization, execution logs, retries and failure handling work. |
-| Campaigns | Drafting, audience validation, scheduling, consent/suppression checks, provider send and delivery reporting work. |
+| Knowledge | Private file upload and text extraction are implemented in the development branch for PDF, DOCX, TXT, Markdown and CSV; ready documents are included in a bounded Vapi prompt context. Semantic indexing/vector retrieval, URL crawling and full UI verification remain outstanding. Pending files must not be represented as ready. |
+| Automations | Tenant-scoped draft creation/read is present. Activation, trigger dispatch, action authorization, execution logs, retries and failure handling are not yet implemented. |
+| Campaigns | Tenant-scoped draft creation/read is present. Audience validation, scheduling, consent/suppression checks, provider sending and delivery reporting are not yet implemented. |
 | Billing | Stripe test checkout, subscription lifecycle, invoice failure, minute top-up, duplicate events and refunds reconcile correctly. |
 | Credits | Earliest-expiring lots are consumed first; insufficient balance blocks new calls; expiry and notifications are idempotent. |
 | Operations | Error monitoring, audit log, backups/restore, rate limits, secrets, retention and incident response are verified. |

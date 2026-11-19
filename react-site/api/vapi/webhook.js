@@ -41,7 +41,7 @@ export default async function handler(req,res){
     p_minutes:minutes,
     p_provider_event_id:String(callId),
     p_provider:'vapi',
-    p_agent_id:null,
+    p_agent_id:agent.id,
     p_call_id:String(callId),
     p_metadata:{assistant_id:assistantId,duration_seconds:seconds,ended_reason:message.endedReason||call.endedReason||null}
   });

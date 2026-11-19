@@ -250,3 +250,45 @@ grant execute on function public.expire_voice_minutes() to service_role;
 comment on table public.voice_credit_lots is 'KATHYA purchased and promotional voice-minute grants with monthly expiry.';
 comment on table public.voice_credit_ledger is 'Append-only audit ledger for KATHYA voice-minute credits and debits.';
 comment on function public.consume_voice_minutes(uuid,numeric,text,text,uuid,text,jsonb) is 'Idempotent provider-side usage deduction; call only after verifying provider webhook authenticity and mapping call to organization.';
+
+-- Stripe checkout webhook idempotency and purchased-minute grants.
+create table if not exists public.stripe_webhook_events (
+  event_id text primary key,
+  event_type text not null,
+  processed_at timestamptz not null default now()
+);
+alter table public.stripe_webhook_events enable row level security;
+revoke all on public.stripe_webhook_events from public,anon,authenticated;
+grant all on public.stripe_webhook_events to service_role;
+
+create unique index if not exists voice_credit_lots_source_reference_uidx
+  on public.voice_credit_lots(source,reference) where reference is not null;
+
+create or replace function public.grant_purchased_voice_minutes(
+  p_org_id uuid,p_minutes numeric,p_reference text,p_note text default null
+) returns jsonb language plpgsql security definer set search_path=''
+as $$
+declare lot public.voice_credit_lots%rowtype; expiry timestamptz;
+begin
+ if auth.role()<>'service_role' then raise exception 'Service role required' using errcode='42501'; end if;
+ if p_org_id is null or p_minutes is null or p_minutes<=0 or nullif(trim(p_reference),'') is null then
+  raise exception 'Organization, positive minutes and unique purchase reference are required';
+ end if;
+ expiry := (date_trunc('month',now() at time zone 'UTC')+interval '1 month') at time zone 'UTC';
+ insert into public.voice_credit_lots(organization_id,source,granted_minutes,remaining_minutes,expires_at,reference,note)
+ values(p_org_id,'purchased',p_minutes,p_minutes,expiry,trim(p_reference),nullif(trim(p_note),''))
+ on conflict(source,reference) where reference is not null do nothing
+ returning * into lot;
+ if lot.id is null then
+  select * into lot from public.voice_credit_lots where source='purchased' and reference=trim(p_reference);
+  if lot.organization_id<>p_org_id or lot.granted_minutes<>p_minutes then
+   raise exception 'Purchase reference already exists with different credit details';
+  end if;
+  return jsonb_build_object('duplicate',true,'lot_id',lot.id,'expires_at',lot.expires_at);
+ end if;
+ insert into public.voice_credit_ledger(organization_id,lot_id,entry_type,source,minutes_delta,description,reference)
+ values(p_org_id,lot.id,'grant','purchased',p_minutes,'Purchased voice minutes credited after verified payment',lot.reference);
+ return jsonb_build_object('duplicate',false,'lot_id',lot.id,'minutes',p_minutes,'expires_at',expiry);
+end; $$;
+revoke all on function public.grant_purchased_voice_minutes(uuid,numeric,text,text) from public,anon,authenticated;
+grant execute on function public.grant_purchased_voice_minutes(uuid,numeric,text,text) to service_role;

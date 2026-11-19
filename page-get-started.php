@@ -1,0 +1,16 @@
+<?php /* Template Name: KATHYA Get Started */ get_header(); ?>
+<main id="main-content"><section class="page-hero compact"><div class="k-container"><div class="eyebrow">GET STARTED</div><h1>Build your KATHYA blueprint.</h1><p>Tell us the outcome you want. We’ll use this information to prepare the right agent, channels, actions and integrations.</p></div></section>
+<section class="k-section"><div class="k-container form-layout">
+<div><h2>From need to working workflow.</h2><div class="steps-list"><div><b>1</b><p><strong>Define the outcome</strong><span>Reception, booking, sales, support, reminders or a custom workflow.</span></p></div><div><b>2</b><p><strong>Connect the work</strong><span>Choose channels, calendar, CRM, messaging and APIs.</span></p></div><div><b>3</b><p><strong>Test before launch</strong><span>Validate conversations, actions and human handoff.</span></p></div></div></div>
+<form class="k-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+<input type="hidden" name="action" value="kathya_get_started"><?php wp_nonce_field('kathya_get_started_submit','kathya_get_started_nonce'); ?>
+<?php if(isset($_GET['started'])&&$_GET['started']==='success'):?><div class="form-success">Thanks — your KATHYA workspace request has been received.</div><?php elseif(isset($_GET['started'])):?><div class="form-error">Please complete the required fields and try again.</div><?php endif;?>
+<label>What should KATHYA handle? *<select name="outcome" required><option value="">Choose an outcome</option><option>AI Receptionist</option><option>Appointment Booking</option><option>Sales & Lead Qualification</option><option>Customer Support</option><option>Collections & Reminders</option><option>Custom Workflow</option></select></label>
+<label>Industry *<input name="industry" required placeholder="e.g. Healthcare, Real Estate, SaaS"></label>
+<fieldset class="k-check-grid"><legend>Channels</legend><label><input type="checkbox" name="channels[]" value="Phone"> Phone</label><label><input type="checkbox" name="channels[]" value="Website"> Website</label><label><input type="checkbox" name="channels[]" value="Chat"> Chat</label><label><input type="checkbox" name="channels[]" value="WhatsApp"> WhatsApp</label></fieldset>
+<label>Systems / integrations<input name="systems" placeholder="Calendar, CRM, helpdesk, APIs…"></label>
+<label>Approx. monthly conversations<select name="volume"><option>Under 1,000</option><option>1,000–5,000</option><option>5,000–25,000</option><option>25,000+</option></select></label>
+<label>Name *<input name="name" required></label><label>Business email *<input type="email" name="email" required></label><label>Phone / WhatsApp<input name="phone"></label><label>Company *<input name="company" required></label>
+<label class="check"><input type="checkbox" name="consent" value="1" required><span>I agree to be contacted about my KATHYA workspace request. *</span></label>
+<button class="k-btn k-btn-primary" type="submit">Create My KATHYA Blueprint →</button><div class="hp-field" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+</form></div></section></main><?php get_footer(); ?>

@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 /* V5 product interactions */
 document.addEventListener('DOMContentLoaded',()=>{
  const talk=document.getElementById('v5-talk'),status=document.getElementById('v5-status'),chat=document.getElementById('v5-chat');
- if(talk&&status&&chat){talk.addEventListener('click',()=>{talk.disabled=true;talk.innerHTML='<span>●</span> Listening…';status.textContent='Listening…';chat.innerHTML='<div class="user"><small>YOU</small><p>Can you book a demo tomorrow afternoon?</p></div>';setTimeout(()=>{status.textContent='Understanding intent…';},650);setTimeout(()=>{status.textContent='Action ready';chat.innerHTML+='<div class="ai"><small>KATHYA</small><p>I found two available times: 2:30 PM and 4:00 PM. Which works better?</p></div>';talk.innerHTML='<span>✓</span> Action ready';setTimeout(()=>{talk.disabled=false;talk.innerHTML='<span>●</span> Experience again';},1800)},1400)})}
+ if(talk&&status&&chat){talk.addEventListener('click',()=>{const steps=[...document.querySelectorAll('.v8-step')],intent=document.getElementById('v8-intent'),tool=document.getElementById('v8-tool'),next=document.getElementById('v8-next');const activate=n=>steps.forEach((s,i)=>s.classList.toggle('active',i===n));talk.disabled=true;talk.innerHTML='<span>●</span> Listening…';status.textContent='Listening to your request…';activate(0);chat.innerHTML='<div class="user"><small>YOU</small><p>Can you book a demo tomorrow afternoon?</p></div>';setTimeout(()=>{status.textContent='Understanding intent + context…';activate(1);if(intent)intent.textContent='Book demo'},650);setTimeout(()=>{status.textContent='Checking connected calendar…';activate(2);if(tool)tool.textContent='Calendar';if(next)next.textContent='Check availability'},1300);setTimeout(()=>{status.textContent='Two times are ready';activate(3);chat.innerHTML+='<div class="ai"><small>KATHYA</small><p>I found 2:30 PM and 4:00 PM. Which works better?</p></div>';if(next)next.textContent='Confirm a time';talk.innerHTML='<span>✓</span> Outcome ready';setTimeout(()=>{talk.disabled=false;talk.innerHTML='<span>●</span> Experience again'},2200)},2100)})}
  const build=document.getElementById('v5-build'),result=document.getElementById('v5-result'),industry=document.getElementById('v5-industry');
  if(build&&result){build.addEventListener('click',()=>{build.textContent='Building…';result.style.opacity='.35';setTimeout(()=>{result.querySelector('strong').textContent='KATHYA '+(industry?.value||'Assistant');result.style.opacity='1';build.textContent='Agent ready ✓'},850)})}
  const tabs=document.querySelectorAll('.v5-usecase-tabs button'),label=document.getElementById('use-label'),title=document.getElementById('use-title'),copy=document.getElementById('use-copy');
@@ -98,4 +98,24 @@ document.addEventListener('DOMContentLoaded',()=>{
  const prompts={demo:'I want to book a KATHYA demo.',solutions:'What solutions does KATHYA AI offer?',pricing:'How does KATHYA AI pricing work?',contact:'How can I contact the KATHYA team?'};
  document.querySelectorAll('.k-assist-quick button').forEach(b=>b.addEventListener('click',async()=>{const k=b.dataset.q;await ask(prompts[k]||b.textContent);if(k==='demo')link('/book-appointment/','Choose a time →');if(k==='contact')link('/contact/','Contact team →');if(k==='pricing')link('/pricing/','View pricing →');if(k==='solutions')link('/solutions/','Explore solutions →')}));
  form?.addEventListener('submit',e=>{e.preventDefault();const q=input.value.trim();if(!q)return;input.value='';ask(q)});
+});
+
+/* V6.2 creative interaction layer */
+document.addEventListener('DOMContentLoaded',()=>{
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const header=document.querySelector('.site-header');
+ const onScroll=()=>header?.classList.toggle('k-scrolled',window.scrollY>18);
+ onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+ document.querySelectorAll('.v5-bento,.pricing-grid,.card-grid,.v5-flow,.auth-points').forEach(group=>{
+   [...group.children].forEach((el,i)=>{el.classList.add('motion-child');el.style.setProperty('--motion-i',i);});
+   if(!group.classList.contains('reveal')) group.classList.add('reveal');
+ });
+ if(reduced)return;
+ document.querySelectorAll('.v5-bento article,.price-card,.k-card,.v5-builder,.auth-card').forEach(card=>{
+   card.addEventListener('pointermove',e=>{if(window.innerWidth<900)return;const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform='perspective(900px) rotateX('+(-y*2.4)+'deg) rotateY('+(x*3.2)+'deg) translateY(-5px)';});
+   card.addEventListener('pointerleave',()=>card.style.transform='');
+ });
+ const hero=document.querySelector('.v5-hero');
+ const mark=hero?.querySelector('.v5-product-stage');
+ if(hero&&mark){hero.addEventListener('pointermove',e=>{if(window.innerWidth<900)return;const x=(e.clientX/window.innerWidth-.5)*8,y=(e.clientY/window.innerHeight-.5)*6;mark.style.transform='translate3d('+x+'px,'+y+'px,0)';});hero.addEventListener('pointerleave',()=>mark.style.transform='');}
 });

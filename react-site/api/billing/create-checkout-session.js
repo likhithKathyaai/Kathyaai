@@ -6,8 +6,10 @@ const minutePackages={500:{env:'STRIPE_PRICE_MINUTES_500',minutes:500},2000:{env
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');
  if(req.method!=='POST')return json(res,405,{error:'Method not allowed'});
- const stripeKey=process.env.STRIPE_SECRET_KEY,appUrl=process.env.KATHYA_APP_URL;
- if(!stripeKey||!appUrl)return json(res,503,{error:'Billing is not configured on this environment'});
+ const stripeKey=process.env.STRIPE_SECRET_KEY,host=String(req.headers.host||'');
+ const safeHost=/^(www\\.)?kathyaai\\.com$|^[a-z0-9-]+\\.vercel\\.app$/i.test(host);
+ const appUrl=process.env.KATHYA_APP_URL||(safeHost?'https://'+host:null);
+ if(!stripeKey||!appUrl||!safeHost)return json(res,503,{error:'Billing is not configured for this preview or production host'});
  const token=String(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
  if(!token)return json(res,401,{error:'Sign in required'});
  const url=process.env.VITE_SUPABASE_URL,key=process.env.VITE_SUPABASE_PUBLISHABLE_KEY;

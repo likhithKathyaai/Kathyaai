@@ -4,9 +4,7 @@ export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');
  if(req.method!=='POST')return json(res,405,{error:'Method not allowed'});
  const apiKey=process.env.VAPI_PRIVATE_API_KEY;
- const phoneNumberId=process.env.VAPI_PHONE_NUMBER_ID;
  if(!apiKey)return json(res,503,{error:'Vapi private key is not configured on the server'});
- if(!phoneNumberId)return json(res,503,{error:'Vapi phone number ID is not configured on the server'});
  const url=process.env.VITE_SUPABASE_URL,key=process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
  if(!url||!key)return json(res,503,{error:'Supabase auth is not configured'});
  const token=(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
@@ -16,8 +14,12 @@ export default async function handler(req,res){
  if(authError||!user)return json(res,401,{error:'Invalid session'});
  const {recordId}=req.body||{};
  if(typeof recordId!=='string'||! /^[0-9a-f-]{36}$/i.test(recordId))return json(res,400,{error:'Valid agent record required'});
- const {data:record,error:readError}=await db.from('workspace_records').select('id,title,payload,status').eq('id',recordId).eq('user_id',user.id).eq('category','agents').single();
+ const {data:record,error:readError}=await db.from('workspace_records').select('id,title,payload,status,organization_id').eq('id',recordId).eq('category','agents').single();
  if(readError||!record)return json(res,404,{error:'Agent not found'});
+ const {data:membership}=await db.from('organization_members').select('role').eq('organization_id',record.organization_id).eq('user_id',user.id).maybeSingle();
+ if(!membership||!['owner','admin','member'].includes(membership.role))return json(res,403,{error:'You do not have permission to connect phone numbers in this workspace'});
+ const phoneNumberId=record.payload?.vapiPhoneNumberId||record.payload?.fields?.['Vapi phone number ID'];
+ if(!phoneNumberId)return json(res,400,{error:'Add a Vapi phone-number ID to this agent before connecting it. Each customer must use an assigned phone number.'});
  const assistantId=record.payload?.vapiAssistantId;
  if(!assistantId)return json(res,409,{error:'Deploy this agent to Vapi before connecting a phone number'});
  if(record.payload?.vapiPhoneNumberConnectedAt)return json(res,409,{error:'A phone number is already recorded as connected to this agent'});
@@ -36,7 +38,7 @@ export default async function handler(req,res){
    if(connected.assistantId!==assistantId)return json(res,502,{error:'Vapi did not confirm the expected assistant assignment'});
   }
   const payload={...record.payload,vapiPhoneNumberId:phoneNumberId,vapiPhoneNumber:connected.number||current.number||null,vapiPhoneNumberConnectedAt:new Date().toISOString()};
-  const {error:saveError}=await db.from('workspace_records').update({payload,status:'configured'}).eq('id',record.id).eq('user_id',user.id);
+  const {error:saveError}=await db.from('workspace_records').update({payload,status:'configured'}).eq('id',record.id).eq('organization_id',record.organization_id);
   if(saveError)return json(res,502,{error:'Vapi connected the phone number, but workspace sync failed. Do not retry; contact support to reconcile it.',connected:true});
   return json(res,200,{connected:true,recordId:record.id,assistantId,phoneNumber:connected.number||current.number||null});
  }catch(e){return json(res,502,{error:'Vapi phone-number service is unavailable'})}

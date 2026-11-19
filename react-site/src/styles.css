@@ -1034,3 +1034,40 @@ button:disabled{cursor:not-allowed;opacity:.65}
 .adminDenied button{margin-top:15px;padding:11px 15px;border:1px solid var(--line);border-radius:9px;background:#0b2017;color:white;cursor:pointer}
 @media(max-width:900px){.adminApp{grid-template-columns:1fr}.adminSide{position:relative;height:auto;padding:15px 18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.portalBrand{grid-column:1/-1;margin:0 0 8px}.adminSide>small{grid-column:1/-1}.adminGuard{margin:0;grid-column:1/-1}.adminBody>header{position:relative}.adminMetrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.adminSide{grid-template-columns:1fr 1fr}.adminBody>header{align-items:flex-start;flex-direction:column}.adminIdentity{width:100%;flex-wrap:wrap}.adminIdentity>div{flex:1;min-width:130px}.adminBody>main{padding:18px}.adminHero{align-items:flex-start;flex-direction:column}.adminMetrics{gap:8px}.adminMetrics article{padding:15px}.adminMetrics article>b{font-size:28px}.adminPanelHead{align-items:flex-start;flex-direction:column}}
+
+
+/* Platform admin management controls */
+.adminSide button{font:inherit;text-align:left;width:100%;cursor:pointer;background:transparent}
+.adminSide button:disabled{opacity:.35;cursor:not-allowed}
+.adminManageGrid{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(420px,1.4fr);gap:14px;margin-top:14px;align-items:start}
+.adminForm,.adminMemberForm{display:grid;gap:13px;padding:20px}
+.adminForm label,.adminMemberForm label,.adminActionList label{display:grid;gap:7px;color:#aebeb4;font-size:10px;font-weight:700}
+.adminForm input,.adminForm select,.adminMemberForm input,.adminMemberForm select,.adminActionList select,.adminTable select{width:100%;min-height:39px;padding:9px 11px;border:1px solid rgba(255,255,255,.13);border-radius:8px;background:#0b2017;color:#eff8f1;font:inherit;font-size:11px}
+.adminForm button,.adminMemberForm button{min-height:42px;padding:10px 14px;border:1px solid rgba(166,255,63,.28);border-radius:9px;background:#a6ff3f;color:#10210d;font-size:11px;font-weight:850;cursor:pointer}
+.adminForm button:disabled,.adminMemberForm button:disabled{opacity:.55}
+.adminActionList{padding:6px 18px 14px}
+.adminActionList article{display:grid;grid-template-columns:minmax(130px,1fr) minmax(100px,.7fr) minmax(100px,.7fr);gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.adminActionList article:last-child{border-bottom:0}
+.adminActionList article>div{display:grid;gap:4px;min-width:0}
+.adminActionList article>div b{font-size:11px;color:#edf7ef}
+.adminActionList article>div small{font-size:9px;color:#809187;overflow-wrap:anywhere}
+.adminSmallButton{padding:8px 11px;border:1px solid rgba(166,255,63,.22);border-radius:7px;background:rgba(166,255,63,.08);color:#caff83;font-size:10px;font-weight:750;cursor:pointer}
+.adminSmallButton.danger{border-color:rgba(255,145,120,.25);background:rgba(255,145,120,.08);color:#ffb09b}
+.adminMemberForm{grid-template-columns:minmax(180px,1fr) minmax(120px,.45fr) auto;align-items:end;border-bottom:1px solid rgba(255,255,255,.07)}
+.adminActionError{margin:14px 0;padding:12px 15px;border:1px solid rgba(255,145,120,.3);border-radius:10px;background:rgba(255,90,70,.08);color:#ffc1b4;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.adminTable td select{min-width:100px}
+@media(max-width:1050px){.adminManageGrid{grid-template-columns:1fr}}
+@media(max-width:650px){.adminActionList article{grid-template-columns:1fr 1fr}.adminActionList article>div{grid-column:1/-1}.adminMemberForm{grid-template-columns:1fr}.adminSide button{min-width:0}.adminTable{min-width:680px}}
+
+/* Fix platform admin navigation visibility on narrow screens: legacy sidebar rules hid inactive tabs. */
+.adminSide>button.adminNavHint,.adminSide>button.adminNavActive{display:flex!important;visibility:visible;opacity:1;pointer-events:auto;position:relative;z-index:2}
+
+/* KATHYA voice-minute credit administration */
+.adminCreditWorkspace{display:grid;gap:12px}.adminCreditIntro{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border:1px solid #dce8e0;border-radius:14px;background:linear-gradient(120deg,#fff,#effaf3)}.adminCreditIntro small{font-size:8px;letter-spacing:.15em;color:#26814d;font-weight:800}.adminCreditIntro h2{font-size:21px;margin:7px 0;color:#10291b}.adminCreditIntro p{font-size:10px;color:#63776a;margin:0;line-height:1.55}.adminCreditIntro>span{white-space:nowrap;padding:7px 10px;border-radius:20px;background:#dff7e7;color:#216d3d;font-size:8px;font-weight:800;letter-spacing:.08em}.adminCreditGrid{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(0,1.4fr);gap:10px}.adminCreditGrid>.adminCustomerPanel{min-width:0}.adminCreditFilter{display:flex;align-items:center;gap:8px;font-size:8px;color:#6d7c72}.adminCreditFilter select{max-width:190px;padding:7px;border:1px solid #dfe8e2;border-radius:7px;background:white;font-size:9px}.creditPositive{color:#18834a;font-weight:800}.creditNegative{color:#b64b43;font-weight:800}.adminCreditWorkspace .adminForm{padding:0 16px 16px}.adminCreditWorkspace .adminMetrics{margin:0}.adminCreditWorkspace .adminMetrics article{min-width:0}.adminCreditWorkspace .adminTable td,.adminCreditWorkspace .adminTable th{white-space:nowrap}.adminCreditWorkspace .adminTable td:last-child{white-space:normal;min-width:130px}
+@media(max-width:900px){.adminCreditGrid{grid-template-columns:1fr}.adminCreditIntro{align-items:flex-start;flex-direction:column}.adminCreditWorkspace .adminMetrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.adminCreditFilter{align-items:flex-start;flex-direction:column}.adminCreditFilter select{max-width:100%}}
+
+/* Multi-tenant workspace and multilingual agent configuration */
+.portalWorkspaceSelect{display:flex;flex-direction:column;gap:3px;min-width:170px;max-width:230px}.portalWorkspaceSelect small{font-size:8px;letter-spacing:.12em;color:#8b9a90}.portalWorkspaceSelect select{max-width:100%;border:1px solid #dce7df;border-radius:8px;background:#fff;padding:7px 9px;color:#173b29;font-size:10px;font-weight:700}.workspaceEditor form{display:grid}.workspaceEditor form label{display:grid;gap:6px}.workspaceEditor form input,.workspaceEditor form textarea{width:100%}.customerCreditWallet{margin:16px 0;padding:22px;border:1px solid #dce9df;border-radius:16px;background:linear-gradient(120deg,#f7fcf8,#eef8f1);display:grid;gap:16px}.customerCreditWallet>div:first-child small{font-size:9px;letter-spacing:.14em;font-weight:800;color:#27834d}.customerCreditWallet h2{font-size:22px;margin:6px 0;color:#163b28}.customerCreditWallet p{font-size:12px;color:#64766b;margin:0;line-height:1.5}.customerCreditStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.customerCreditStats article{background:#fff;border:1px solid #e2eee5;border-radius:12px;padding:14px;display:grid;gap:6px}.customerCreditStats small{font-size:10px;color:#718078}.customerCreditStats b{font-size:21px;color:#153e29}@media(max-width:800px){.portalWorkspaceSelect{max-width:150px}.customerCreditStats{grid-template-columns:1fr}}
+
+.customerCreditPurchase{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:14px;border-top:1px solid #dce9df}.customerCreditPurchase>div{display:grid;gap:3px;margin-right:auto}.customerCreditPurchase>div b{font-size:12px;color:#173b29}.customerCreditPurchase>div small{font-size:10px;color:#738078}.customerCreditPurchase button,.customerCreditPurchase select{border:1px solid #cfe1d4;background:#fff;color:#1d6339;border-radius:8px;padding:9px 11px;font-size:10px;font-weight:750;cursor:pointer}.customerCreditPurchase button:disabled,.customerCreditPurchase select:disabled{opacity:.5;cursor:wait}

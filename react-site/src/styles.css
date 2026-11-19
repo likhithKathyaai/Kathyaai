@@ -1058,3 +1058,6 @@ button:disabled{cursor:not-allowed;opacity:.65}
 .adminTable td select{min-width:100px}
 @media(max-width:1050px){.adminManageGrid{grid-template-columns:1fr}}
 @media(max-width:650px){.adminActionList article{grid-template-columns:1fr 1fr}.adminActionList article>div{grid-column:1/-1}.adminMemberForm{grid-template-columns:1fr}.adminSide button{min-width:0}.adminTable{min-width:680px}}
+
+/* Fix platform admin navigation visibility on narrow screens: legacy sidebar rules hid inactive tabs. */
+.adminSide>button.adminNavHint,.adminSide>button.adminNavActive{display:flex!important;visibility:visible;opacity:1;pointer-events:auto;position:relative;z-index:2}

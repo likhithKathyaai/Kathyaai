@@ -1071,3 +1071,70 @@ button:disabled{cursor:not-allowed;opacity:.65}
 .portalWorkspaceSelect{display:flex;flex-direction:column;gap:3px;min-width:170px;max-width:230px}.portalWorkspaceSelect small{font-size:8px;letter-spacing:.12em;color:#8b9a90}.portalWorkspaceSelect select{max-width:100%;border:1px solid #dce7df;border-radius:8px;background:#fff;padding:7px 9px;color:#173b29;font-size:10px;font-weight:700}.workspaceEditor form{display:grid}.workspaceEditor form label{display:grid;gap:6px}.workspaceEditor form input,.workspaceEditor form textarea{width:100%}.customerCreditWallet{margin:16px 0;padding:22px;border:1px solid #dce9df;border-radius:16px;background:linear-gradient(120deg,#f7fcf8,#eef8f1);display:grid;gap:16px}.customerCreditWallet>div:first-child small{font-size:9px;letter-spacing:.14em;font-weight:800;color:#27834d}.customerCreditWallet h2{font-size:22px;margin:6px 0;color:#163b28}.customerCreditWallet p{font-size:12px;color:#64766b;margin:0;line-height:1.5}.customerCreditStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.customerCreditStats article{background:#fff;border:1px solid #e2eee5;border-radius:12px;padding:14px;display:grid;gap:6px}.customerCreditStats small{font-size:10px;color:#718078}.customerCreditStats b{font-size:21px;color:#153e29}@media(max-width:800px){.portalWorkspaceSelect{max-width:150px}.customerCreditStats{grid-template-columns:1fr}}
 
 .customerCreditPurchase{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:14px;border-top:1px solid #dce9df}.customerCreditPurchase>div{display:grid;gap:3px;margin-right:auto}.customerCreditPurchase>div b{font-size:12px;color:#173b29}.customerCreditPurchase>div small{font-size:10px;color:#738078}.customerCreditPurchase button,.customerCreditPurchase select{border:1px solid #cfe1d4;background:#fff;color:#1d6339;border-radius:8px;padding:9px 11px;font-size:10px;font-weight:750;cursor:pointer}.customerCreditPurchase button:disabled,.customerCreditPurchase select:disabled{opacity:.5;cursor:wait}
+
+
+/* KATHYA workspace theme system + official logo watermark */
+.portalBody{position:relative;isolation:isolate;min-width:0}
+.portalBody::before{content:"";position:fixed;inset:82px 0 0 246px;z-index:0;pointer-events:none;background-image:url('/kathya-logo.png');background-repeat:no-repeat;background-position:center 48%;background-size:min(38vw,390px);opacity:.045;filter:grayscale(1)}
+.portalBody>*{position:relative;z-index:1}
+.portalTop{gap:10px}
+.portalThemeToggle{height:39px!important;min-width:68px;width:auto!important;padding:0 10px!important;display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:11px!important;font-size:10px;font-weight:750;cursor:pointer;white-space:nowrap}
+.portal.theme-light{background:#f6f9f7;color:#14231b}
+.portal.theme-light .portalBody{background:#f6f9f7}
+.portal.theme-light .portalTop{background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom-color:#e5ebe7}
+.portal.theme-light .portalThemeToggle{background:#f3faf5;color:#245a3b;border:1px solid #dce9e0}
+.portal.theme-light .portalThemeToggle:hover{background:#e7f7ec;border-color:#a9d9b8}
+.portal.theme-dark{background:#06130d;color:#eaf5ee}
+.portal.theme-dark .portalBody{background:#06130d;color:#eaf5ee}
+.portal.theme-dark .portalBody::before{opacity:.065;filter:grayscale(1) brightness(0) invert(1)}
+.portal.theme-dark .portalTop{background:rgba(7,22,15,.94);border-bottom:1px solid rgba(151,211,174,.13);color:#eaf5ee;backdrop-filter:blur(18px)}
+.portal.theme-dark .sidebarResponse{color:#dcebe1}
+.portal.theme-dark .portalWorkspaceSelect small{color:#86a493}
+.portal.theme-dark .portalWorkspaceSelect select,.portal.theme-dark .portalSearch{background:#0c2116;color:#dcebe1;border-color:#254333;box-shadow:none}
+.portal.theme-dark .portalSearch{color:#8da99a}
+.portal.theme-dark .portalSearch kbd{color:#8da99a}
+.portal.theme-dark .portalTop>button:not(.portalThemeToggle){background:#0c2116;color:#c6ddce;border-color:#254333}
+.portal.theme-dark .portalThemeToggle{background:#173523;color:#d5f4df;border:1px solid #315c42}
+.portal.theme-dark .portalThemeToggle:hover{background:#20482f;border-color:#65c88a}
+.portal.theme-dark .portalAccount{color:#e5f3e9}
+.portal.theme-dark .portalAccount small{color:#91ad9b}
+.portal.theme-dark .accountMenu{background:#0d2117;border-color:#294635;color:#e4f1e8}
+.portal.theme-dark .accountIdentity{border-bottom:1px solid #254131}
+.portal.theme-dark .accountIdentity b{color:#eaf5ee}
+.portal.theme-dark .accountIdentity small{color:#91aa9a}
+.portal.theme-dark .accountMenu button,.portal.theme-dark .accountMenu a{color:#c5d9cb}
+.portal.theme-dark .accountMenu button:hover,.portal.theme-dark .accountMenu a:hover{background:#183626;color:#fff}
+.portal.theme-dark .accountMenu i{border-color:#294635}
+.portal.theme-dark .dashMain,.portal.theme-dark .workspaceModule,.portal.theme-dark .workspaceV2,.portal.theme-dark .setupMain{background:transparent!important;color:#e8f3ec!important}
+.portal.theme-dark .dashBreadcrumb,.portal.theme-dark .dashBreadcrumb span{color:#91aa9a}
+.portal.theme-dark .dashBreadcrumb b{color:#dff1e5}
+.portal.theme-dark .dashWelcome h1,.portal.theme-dark .workspaceModuleHead h1,.portal.theme-dark .workspaceModulePanel h2,.portal.theme-dark .workspacePanelTitle,.portal.theme-dark .setupIntro h1{color:#eff9f2}
+.portal.theme-dark .dashWelcome p,.portal.theme-dark .workspaceModuleHead p,.portal.theme-dark .workspaceModulePanel p,.portal.theme-dark .setupIntro p{color:#9ab2a2}
+.portal.theme-dark .dashWelcome small,.portal.theme-dark .cardHead small,.portal.theme-dark .workspaceModuleHead>small,.portal.theme-dark .setupIntro>small{color:#72d99a}
+.portal.theme-dark .dashActions select,.portal.theme-dark .workspaceModuleForm input,.portal.theme-dark .workspaceModuleForm textarea,.portal.theme-dark .workspaceModuleForm select,.portal.theme-dark .workspaceRecordFilters input,.portal.theme-dark .workspaceRecordFilters select,.portal.theme-dark .workspaceRecordList select,.portal.theme-dark .setupCard input,.portal.theme-dark .setupCard select{background:#0c2116!important;color:#e6f4ea!important;border-color:#2a4936!important}
+.portal.theme-dark .metricRow article,.portal.theme-dark .dashGrid>article:not(.liveCard),.portal.theme-dark .outcomeTable,.portal.theme-dark .workspaceModuleTemplates button,.portal.theme-dark .workspaceModulePanel,.portal.theme-dark .workspaceRecords,.portal.theme-dark .workspaceRecordList article,.portal.theme-dark .workspaceIdentity,.portal.theme-dark .workspaceV2 .workspacePanel,.portal.theme-dark .setupCard,.portal.theme-dark .customerCreditStats article{background:#0b1d14!important;border-color:#254232!important;color:#e4f1e8!important;box-shadow:0 10px 34px rgba(0,0,0,.16)}
+.portal.theme-dark .metricRow article>div>span,.portal.theme-dark .workspaceRecordIcon{background:#143c27;color:#79e5a2}
+.portal.theme-dark .metricRow small,.portal.theme-dark .workspaceRecordList article>div small,.portal.theme-dark .workspaceDraftList small,.portal.theme-dark .setupPrivacy{color:#91aa9a}
+.portal.theme-dark .metricRow article>b,.portal.theme-dark .workspaceRecordList article>div b,.portal.theme-dark .workspaceEmpty b,.portal.theme-dark .workspaceModuleTemplates button,.portal.theme-dark .workspaceModulePanel label,.portal.theme-dark .setupCard label{color:#e6f4ea}
+.portal.theme-dark .workspaceModuleTemplates button:hover{background:#123321!important;border-color:#3d8156}
+.portal.theme-dark .workspaceDraftList>div,.portal.theme-dark .workspaceRecordFilters>div{background:#0c2116;border-color:#2a4936;color:#dcebe1}
+.portal.theme-dark .workspaceRecordFilters{color:#a7c0b0}
+.portal.theme-dark .workspaceEmpty{color:#9ab3a3}
+.portal.theme-dark .workspaceEmpty b{color:#e8f5ec}
+.portal.theme-dark .workspaceError,.portal.theme-dark .formError{background:#3a2119;color:#ffc4ad;border:1px solid #74412d}
+.portal.theme-dark .workspaceIdentity{color:#cde4d4}
+.portal.theme-dark .workspaceModuleForm button,.portal.theme-dark .setupContinue{background:#a6ff3f;color:#092014}
+.portal.theme-dark .customerCreditWallet{background:linear-gradient(120deg,#10291c,#0b1d14);border-color:#2b4b37}
+.portal.theme-dark .customerCreditWallet h2,.portal.theme-dark .customerCreditPurchase>div b,.portal.theme-dark .customerCreditStats b{color:#e8f6ec}
+.portal.theme-dark .customerCreditWallet p,.portal.theme-dark .customerCreditStats small{color:#9db5a5}
+.portal.theme-dark .customerCreditStats article{border-color:#2b4b37}
+.portal.theme-dark .customerCreditPurchase{border-color:#294735}
+.portal.theme-dark .customerCreditPurchase button,.portal.theme-dark .customerCreditPurchase select{background:#10291c;color:#c8f2d5;border-color:#365a43}
+.portal.theme-dark .setupCard .phoneField>span{background:#10291c;border-color:#2a4936;color:#d6e9dc}
+.portal.theme-dark .setupCard input:focus,.portal.theme-dark .setupCard select:focus{border-color:#66d991!important}
+.portal.theme-dark .tableHead{color:#9bb3a4}
+.portal.theme-dark .outcomeLine{border-color:#294535;color:#a9c1b1}
+.portal.theme-dark .outcomeLine>span:first-child{color:#e3f2e8}
+.portal.theme-dark .portalUsage{background:#102d1c;border-color:#2b6742;color:#82e7a4}
+@media(max-width:900px){.portalBody::before{inset:72px 0 0 0;background-size:min(62vw,330px);background-position:center 55%}.portalThemeToggle{min-width:40px;padding:0 9px!important}.portalThemeToggle span{display:none}}
+@media(max-width:600px){.portalBody::before{opacity:.035}.portal.theme-dark .portalBody::before{opacity:.05}}

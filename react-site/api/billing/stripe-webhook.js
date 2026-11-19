@@ -45,7 +45,7 @@ export default async function handler(req,res){
    if(orgId){
     const {error}=await db.from('customer_subscriptions').upsert({
      organization_id:orgId,plan_code:obj.metadata?.plan_code||'launch',
-     status:event.type==='customer.subscription.deleted'?'canceled':obj.status,
+     status:event.type==='customer.subscription.deleted'?'canceled':(['trialing','active','past_due','canceled','incomplete'].includes(obj.status)?obj.status:'incomplete'),
      billing_provider:'stripe',provider_customer_id:obj.customer||null,provider_subscription_id:obj.id,
      current_period_start:obj.current_period_start?new Date(obj.current_period_start*1000).toISOString():null,
      current_period_end:obj.current_period_end?new Date(obj.current_period_end*1000).toISOString():null,

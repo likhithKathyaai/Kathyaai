@@ -243,3 +243,75 @@ comment on table public.voice_campaigns is 'Tenant-isolated inbound and outbound
 comment on table public.integration_connections is 'Non-secret integration connection metadata. OAuth tokens and API secrets must stay server-side.';
 comment on table public.automation_workflows is 'Tenant-isolated workflow definitions and action steps.';
 comment on table public.customer_subscriptions is 'Provider-backed customer subscription state; customers have read-only access.';
+
+-- Private document storage. Object paths must begin with the tenant UUID.
+insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
+values('kathya-knowledge','kathya-knowledge',false,26214400,
+ array['application/pdf','text/plain','text/markdown','text/csv','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
+on conflict(id) do update set public=false,file_size_limit=26214400;
+
+drop policy if exists kathya_knowledge_read on storage.objects;
+create policy kathya_knowledge_read on storage.objects for select to authenticated
+using(bucket_id='kathya-knowledge' and exists(
+ select 1 from public.organization_members m
+ where m.organization_id=(storage.foldername(name))[1]::uuid and m.user_id=auth.uid()
+));
+drop policy if exists kathya_knowledge_insert on storage.objects;
+create policy kathya_knowledge_insert on storage.objects for insert to authenticated
+with check(bucket_id='kathya-knowledge' and exists(
+ select 1 from public.organization_members m
+ where m.organization_id=(storage.foldername(name))[1]::uuid and m.user_id=auth.uid()
+ and m.role in ('owner','admin','member')
+));
+drop policy if exists kathya_knowledge_update on storage.objects;
+create policy kathya_knowledge_update on storage.objects for update to authenticated
+using(bucket_id='kathya-knowledge' and exists(
+ select 1 from public.organization_members m
+ where m.organization_id=(storage.foldername(name))[1]::uuid and m.user_id=auth.uid()
+ and m.role in ('owner','admin','member')
+))
+with check(bucket_id='kathya-knowledge' and exists(
+ select 1 from public.organization_members m
+ where m.organization_id=(storage.foldername(name))[1]::uuid and m.user_id=auth.uid()
+ and m.role in ('owner','admin','member')
+));
+drop policy if exists kathya_knowledge_delete on storage.objects;
+create policy kathya_knowledge_delete on storage.objects for delete to authenticated
+using(bucket_id='kathya-knowledge' and exists(
+ select 1 from public.organization_members m
+ where m.organization_id=(storage.foldername(name))[1]::uuid and m.user_id=auth.uid()
+ and m.role in ('owner','admin')
+));
+
+create table if not exists public.voice_provider_cost_events (
+ id uuid primary key default gen_random_uuid(),
+ organization_id uuid not null references public.organizations(id) on delete cascade,
+ provider text not null,
+ provider_event_id text not null,
+ cost_amount numeric(12,6),
+ currency text not null default 'USD',
+ metadata jsonb not null default '{}'::jsonb,
+ created_at timestamptz not null default now(),
+ unique(provider,provider_event_id)
+);
+alter table public.voice_provider_cost_events enable row level security;
+revoke all on public.voice_provider_cost_events from public,anon,authenticated;
+grant all on public.voice_provider_cost_events to service_role;
+
+create table if not exists public.customer_notifications (
+ id uuid primary key default gen_random_uuid(),
+ organization_id uuid not null references public.organizations(id) on delete cascade,
+ notification_key text not null unique,
+ notification_type text not null,
+ recipient_email text not null,
+ subject text not null,
+ body text not null,
+ scheduled_for timestamptz not null default now(),
+ sent_at timestamptz,
+ status text not null default 'queued' check(status in ('queued','sent','failed')),
+ last_error text,
+ created_at timestamptz not null default now()
+);
+alter table public.customer_notifications enable row level security;
+revoke all on public.customer_notifications from public,anon,authenticated;
+grant all on public.customer_notifications to service_role;

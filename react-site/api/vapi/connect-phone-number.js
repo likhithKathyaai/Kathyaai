@@ -18,7 +18,7 @@ export default async function handler(req,res){
  if(readError||!record)return json(res,404,{error:'Agent not found'});
  const {data:membership}=await db.from('organization_members').select('role').eq('organization_id',record.organization_id).eq('user_id',user.id).maybeSingle();
  if(!membership||!['owner','admin','member'].includes(membership.role))return json(res,403,{error:'You do not have permission to connect phone numbers in this workspace'});
- const phoneNumberId=record.payload?.vapiPhoneNumberId;
+ const phoneNumberId=record.payload?.vapiPhoneNumberId||record.payload?.fields?.['Vapi phone number ID'];
  if(!phoneNumberId)return json(res,400,{error:'Add a Vapi phone-number ID to this agent before connecting it. Each customer must use an assigned phone number.'});
  const assistantId=record.payload?.vapiAssistantId;
  if(!assistantId)return json(res,409,{error:'Deploy this agent to Vapi before connecting a phone number'});

@@ -189,6 +189,9 @@ begin
   select * into event_row from public.voice_usage_events
     where provider=p_provider and provider_event_id=p_provider_event_id;
   if found then
+    if event_row.organization_id<>p_org_id or event_row.minutes<>p_minutes then
+      raise exception 'Provider event ID was already used for a different workspace or duration';
+    end if;
     select coalesce(sum(l.remaining_minutes),0) into balance from public.voice_credit_lots l
       where l.organization_id=p_org_id and l.expires_at>now();
     return jsonb_build_object('duplicate',true,'available_minutes',balance);

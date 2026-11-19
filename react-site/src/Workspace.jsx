@@ -86,6 +86,7 @@ export function Workspace(){const[range,setRange]=useState('7 days');const[user,
 export function Admin(){
  const [user,setUser]=useState(null),[access,setAccess]=useState('loading'),[data,setData]=useState(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[tab,setTab]=useState('overview'),[selectedOrg,setSelectedOrg]=useState(null),[members,setMembers]=useState([]),[audit,setAudit]=useState([]);
  const [newOrg,setNewOrg]=useState({name:'',slug:'',owner_email:'',plan:'launch'}),[memberForm,setMemberForm]=useState({email:'',role:'member'});
+ const [creditData,setCreditData]=useState(null),[creditLedger,setCreditLedger]=useState([]),[creditOrgFilter,setCreditOrgFilter]=useState(''),[creditForm,setCreditForm]=useState({org_id:'',minutes:'',source:'promotional',note:''});
  const load=async()=>{
   if(!supabase){setAccess('config');return}
   const {data:a,error:ae}=await supabase.auth.getUser();
@@ -141,6 +142,21 @@ export function Admin(){
   setTab('audit');const {data:d,error:e}=await supabase.rpc('platform_admin_audit_log');
   if(e)setError(e.message);else setAudit(d||[]);
  };
+ const loadCredits=async(orgId=creditOrgFilter)=>{
+  setTab('credits');setError('');
+  const {data:d,error:e}=await supabase.rpc('platform_admin_credit_overview');
+  if(e){setError('Credit wallet migration is not installed yet: '+e.message);return}
+  setCreditData(d);
+  const {data:l,error:le}=await supabase.rpc('platform_admin_credit_ledger',{p_org_id:orgId||null});
+  if(le)setError(le.message);else setCreditLedger(l||[]);
+ };
+ const allocateCredits=async(e)=>{
+  e.preventDefault();if(!creditForm.org_id||!Number(creditForm.minutes))return;
+  setBusy(true);setError('');
+  const {error:e2}=await supabase.rpc('platform_admin_allocate_voice_minutes',{p_org_id:creditForm.org_id,p_minutes:Number(creditForm.minutes),p_source:creditForm.source,p_note:creditForm.note||null,p_reference:null});
+  if(e2)setError(e2.message);else{setCreditForm(v=>({...v,minutes:'',note:''}));await loadCredits(creditOrgFilter)}
+  setBusy(false);
+ };
  if(access==='loading')return <div className="authLoading">Verifying platform-owner access…</div>;
  if(access==='config')return <div className="authLoading">Supabase authentication is not configured.</div>;
  if(access==='denied')return <section className="adminDenied"><img src="/kathya-logo.png" alt="KATHYA"/><small>RESTRICTED AREA</small><h1>Platform Owner</h1><p>This account does not have platform-owner permission.</p><a href="/workspace">Return to workspace</a></section>;
@@ -149,12 +165,12 @@ export function Admin(){
  const cards=[['Customer workspaces',metrics.organizations??0,Users],['Active workspaces',metrics.active_organizations??0,CheckCircle2],['AI agents',metrics.agents??0,Bot],['Conversations',metrics.conversations??0,MessageSquare]];
  return <section className="adminApp">
   <aside className="adminSide"><a href="/admin" className="portalBrand"><img src="/kathya-logo.png" alt="KATHYA"/><div><b>KATHYA</b><small>PLATFORM OWNER</small></div></a><small>CONTROL PLANE</small>
-   {[['overview','Overview',LayoutDashboard],['customers','Customers',Users],['audit','Audit log',ShieldCheck]].map(([id,label,Icon])=><button key={id} className={tab===id?'adminNavActive':'adminNavHint'} onClick={()=>id==='audit'?loadAudit():setTab(id)}><Icon size={16}/>{label}</button>)}
+   {[['overview','Overview',LayoutDashboard],['customers','Customers',Users],['credits','Credit Admin',WalletCards],['audit','Audit log',ShieldCheck]].map(([id,label,Icon])=><button key={id} className={tab===id?'adminNavActive':'adminNavHint'} onClick={()=>id==='audit'?loadAudit():id==='credits'?loadCredits(''):setTab(id)}><Icon size={16}/>{label}</button>)}
    <button className={tab==='members'?'adminNavActive':'adminNavHint'} disabled={!selectedOrg} onClick={()=>setTab('members')}><Users size={16}/>Workspace members</button>
    <div className="adminGuard"><CheckCircle2 size={15}/><div><b>Owner verified</b><small>Database-enforced access</small></div></div>
   </aside>
   <div className="adminBody">
-   <header><div><small>KATHYA CONTROL PLANE</small><b>{tab==='overview'?'Platform Overview':tab==='customers'?'Customer Management':tab==='members'?'Workspace Members':'Platform Audit Log'}</b></div><div className="adminIdentity"><span>{(user?.email||'O')[0].toUpperCase()}</span><div><b>Platform Owner</b><small>{user?.email}</small></div><button onClick={refresh} disabled={busy}>{busy?'Working…':'Refresh'}</button><button onClick={async()=>{await supabase.auth.signOut();location.href='/sign-in'}}><LogOut size={15}/>Logout</button></div></header>
+   <header><div><small>KATHYA CONTROL PLANE</small><b>{tab==='overview'?'Platform Overview':tab==='customers'?'Customer Management':tab==='members'?'Workspace Members':tab==='credits'?'Voice Credit Admin':'Platform Audit Log'}</b></div><div className="adminIdentity"><span>{(user?.email||'O')[0].toUpperCase()}</span><div><b>Platform Owner</b><small>{user?.email}</small></div><button onClick={refresh} disabled={busy}>{busy?'Working…':'Refresh'}</button><button onClick={async()=>{await supabase.auth.signOut();location.href='/sign-in'}}><LogOut size={15}/>Logout</button></div></header>
    <main>
     <div className="adminHero"><div><small>PLATFORM OPERATIONS</small><h1>One control plane.<br/><em>Every customer workspace.</em></h1><p>Manage customer organizations, workspace access and privileged platform activity.</p></div><span>OWNER</span></div>
     {error&&<div className="adminActionError" role="alert">{error}</div>}
@@ -173,6 +189,28 @@ export function Admin(){
     {tab==='members'&&<section className="adminCustomerPanel"><div className="adminPanelHead"><div><small>ACCESS CONTROL</small><h2>{selectedOrg?.name||'Choose a workspace'}</h2><p>Add registered users and control their workspace permissions.</p></div><button className="adminSmallButton" onClick={()=>setTab('customers')}>Back to customers</button></div>
      {selectedOrg&&<><form className="adminMemberForm" onSubmit={addMember}><label>Registered user email<input required type="email" value={memberForm.email} onChange={e=>setMemberForm(v=>({...v,email:e.target.value}))} placeholder="user@company.com"/></label><label>Role<select value={memberForm.role} onChange={e=>setMemberForm(v=>({...v,role:e.target.value}))}><option value="admin">Admin</option><option value="member">Member</option><option value="viewer">Viewer</option></select></label><button disabled={busy} type="submit">Add / update member</button></form>
      <div className="adminTableWrap"><table className="adminTable"><thead><tr><th>Email</th><th>Role</th><th>Joined</th><th>Action</th></tr></thead><tbody>{members.map(m=><tr key={m.user_id}><td>{m.email}</td><td>{m.role==='owner'?'Owner':<select value={m.role} disabled={busy} onChange={e=>changeRole(m,e.target.value)}><option value="admin">Admin</option><option value="member">Member</option><option value="viewer">Viewer</option></select>}</td><td>{new Date(m.created_at).toLocaleDateString()}</td><td>{m.role==='owner'?'Protected':<button className="adminSmallButton danger" disabled={busy} onClick={()=>removeMember(m)}>Remove</button>}</td></tr>)}</tbody></table></div></>}
+    </section>}
+    {tab==='audit'&&<section className="adminCustomerPanel">    {tab==='credits'&&<section className="adminCreditWorkspace">
+     <div className="adminCreditIntro"><div><small>VOICE MINUTE WALLET</small><h2>Credit administration</h2><p>Allocate purchased or promotional minutes to customer workspaces. Each grant expires at 00:00 UTC on the first day of next month.</p></div><span>MONTHLY EXPIRY</span></div>
+     <div className="adminMetrics">{[['Available minutes',creditData?.totals?.available_minutes],['Granted minutes',creditData?.totals?.granted_minutes],['Used minutes',creditData?.totals?.used_minutes],['Expired unspent',creditData?.totals?.expired_unspent_minutes]].map(([label,value])=><article key={label}><small>{label}</small><b>{value==null?'—':Number(value).toLocaleString(undefined,{maximumFractionDigits:2})}</b><span>Verified wallet totals</span></article>)}</div>
+     <div className="adminCreditGrid">
+      <section className="adminCustomerPanel"><div className="adminPanelHead"><div><small>MANUAL ALLOCATION</small><h2>Grant voice minutes</h2><p>Use purchased for paid orders and promotional for trial or bonus minutes.</p></div></div>
+       <form className="adminForm" onSubmit={allocateCredits}>
+        <label>Customer company<select required value={creditForm.org_id} onChange={e=>setCreditForm(v=>({...v,org_id:e.target.value}))}><option value="">Select a company</option>{(creditData?.organizations||[]).map(o=><option key={o.id} value={o.id}>{o.name} — {o.owner_email||'No owner email'}</option>)}</select></label>
+        <label>Minutes<input required type="number" min="0.01" step="0.01" value={creditForm.minutes} onChange={e=>setCreditForm(v=>({...v,minutes:e.target.value}))} placeholder="Example: 500"/></label>
+        <label>Allocation type<select value={creditForm.source} onChange={e=>setCreditForm(v=>({...v,source:e.target.value}))}><option value="purchased">Purchased minutes</option><option value="promotional">Promotional / free minutes</option></select></label>
+        <label>Admin note<input value={creditForm.note} onChange={e=>setCreditForm(v=>({...v,note:e.target.value}))} placeholder="Order ID, promotion or reason"/></label>
+        <button disabled={busy||!creditForm.org_id||!Number(creditForm.minutes)} type="submit">{busy?'Allocating…':'Allocate minutes'}</button>
+       </form>
+      </section>
+      <section className="adminCustomerPanel"><div className="adminPanelHead"><div><small>COMPANY BALANCES</small><h2>Customer voice minutes</h2><p>Balances exclude expired credits; expiry warnings show the next 7 days.</p></div><button className="adminSmallButton" onClick={()=>loadCredits(creditOrgFilter)}>Refresh</button></div>
+       <div className="adminTableWrap"><table className="adminTable"><thead><tr><th>Company</th><th>Available</th><th>Used</th><th>Expiring in 7 days</th><th>Next expiry</th></tr></thead><tbody>{(creditData?.organizations||[]).map(o=><tr key={o.id}><td><b>{o.name}</b><small>{o.owner_email||'—'}</small></td><td>{Number(o.available_minutes||0).toLocaleString()}</td><td>{Number(o.used_minutes||0).toLocaleString()}</td><td>{Number(o.expiring_minutes||0).toLocaleString()}</td><td>{o.next_expiry?new Date(o.next_expiry).toLocaleDateString():'—'}</td></tr>)}</tbody></table></div>
+      </section>
+     </div>
+     <section className="adminCustomerPanel"><div className="adminPanelHead"><div><small>TRANSACTION HISTORY</small><h2>Credit ledger</h2><p>Latest 200 allocations, usage deductions, refunds and expiries.</p></div><label className="adminCreditFilter">Company<select value={creditOrgFilter} onChange={e=>{setCreditOrgFilter(e.target.value);loadCredits(e.target.value)}}><option value="">All companies</option>{(creditData?.organizations||[]).map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label></div>
+      <div className="adminTableWrap"><table className="adminTable"><thead><tr><th>Date</th><th>Transaction</th><th>Type</th><th>Minutes</th><th>Reference / note</th></tr></thead><tbody>{creditLedger.map(x=><tr key={x.id}><td>{new Date(x.created_at).toLocaleString()}</td><td>{x.entry_type}</td><td>{x.source||'—'}</td><td className={Number(x.minutes_delta)<0?'creditNegative':'creditPositive'}>{Number(x.minutes_delta)>0?'+':''}{Number(x.minutes_delta).toLocaleString()}</td><td>{x.reference||x.description||'—'}</td></tr>)}</tbody></table></div>{creditLedger.length===0&&<div className="adminEmpty">No credit transactions yet.</div>}
+     </section>
+     <div className="adminReadOnlyNote"><ShieldCheck size={17}/><span><b>Accounting boundary:</b> customer minutes are separate from KATHYA's Vapi/provider costs. Live deductions require a verified provider webhook mapped to the correct company and call. This screen does not yet activate provider deductions or scheduled expiry processing.</span></div>
     </section>}
     {tab==='audit'&&<section className="adminCustomerPanel"><div className="adminPanelHead"><div><small>SECURITY & GOVERNANCE</small><h2>Recent admin actions</h2><p>Latest 100 privileged platform changes.</p></div></div><div className="adminTableWrap"><table className="adminTable"><thead><tr><th>Action</th><th>Actor</th><th>Details</th><th>Time</th></tr></thead><tbody>{audit.map(x=><tr key={x.id}><td>{x.action}</td><td>{x.actor_email}</td><td>{JSON.stringify(x.details)}</td><td>{new Date(x.created_at).toLocaleString()}</td></tr>)}</tbody></table></div>{audit.length===0&&<div className="adminEmpty">No admin actions recorded yet.</div>}</section>}
     <div className="adminReadOnlyNote"><ShieldCheck size={17}/><span><b>Security:</b> all management operations call owner-verified database functions. Workspace owners cannot be removed or demoted from this console. Mutations are written to the audit log.</span></div>

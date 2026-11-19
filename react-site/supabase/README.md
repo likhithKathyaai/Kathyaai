@@ -40,7 +40,7 @@ The webhook bills fractional minutes based on reported call duration. It does no
 
 - Never put provider API keys, OAuth tokens, Stripe secrets or Supabase service-role keys in browser code or customer-visible JSON.
 - Integration records store public metadata only. OAuth/token vaulting needs a server-side secret store.
-- Knowledge files are stored in the private `kathya-knowledge` bucket under an organization UUID prefix. Uploaded file extraction/indexing is a separate worker stage.
+- Knowledge files are stored in the private `kathya-knowledge` bucket under an organization UUID prefix. The preview processor extracts PDF, DOCX, TXT, Markdown and CSV text into the tenant's knowledge row; URL-only sources remain pending until safe website ingestion is added. Vapi agent deployment includes up to 12,000 characters from the tenant's latest ready knowledge documents.
 - The Stripe webhook verifies signatures and is idempotent. Configure the webhook endpoint at `/api/billing/stripe-webhook` for checkout completion, subscription updates/deletion and failed invoices.
 - Monthly credit expiry runs from the Vercel cron route `/api/cron/voice-credit-expiry`. Email notices are queued; delivery requires SMTP variables.
 - Provider costs are recorded separately when Vapi reports a cost value. Do not treat customer minutes as provider spend.

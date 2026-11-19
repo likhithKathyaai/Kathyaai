@@ -30,7 +30,7 @@ export default async function handler(req,res){
   if(!assistantId||!callId||!Number.isFinite(seconds)||seconds<=0){
     return json(res,422,{error:'Call report is missing assistant ID, call ID or valid duration'});
   }
-  const minutes=Math.round((seconds/60)*100)/100;
+  const minutes=Math.max(0.01,Math.round((seconds/60)*100)/100);
   const {data:agent,error:agentError}=await db.from('workspace_records')
     .select('id,organization_id,payload').eq('category','agents')
     .contains('payload',{vapiAssistantId:assistantId}).maybeSingle();

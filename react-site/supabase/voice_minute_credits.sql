@@ -63,6 +63,8 @@ alter table public.voice_usage_allocations enable row level security;
 
 revoke all on public.voice_credit_lots, public.voice_credit_ledger,
   public.voice_usage_events, public.voice_usage_allocations from public, anon, authenticated;
+grant all on public.voice_credit_lots, public.voice_credit_ledger,
+  public.voice_usage_events, public.voice_usage_allocations to service_role;
 
 -- Customer-safe balance: only a member of the requested organization can read it.
 create or replace function public.customer_voice_credit_balance(p_org_id uuid)

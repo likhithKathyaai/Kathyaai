@@ -7,8 +7,9 @@ Run these scripts in the **KATHYA AI Supabase project**, in this order. These sc
 3. `saas_organizations.sql` — organizations, memberships, tenant RLS and signup provisioning.
 4. `platform_admin_overview.sql` — owner-only platform overview.
 5. `platform_admin_management.sql` — organization/member administration and audit log.
-6. `voice_minute_credits.sql` — monthly purchased/promotional minute lots, ledger, usage deduction, expiry and Stripe purchase-credit grant.
-7. `multitenant_product_core.sql` — customer business profiles, CRM contacts, campaigns, integrations, automations, structured extractions, subscription state and private knowledge storage.
+6. `platform_admin_owner_guard.sql` — prevents member-management upserts from demoting a workspace owner.
+7. `voice_minute_credits.sql` — monthly purchased/promotional minute lots, ledger, usage deduction, expiry and Stripe purchase-credit grant.
+8. `multitenant_product_core.sql` — customer business profiles, CRM contacts, campaigns, integrations, automations, structured extractions, subscription state and private knowledge storage.
 
 ## Environment variables used by server routes
 

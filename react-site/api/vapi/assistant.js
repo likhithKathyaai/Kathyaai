@@ -17,6 +17,11 @@ export default async function handler(req,res){
  if(readError||!record)return json(res,404,{error:'Agent not found'});
  const {data:membership}=await db.from('organization_members').select('role').eq('organization_id',record.organization_id).eq('user_id',user.id).maybeSingle();
  if(!membership||!['owner','admin','member'].includes(membership.role))return json(res,403,{error:'You do not have permission to deploy agents in this workspace'});
+ const {data:org}=await db.from('organizations').select('status').eq('id',record.organization_id).maybeSingle();
+ if(!org||org.status!=='active')return json(res,403,{error:'This customer workspace is not active'});
+ const {data:balance,error:balanceError}=await db.rpc('customer_voice_credit_balance',{p_org_id:record.organization_id});
+ if(balanceError)return json(res,503,{error:'Voice credit wallet is not ready for this workspace'});
+ if(Number(balance?.available_minutes||0)<=0)return json(res,402,{error:'Your workspace has no available voice minutes. Add credits before deploying a live agent.'});
  if(record.payload?.vapiAssistantId)return json(res,409,{error:'Agent already deployed to Vapi'});
  const fields=record.payload?.fields||{};
  const name=(record.title||'KATHYA Agent').slice(0,40);

@@ -153,9 +153,9 @@ export function Workspace(){
  if(loading)return <div className="authLoading">Securing your KATHYA workspace…</div>;
  if(!authConfigured)return <div className="authLoading">Authentication configuration required.</div>;
  if(!user)return null;
- if(profile&&!profile.onboarding_complete)return <Shell user={user}><main className="setupMain"><div className="setupIntro"><small>ACCOUNT SETUP</small><h1>Finish setting up your account</h1><p>This information is saved securely to your KATHYA customer profile.</p></div><form className="setupCard" onSubmit={async e=>{
+ if(!profile||!profile.onboarding_complete)return <Shell user={user}><main className="setupMain"><div className="setupIntro"><small>ACCOUNT SETUP</small><h1>Finish setting up your account</h1><p>This information is saved securely to your KATHYA customer profile.</p></div><form className="setupCard" onSubmit={async e=>{
   e.preventDefault();const fd=new FormData(e.currentTarget);
-  const {error}=await supabase.from('profiles').update({full_name:fd.get('name'),business_name:fd.get('business'),mobile:fd.get('mobile'),primary_goal:fd.get('goal'),onboarding_complete:true,updated_at:new Date().toISOString()}).eq('id',user.id);
+  const {error}=await supabase.from('profiles').upsert({id:user.id,email:user.email,full_name:fd.get('name'),business_name:fd.get('business'),mobile:fd.get('mobile'),primary_goal:fd.get('goal'),onboarding_complete:true,updated_at:new Date().toISOString()},{onConflict:'id'});
   if(error){alert('Could not save your profile: '+error.message);return}
   const {data:workspaces,error:workspaceError}=await supabase.rpc('customer_list_workspaces');
   if(workspaceError||!workspaces?.length){alert('Your account was saved, but no customer workspace is available. Contact KATHYA support.');return}

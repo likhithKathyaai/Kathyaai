@@ -15,9 +15,9 @@ export function SignIn(){
  useEffect(()=>{
   if(!supabase)return;
   if(recoveryFlow)setMode('update');
-  const {data:{subscription}}=supabase.auth.onAuthStateChange((event)=>{
+  const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
    if(event==='PASSWORD_RECOVERY')setMode('update');
-   else if(event==='SIGNED_IN'&&!recoveryFlow&&params.has('next'))window.location.replace(nextPath);
+   else if((event==='SIGNED_IN'||event==='INITIAL_SESSION')&&session&&!recoveryFlow)window.location.replace(nextPath);
   });
   return()=>subscription.unsubscribe();
  },[]);

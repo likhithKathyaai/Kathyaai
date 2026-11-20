@@ -4,7 +4,8 @@ This checklist is the release gate for the multi-tenant SaaS application. A succ
 
 ## Current development scope
 
-- The release candidate contains live tenant-derived dashboard metrics, onboarding recovery, owner-role protection, PDF/DOCX/TXT/Markdown/CSV extraction and bounded Vapi prompt context injection.\n- Backend hardening branch PR #10 consolidates four Vapi routes into one Vercel serverless route to stay within the Hobby 12-function limit, adds an inbound credit selector, retry-safe Stripe webhook processing, and automated smoke tests. Its preview and live provider integration tests are pending.
+- The release candidate contains live tenant-derived dashboard metrics, onboarding recovery, owner-role protection, PDF/DOCX/TXT/Markdown/CSV extraction and bounded Vapi prompt context injection.
+- Backend hardening branch PR #10 consolidates four Vapi routes into one Vercel serverless route to stay within the Hobby 12-function limit, adds an inbound credit selector, retry-safe Stripe webhook processing, and automated smoke tests. Its preview and live provider integration tests are pending.
 - Knowledge injection is a bounded static context window, not semantic/vector search. URL crawling, embeddings and retrieval ranking are not implemented.
 - Automations and campaigns currently support tenant-scoped draft records; a production trigger/action runner, scheduling, retries and provider delivery are not complete.
 
@@ -27,7 +28,8 @@ The current set covers:
 5. Platform-owner customer/member management and audit log.
 6. Workspace-owner role protection.
 7. Voice-minute lots, ledger, usage deduction, expiry and Stripe idempotency.
-8. Tenant CRM, knowledge metadata/storage, campaigns, integrations, automations, structured extractions and subscription state.\n9. Stripe webhook processing status, retry attempts and recovery.
+8. Tenant CRM, knowledge metadata/storage, campaigns, integrations, automations, structured extractions and subscription state.
+9. Stripe webhook processing status, retry attempts and recovery.
 
 ## Required external configuration
 
@@ -42,8 +44,8 @@ The current set covers:
 - `VAPI_PRIVATE_API_KEY` and `KATHYA_VAPI_WEBHOOK_SECRET` must be configured server-side.
 - Configure a Vapi test phone number and the consolidated `/api/vapi/{assistant,connect-phone-number,webhook,assistant-request}` routes for the preview deployment.
 - Verify assistant creation, phone assignment, inbound call, end-of-call report, duplicate webhook delivery, call transcript/summary persistence and customer credit deduction.
-- The current credit gate prevents deployment when a workspace has no balance. It does not yet guarantee that an already-deployed inbound number refuses every new call after its balance reaches zero. Treat this as a launch blocker until a pre-call/telephony enforcement mechanism is tested.
-- Vapi's current documentation recommends Custom Credentials for webhook authentication. The code currently uses the legacy inline server URL secret; migrate to a Vapi credential ID before treating webhook security as final.
+- The new phone-number connection route configures an `assistant-request` selector that checks active organization status and available credits before selecting the saved assistant. Live phone QA is pending. Concurrent calls can still race because credit minutes are not reserved at call start; reservation/concurrency controls remain a launch blocker.
+- The selector currently uses a tokenized server URL; replace it with a Vapi Custom Credential when credential provisioning is automated.
 
 ### Stripe
 Checkout is not ready until the Stripe account supplies and verifies:

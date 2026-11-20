@@ -9,7 +9,7 @@ export default async function handler(req,res){
  const n=clean(name,120),e=clean(email,180),c=clean(company,160),u=clean(usecase,120),m=clean(message);
  if(!n||!e||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e))return res.status(400).json({error:'Please enter a valid name and work email.'});
  const syncUrl=process.env.FOUNDER_CRM_INGEST_URL,secret=process.env.WEBSITE_LEAD_SYNC_SECRET;
- const smtp=Boolean(process.env.SMTP_USER&&process.env.SMTP_PASSWORD);
+ const smtpPassword=process.env.SMTP_PASS||process.env.SMTP_PASSWORD;\n const smtp=Boolean(process.env.SMTP_USER&&smtpPassword);
  if(!smtp&&!(syncUrl&&secret))return res.status(503).json({error:'Contact service is temporarily unavailable.'});
  let crmSynced=false,emailed=false;
  if(syncUrl&&secret){
@@ -26,7 +26,7 @@ export default async function handler(req,res){
  }
  if(smtp){
   try{
-   const transport=nodemailer.createTransport({host:process.env.SMTP_HOST||'smtp.hostinger.com',port:Number(process.env.SMTP_PORT||465),secure:Number(process.env.SMTP_PORT||465)===465,auth:{user:process.env.SMTP_USER,pass:process.env.SMTP_PASSWORD}});
+   const transport=nodemailer.createTransport({host:process.env.SMTP_HOST||'smtp.hostinger.com',port:Number(process.env.SMTP_PORT||465),secure:Number(process.env.SMTP_PORT||465)===465,auth:{user:process.env.SMTP_USER,pass:smtpPassword}});
    await transport.sendMail({from:`KATHYA AI <${process.env.SMTP_USER}>`,to:process.env.LEAD_NOTIFICATION_EMAIL||'hr@pamedlogtalent.com',replyTo:e,subject:`New KATHYA AI Lead — ${c||n} — ${u||'Website'}`,text:`New KATHYA AI website lead\n\nName: ${n}\nEmail: ${e}\nCompany: ${c||'—'}\nUse case: ${u||'—'}\n\nWhat should KATHYA help complete?\n${m||'—'}\n\nReceived: ${new Date().toISOString()}`});
    emailed=true;
   }catch(err){console.error('Lead notification email failed',err?.message)}

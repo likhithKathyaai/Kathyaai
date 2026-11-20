@@ -2,7 +2,7 @@ import {createClient} from '@supabase/supabase-js';
 import {timingSafeEqual} from 'node:crypto';
 const json=(res,status,data)=>res.status(status).json(data);
 const safeEqual=(a,b)=>{const left=Buffer.from(String(a||'')),right=Buffer.from(String(b||''));return left.length===right.length&&timingSafeEqual(left,right)};
-const pickPhone=(message,call)=>{
+export const pickPhone=(message,call)=>{
  const candidates=[message.phoneNumber,call.phoneNumber,call.phoneNumberId,message.phoneNumberId].filter(Boolean);
  for(const item of candidates){
   if(typeof item==='string')return {id:item,number:null};

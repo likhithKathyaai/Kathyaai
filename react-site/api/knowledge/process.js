@@ -4,7 +4,22 @@ import mammoth from 'mammoth';
 
 const json=(res,status,data)=>res.status(status).json(data);
 const MAX_BYTES=25*1024*1024;
-const MAX_CHARS=200000;\n\nexport async function extractPdfText(buffer,{maxChars=MAX_CHARS,parser=getDocument}={}){\n const task=parser({data:new Uint8Array(buffer),isEvalSupported:false,disableFontFace:true,useSystemFonts:true});\n const document=await task.promise;\n let text='';\n try{\n  for(let pageNumber=1;pageNumber<=document.numPages&&text.length<maxChars;pageNumber++){\n   const page=await document.getPage(pageNumber);\n   const content=await page.getTextContent();\n   text+=content.items.map(item=>typeof item.str==='string'?item.str:'').join(' ')+'\n';\n   await page.cleanup?.();\n  }\n  return text.slice(0,maxChars);\n }finally{await task.destroy?.();}\n}
+const MAX_CHARS=200000;
+
+export async function extractPdfText(buffer,{maxChars=MAX_CHARS,parser=getDocument}={}){
+ const task=parser({data:new Uint8Array(buffer),isEvalSupported:false,disableFontFace:true,useSystemFonts:true});
+ const document=await task.promise;
+ let text='';
+ try{
+  for(let pageNumber=1;pageNumber<=document.numPages&&text.length<maxChars;pageNumber++){
+   const page=await document.getPage(pageNumber);
+   const content=await page.getTextContent();
+   text+=content.items.map(item=>typeof item.str==='string'?item.str:'').join(' ')+'\n';
+   await page.cleanup?.();
+  }
+  return text.slice(0,maxChars);
+ }finally{await task.destroy?.();}
+}
 
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');

@@ -23,10 +23,8 @@ export default async function handler(req,res){
  const url=process.env.VITE_SUPABASE_URL,serviceKey=process.env.SUPABASE_SERVICE_ROLE_KEY;
  if(!url||!serviceKey)return json(res,200,{error:'Sorry, the phone service is temporarily unavailable. Please try again later.'});
  const db=createClient(url,serviceKey,{auth:{persistSession:false,autoRefreshToken:false}});
- let query=db.from('workspace_records').select('id,organization_id,payload').eq('category','agents');
- if(phone.id)query=query.contains('payload',{vapiPhoneNumberId:phone.id});
- else query=query.contains('payload',{vapiPhoneNumber:phone.number});
- const {data:agent,error:agentError}=await query.limit(2);
+ let {data:agent,error:agentError}=await db.from('workspace_records').select('id,organization_id,payload').eq('category','agents').contains('payload',{vapiPhoneNumberId:phone.id||'__no_id__'}).limit(2);
+ if((!agent||!agent.length)&&phone.number){const fallback=await db.from('workspace_records').select('id,organization_id,payload').eq('category','agents').contains('payload',{vapiPhoneNumber:phone.number}).limit(2);agent=fallback.data;agentError=fallback.error;}
  if(agentError||!agent||agent.length!==1)return json(res,200,{error:'Sorry, this phone service is not available. Please try again later.'});
  const record=agent[0],assistantId=record.payload?.vapiAssistantId;
  if(!assistantId)return json(res,200,{error:'Sorry, this phone service is not ready. Please try again later.'});

@@ -17,8 +17,8 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "@supabase/supabase-js": "^2.58.0",
-    "pdf-parse": "^1.1.1",
-    "mammoth": "^1.9.1"
+    "mammoth": "^1.9.1",
+    "pdfjs-dist": "^4.2.67"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",

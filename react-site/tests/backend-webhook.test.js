@@ -32,3 +32,13 @@ test('Vapi dispatcher resolves rewritten and direct paths',()=>{
 test('Vapi phone mapping accepts provider phone-number objects',()=>{
  assert.deepEqual(pickPhone({phoneNumber:{id:'pn_123',number:'+15555550100'}},{}),{id:'pn_123',number:'+15555550100'});
 });
+
+test('PDF extraction reads pages, disables eval, and applies the text cap',async()=>{
+ const {extractPdfText}=await import('../api/knowledge/process.js');
+ let receivedOptions,cleaned=false;
+ const parser=options=>{receivedOptions=options;return {promise:Promise.resolve({numPages:2,getPage:async n=>({getTextContent:async()=>({items:[{str:`page${n}`}] }),cleanup:async()=>{}})}),destroy:async()=>{cleaned=true}}};
+ const output=await extractPdfText(Buffer.from([1,2,3]),{maxChars:5,parser});
+ assert.equal(output,'page1');
+ assert.equal(receivedOptions.isEvalSupported,false);
+ assert.equal(cleaned,true);
+});

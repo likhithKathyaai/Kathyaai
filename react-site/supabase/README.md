@@ -9,7 +9,7 @@ Run these scripts in the **KATHYA AI Supabase project**, in this order. These sc
 5. `platform_admin_management.sql` — organization/member administration and audit log.
 6. `platform_admin_owner_guard.sql` — prevents member-management upserts from demoting a workspace owner.
 7. `voice_minute_credits.sql` — monthly purchased/promotional minute lots, ledger, usage deduction, expiry and Stripe purchase-credit grant.
-8. `multitenant_product_core.sql` — customer business profiles, CRM contacts, campaigns, integrations, automations, structured extractions, subscription state and private knowledge storage.
+8. `multitenant_product_core.sql` — customer business profiles, CRM contacts, campaigns, integrations, automations, structured extractions, subscription state and private knowledge storage.\n9. `stripe_webhook_processing.sql` — retry-safe Stripe webhook event processing states and recovery.
 
 ## Environment variables used by server routes
 

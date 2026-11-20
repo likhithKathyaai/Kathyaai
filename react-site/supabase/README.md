@@ -10,6 +10,7 @@ Run these scripts in the **KATHYA AI Supabase project**, in this order. These sc
 6. `platform_admin_owner_guard.sql` — prevents member-management upserts from demoting a workspace owner.
 7. `voice_minute_credits.sql` — monthly purchased/promotional minute lots, ledger, usage deduction, expiry and Stripe purchase-credit grant.
 8. `multitenant_product_core.sql` — customer business profiles, CRM contacts, campaigns, integrations, automations, structured extractions, subscription state and private knowledge storage.
+9. `stripe_webhook_processing.sql` — retry-safe Stripe webhook event processing states and recovery.
 
 ## Environment variables used by server routes
 
@@ -34,7 +35,7 @@ For Stripe checkout (not configured until Stripe account/price IDs are supplied)
 
 New assistants created from this branch receive the authenticated end-of-call webhook URL for their deployment. The webhook URL uses the active Vercel deployment host and `KATHYA_VAPI_WEBHOOK_SECRET`. Each customer must enter the Vapi phone-number ID assigned to that agent; the platform-wide phone number is not automatically shared between customers.
 
-The webhook bills fractional minutes based on reported call duration. It does not yet enforce a zero-credit block before call initiation; that needs a Vapi pre-call control or telephony routing gate and must be tested before commercial use.
+Inbound phone-number connection configures a Vapi assistant-request selector that rejects inactive workspaces and zero-credit calls before selecting the agent. This is a pre-call gate, but concurrent calls can race against the wallet balance because minutes are not reserved before call start; reservation/concurrency controls and live telephony tests remain launch blockers. The selector uses a tokenized server URL; replace with a Vapi Custom Credential when credential provisioning is automated.
 
 ## Important security and launch notes
 

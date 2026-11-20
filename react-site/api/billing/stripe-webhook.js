@@ -8,7 +8,7 @@ export function validSignature(raw,header,secret){
  const fields=String(header).split(',').map(x=>x.trim());
  const timestamp=fields.find(x=>x.startsWith('t='))?.slice(2);
  const signatures=fields.filter(x=>x.startsWith('v1=')).map(x=>x.slice(3));
- if(!timestamp||!signatures.length||!/^\\d+$/.test(timestamp)||Math.abs(Date.now()/1000-Number(timestamp))>300)return false;
+ if(!timestamp||!signatures.length||!/^\d+$/.test(timestamp)||Math.abs(Date.now()/1000-Number(timestamp))>300)return false;
  const expected=createHmac('sha256',secret).update(timestamp+'.').update(raw).digest();
  return signatures.some(signature=>{const candidate=Buffer.from(signature,'hex');return candidate.length===expected.length&&timingSafeEqual(candidate,expected)});
 }

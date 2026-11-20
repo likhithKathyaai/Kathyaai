@@ -305,8 +305,6 @@ export function Admin(){
   </div>
  </section>
 }
-ookOpen size={18}/></button><button title="Notifications"><Bell size={18}/></button><div className="accountWrap"><button className="portalAccount" onClick={()=>setAccountOpen(v=>!v)} aria-expanded={accountOpen}><span>{(user?.email||'A')[0].toUpperCase()}</span><div><b>{user?.user_metadata?.full_name||user?.email?.split("@")[0]||"Account"}</b><small>{user?.email||"Workspace"}</small></div><ChevronDown size={15}/></button>{accountOpen&&<div className="accountMenu"><div className="accountIdentity"><span>A</span><div><b>KATHYA Workspace</b><small>{user?.email}</small></div></div><button onClick={()=>setActive('Settings')}><UserRound size={15}/>Account settings</button><button onClick={()=>setMsg('Help center selected')}><LifeBuoy size={15}/>Help & support</button><i/><button onClick={logout} className="logoutAction"><LogOut size={15}/>Log out</button></div>}</div></header>{typeof children==="function"?children(active,setActive,organizationId):children}</div></section>
-}
 
 const moduleConfig={
 'My Agents':{table:'agents',title:'Your AI agent team',description:'Manage voice and chat agents, review their status, and configure business goals.',fields:['Agent name','Purpose','Instructions','Default language','Supported languages','Multilingual support','Voice provider','Voice ID','Vapi phone number ID'],templates:['AI Receptionist','Sales Agent','Support Agent','Booking Agent']},

@@ -9,7 +9,8 @@ export default async function handler(req,res){
  const n=clean(name,120),e=clean(email,180),c=clean(company,160),u=clean(usecase,120),m=clean(message);
  if(!n||!e||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e))return res.status(400).json({error:'Please enter a valid name and work email.'});
  const syncUrl=process.env.FOUNDER_CRM_INGEST_URL,secret=process.env.WEBSITE_LEAD_SYNC_SECRET;
- const smtpPassword=process.env.SMTP_PASS||process.env.SMTP_PASSWORD;\n const smtp=Boolean(process.env.SMTP_USER&&smtpPassword);
+ const smtpPassword=process.env.SMTP_PASS||process.env.SMTP_PASSWORD;
+ const smtp=Boolean(process.env.SMTP_USER&&smtpPassword);
  if(!smtp&&!(syncUrl&&secret))return res.status(503).json({error:'Contact service is temporarily unavailable.'});
  let crmSynced=false,emailed=false;
  if(syncUrl&&secret){

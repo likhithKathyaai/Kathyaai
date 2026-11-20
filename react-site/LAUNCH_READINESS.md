@@ -5,7 +5,7 @@ This checklist is the release gate for the multi-tenant SaaS application. A succ
 ## Current development scope
 
 - The release candidate contains live tenant-derived dashboard metrics, onboarding recovery, owner-role protection, PDF/DOCX/TXT/Markdown/CSV extraction and bounded Vapi prompt context injection.
-- Backend hardening branch PR #10 consolidates four Vapi routes into one Vercel serverless route to stay within the Hobby 12-function limit, adds an inbound credit selector, retry-safe Stripe webhook processing, and automated smoke tests. Its preview and live provider integration tests are pending.
+- Backend hardening PR #10 consolidates four Vapi routes into one serverless route (10 functions total), adds a pre-call credit selector, retry-safe Stripe webhook processing, PDF.js extraction hardening, and SMTP configuration consistency. GitHub CI passed: 10 tests, production build, and npm audit (0 vulnerabilities). The latest Vercel preview is rate-limited; the preceding READY preview passed route smoke tests. Live provider/database integration tests are still pending.
 - Knowledge injection is a bounded static context window, not semantic/vector search. URL crawling, embeddings and retrieval ranking are not implemented.
 - Automations and campaigns currently support tenant-scoped draft records; a production trigger/action runner, scheduling, retries and provider delivery are not complete.
 

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHmac} from 'node:crypto';
 import {validSignature as validStripeSignature} from '../api/billing/stripe-webhook.js';
-import {getCallDurationSeconds} from '../api/vapi/webhook.js';
+import {getCallDurationSeconds} from '../server/vapi/webhook.js';
 
 const signed=(raw,timestamp,secret)=>createHmac('sha256',secret).update(String(timestamp)+'.').update(raw).digest('hex');
 test('Stripe signature verifies exact payload',()=>{

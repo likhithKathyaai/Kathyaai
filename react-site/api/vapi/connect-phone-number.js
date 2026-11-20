@@ -10,7 +10,7 @@ export default async function handler(req,res){
  if(!apiKey||!secret)return json(res,503,{error:'Vapi integration is not configured on the server'});
  const url=process.env.VITE_SUPABASE_URL,key=process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
  if(!url||!key)return json(res,503,{error:'Supabase auth is not configured'});
- const token=String(req.headers.authorization||'').replace(/^Bearer\\s+/i,'');
+ const token=String(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
  if(!token)return json(res,401,{error:'Sign in required'});
  const db=createClient(url,key,{global:{headers:{Authorization:'Bearer '+token}},auth:{persistSession:false}});
  const {data:{user},error:authError}=await db.auth.getUser(token);
@@ -33,10 +33,10 @@ export default async function handler(req,res){
   if(current.assistantId&&current.assistantId!==assistantId)return json(res,409,{error:'This phone number is already assigned to a different assistant. No changes were made.'});
   if(current.squadId)return json(res,409,{error:'This phone number is assigned to a Vapi squad. No changes were made.'});
   const host=String(req.headers.host||'');
-  const safeHost=/^(www\\.)?kathyaai\\.com$|^[a-z0-9-]+\\.vercel\\.app$/i.test(host);
-  const appUrl=process.env.KATHYA_APP_URL||(safeHost?'https://'+host:null);
+  const safeHost=/^(www\.)?kathyaai\.com$|^[a-z0-9-]+\.vercel\.app$/i.test(host);
+  const appUrl=safeHost?'https://'+host:null;
   if(!appUrl||!safeHost)return json(res,503,{error:'The server host is not approved for phone routing'});
-  const selectorUrl=appUrl.replace(/\\/$/,'')+'/api/vapi/assistant-request?token='+encodeURIComponent(secret);
+  const selectorUrl=appUrl.replace(/\/$/,'')+'/api/vapi/assistant-request?token='+encodeURIComponent(secret);
   const server={url:selectorUrl,timeoutSeconds:7};
   if(current.server?.url&&current.server.url!==selectorUrl&&!current.server.url.includes('/api/vapi/assistant-request'))return json(res,409,{error:'This phone number has an existing webhook configuration. Review it before replacing it.'});
   const patchResponse=await fetch('https://api.vapi.ai/phone-number/'+encodeURIComponent(phoneNumberId),{method:'PATCH',headers,body:JSON.stringify({assistantId:null,squadId:null,server})});

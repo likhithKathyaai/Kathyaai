@@ -1,10 +1,10 @@
 import {createClient} from '@supabase/supabase-js';
-import pdfParse from 'pdf-parse';
+import {getDocument} from 'pdfjs-dist/legacy/build/pdf.mjs';
 import mammoth from 'mammoth';
 
 const json=(res,status,data)=>res.status(status).json(data);
 const MAX_BYTES=25*1024*1024;
-const MAX_CHARS=200000;
+const MAX_CHARS=200000;\n\nexport async function extractPdfText(buffer,{maxChars=MAX_CHARS,parser=getDocument}={}){\n const task=parser({data:new Uint8Array(buffer),isEvalSupported:false,disableFontFace:true,useSystemFonts:true});\n const document=await task.promise;\n let text='';\n try{\n  for(let pageNumber=1;pageNumber<=document.numPages&&text.length<maxChars;pageNumber++){\n   const page=await document.getPage(pageNumber);\n   const content=await page.getTextContent();\n   text+=content.items.map(item=>typeof item.str==='string'?item.str:'').join(' ')+'\\n';\n   await page.cleanup?.();\n  }\n  return text.slice(0,maxChars);\n }finally{await task.destroy?.();}\n}
 
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');

@@ -38,7 +38,8 @@ export default async function handler(req,res){
   if(!appUrl||!safeHost)return json(res,503,{error:'The server host is not approved for phone routing'});
   const selectorUrl=appUrl.replace(/\/$/,'')+'/api/vapi/assistant-request?token='+encodeURIComponent(secret);
   const server={url:selectorUrl,timeoutSeconds:7};
-  const existingServerUrl=current.server?.url||current.serverUrl||null;\n  if(existingServerUrl&&existingServerUrl!==selectorUrl&&!existingServerUrl.includes('/api/vapi/assistant-request'))return json(res,409,{error:'This phone number has an existing webhook configuration. Review it before replacing it.'});
+  const existingServerUrl=current.server?.url||current.serverUrl||null;
+  if(existingServerUrl&&existingServerUrl!==selectorUrl&&!existingServerUrl.includes('/api/vapi/assistant-request'))return json(res,409,{error:'This phone number has an existing webhook configuration. Review it before replacing it.'});
   const patchResponse=await fetch('https://api.vapi.ai/phone-number/'+encodeURIComponent(phoneNumberId),{method:'PATCH',headers,body:JSON.stringify({assistantId:null,squadId:null,server})});
   const connected=await patchResponse.json().catch(()=>({}));
   if(!patchResponse.ok)return json(res,502,{error:'Vapi could not configure credit-gated inbound routing',details:connected?.message||connected?.error||patchResponse.status});

@@ -8,7 +8,7 @@ export function validSignature(raw,header,secret){
  const fields=String(header).split(',').map(x=>x.trim());
  const timestamp=fields.find(x=>x.startsWith('t='))?.slice(2);
  const signatures=fields.filter(x=>x.startsWith('v1=')).map(x=>x.slice(3));
- if(!timestamp||!signatures.length||!/^\\d+$/.test(timestamp)||Math.abs(Date.now()/1000-Number(timestamp))>300)return false;
+ if(!timestamp||!signatures.length||!/^\d+$/.test(timestamp)||Math.abs(Date.now()/1000-Number(timestamp))>300)return false;
  const expected=createHmac('sha256',secret).update(timestamp+'.').update(raw).digest();
  return signatures.some(signature=>{const candidate=Buffer.from(signature,'hex');return candidate.length===expected.length&&timingSafeEqual(candidate,expected)});
 }
@@ -24,7 +24,7 @@ export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');
  if(req.method!=='POST')return json(res,405,{error:'Method not allowed'});
  const secret=process.env.KATHYA_VAPI_WEBHOOK_SECRET;
- const supplied=req.headers['x-vapi-secret']||String(req.headers.authorization||'').replace(/^Bearer\\s+/i,'');
+ const supplied=req.headers['x-vapi-secret']||String(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
  if(!secret||!supplied||!safeEqual(supplied,secret))return json(res,401,{error:'Webhook authentication failed'});
  const url=process.env.VITE_SUPABASE_URL,serviceKey=process.env.SUPABASE_SERVICE_ROLE_KEY;
  if(!url||!serviceKey)return json(res,503,{error:'Server database credentials are not configured'});

@@ -1,13 +1,16 @@
 import {createClient} from '@supabase/supabase-js';
+import {timingSafeEqual} from 'node:crypto';
 const json=(res,status,data)=>res.status(status).json(data);
+const safeEqual=(a,b)=>{const left=Buffer.from(String(a||'')),right=Buffer.from(String(b||''));return left.length===right.length&&timingSafeEqual(left,right)};
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');
  if(req.method!=='POST')return json(res,405,{error:'Method not allowed'});
  const apiKey=process.env.VAPI_PRIVATE_API_KEY;
- if(!apiKey)return json(res,503,{error:'Vapi private key is not configured on the server'});
+ const secret=process.env.KATHYA_VAPI_WEBHOOK_SECRET;
+ if(!apiKey||!secret)return json(res,503,{error:'Vapi integration is not configured on the server'});
  const url=process.env.VITE_SUPABASE_URL,key=process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
  if(!url||!key)return json(res,503,{error:'Supabase auth is not configured'});
- const token=(req.headers.authorization||'').replace(/^Bearer\s+/i,'');
+ const token=String(req.headers.authorization||'').replace(/^Bearer\\s+/i,'');
  if(!token)return json(res,401,{error:'Sign in required'});
  const db=createClient(url,key,{global:{headers:{Authorization:'Bearer '+token}},auth:{persistSession:false}});
  const {data:{user},error:authError}=await db.auth.getUser(token);
@@ -19,27 +22,30 @@ export default async function handler(req,res){
  const {data:membership}=await db.from('organization_members').select('role').eq('organization_id',record.organization_id).eq('user_id',user.id).maybeSingle();
  if(!membership||!['owner','admin','member'].includes(membership.role))return json(res,403,{error:'You do not have permission to connect phone numbers in this workspace'});
  const phoneNumberId=record.payload?.vapiPhoneNumberId||record.payload?.fields?.['Vapi phone number ID'];
- if(!phoneNumberId)return json(res,400,{error:'Add a Vapi phone-number ID to this agent before connecting it. Each customer must use an assigned phone number.'});
+ if(!phoneNumberId)return json(res,400,{error:'Add a Vapi phone-number ID to this agent before connecting it.'});
  const assistantId=record.payload?.vapiAssistantId;
  if(!assistantId)return json(res,409,{error:'Deploy this agent to Vapi before connecting a phone number'});
- if(record.payload?.vapiPhoneNumberConnectedAt)return json(res,409,{error:'A phone number is already recorded as connected to this agent'});
  try{
   const headers={Authorization:'Bearer '+apiKey,'Content-Type':'application/json'};
   const currentResponse=await fetch('https://api.vapi.ai/phone-number/'+encodeURIComponent(phoneNumberId),{headers});
   const current=await currentResponse.json().catch(()=>({}));
   if(!currentResponse.ok)return json(res,502,{error:'Could not verify the configured Vapi phone number',details:current?.message||current?.error||currentResponse.status});
-  if(current.assistantId&&current.assistantId!==assistantId)return json(res,409,{error:'This phone number is already assigned to a different Vapi assistant. No changes were made.'});
-  if(current.squadId)return json(res,409,{error:'This phone number is currently assigned to a Vapi squad. No changes were made.'});
-  let connected=current;
-  if(current.assistantId!==assistantId){
-   const patchResponse=await fetch('https://api.vapi.ai/phone-number/'+encodeURIComponent(phoneNumberId),{method:'PATCH',headers,body:JSON.stringify({assistantId})});
-   connected=await patchResponse.json().catch(()=>({}));
-   if(!patchResponse.ok)return json(res,502,{error:'Vapi could not attach the phone number',details:connected?.message||connected?.error||patchResponse.status});
-   if(connected.assistantId!==assistantId)return json(res,502,{error:'Vapi did not confirm the expected assistant assignment'});
-  }
-  const payload={...record.payload,vapiPhoneNumberId:phoneNumberId,vapiPhoneNumber:connected.number||current.number||null,vapiPhoneNumberConnectedAt:new Date().toISOString()};
+  if(current.assistantId&&current.assistantId!==assistantId)return json(res,409,{error:'This phone number is already assigned to a different assistant. No changes were made.'});
+  if(current.squadId)return json(res,409,{error:'This phone number is assigned to a Vapi squad. No changes were made.'});
+  const host=String(req.headers.host||'');
+  const safeHost=/^(www\\.)?kathyaai\\.com$|^[a-z0-9-]+\\.vercel\\.app$/i.test(host);
+  const appUrl=process.env.KATHYA_APP_URL||(safeHost?'https://'+host:null);
+  if(!appUrl||!safeHost)return json(res,503,{error:'The server host is not approved for phone routing'});
+  const selectorUrl=appUrl.replace(/\\/$/,'')+'/api/vapi/assistant-request?token='+encodeURIComponent(secret);
+  const server={url:selectorUrl,timeoutSeconds:7};
+  if(current.server?.url&&current.server.url!==selectorUrl&&!current.server.url.includes('/api/vapi/assistant-request'))return json(res,409,{error:'This phone number has an existing webhook configuration. Review it before replacing it.'});
+  const patchResponse=await fetch('https://api.vapi.ai/phone-number/'+encodeURIComponent(phoneNumberId),{method:'PATCH',headers,body:JSON.stringify({assistantId:null,squadId:null,server})});
+  const connected=await patchResponse.json().catch(()=>({}));
+  if(!patchResponse.ok)return json(res,502,{error:'Vapi could not configure credit-gated inbound routing',details:connected?.message||connected?.error||patchResponse.status});
+  if(connected.assistantId||connected.squadId||connected.server?.url!==selectorUrl)return json(res,502,{error:'Vapi did not confirm dynamic inbound routing'});
+  const payload={...record.payload,vapiPhoneNumberId:phoneNumberId,vapiPhoneNumber:connected.number||current.number||null,vapiPhoneNumberConnectedAt:new Date().toISOString(),vapiInboundRouting:'credit-gated'};
   const {error:saveError}=await db.from('workspace_records').update({payload,status:'configured'}).eq('id',record.id).eq('organization_id',record.organization_id);
-  if(saveError)return json(res,502,{error:'Vapi connected the phone number, but workspace sync failed. Do not retry; contact support to reconcile it.',connected:true});
-  return json(res,200,{connected:true,recordId:record.id,assistantId,phoneNumber:connected.number||current.number||null});
+  if(saveError)return json(res,502,{error:'Vapi routing was updated, but workspace sync failed. Do not retry; reconcile the phone number in Vapi.',connected:true});
+  return json(res,200,{connected:true,creditGateEnabled:true,recordId:record.id,assistantId,phoneNumber:connected.number||current.number||null});
  }catch(e){return json(res,502,{error:'Vapi phone-number service is unavailable'})}
 }

@@ -1,0 +1,29 @@
+name: KATHYA backend smoke tests
+on:
+  pull_request:
+    branches: [kathya-react, release/kathya-multitenant-2026-11-19]
+    paths:
+      - 'react-site/**'
+      - '.github/workflows/kathya-backend-tests.yml'
+  push:
+    branches: [feature/backend-webhook-hardening-qa]
+    paths:
+      - 'react-site/**'
+      - '.github/workflows/kathya-backend-tests.yml'
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react-site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm test
+      - run: npm run build

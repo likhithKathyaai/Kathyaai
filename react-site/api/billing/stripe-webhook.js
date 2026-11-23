@@ -38,14 +38,18 @@ export default async function handler(req,res){
  }
  try{
   const obj=event.data?.object||{};
-  if(event.type==='checkout.session.completed'){
+  if(event.type==='checkout.session.completed'||event.type==='checkout.session.async_payment_succeeded'){
    const orgId=obj.metadata?.organization_id||obj.client_reference_id;
    if(!orgId)throw new Error('Checkout session is missing its workspace reference');
    if(obj.metadata?.purchase_type==='voice_minutes'){
-    const minutes=Number(obj.metadata.minutes);
-    const {error}=await db.rpc('grant_purchased_voice_minutes',{p_org_id:orgId,p_minutes:minutes,p_reference:obj.id,p_note:'Stripe checkout '+obj.id});
-    if(error)throw error;
-   }else if(obj.mode==='subscription'){
+    // Never grant credits until Stripe confirms the Checkout Session is paid.
+    // Delayed payment methods are handled by async_payment_succeeded.
+    if(obj.payment_status==='paid'){
+     const minutes=Number(obj.metadata.minutes);
+     const {error}=await db.rpc('grant_purchased_voice_minutes',{p_org_id:orgId,p_minutes:minutes,p_reference:obj.id,p_note:'Stripe checkout '+obj.id});
+     if(error)throw error;
+    }
+   }else if(event.type==='checkout.session.completed'&&obj.mode==='subscription'){
     const {error}=await db.from('customer_subscriptions').upsert({organization_id:orgId,plan_code:obj.metadata?.plan_code||'launch',status:obj.payment_status==='paid'?'active':'incomplete',billing_provider:'stripe',provider_customer_id:obj.customer||null,provider_subscription_id:obj.subscription||null,updated_at:new Date().toISOString()},{onConflict:'organization_id'});
     if(error)throw error;
    }

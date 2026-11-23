@@ -33,6 +33,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/vapi/:route*",
+      "destination": "/api/vapi?route=:route*"
+    },
+    {
       "source": "/((?!api/|google3dcd28267f5aa86d\\.html$|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/index.html"
     }
